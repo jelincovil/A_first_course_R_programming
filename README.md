@@ -2,7 +2,25 @@
 
 Curso de programación con R para análisis de datos. Curso para el Magíster en Data Science de la UDLA, Chile.
 
+Foco del curso:
+- Programación en R.
+- Usar plataformas de complemento: Posit Cloud, Rstudio, Anaconda, GitHub, Linkedin.
+- Lenguajes Complementarios: markdown y SQL.
+- Producto Final: proyecto aplicado de Data Science.
+
 ## Unidad I:  Introducción al Lenguaje R
+- Introducción al Lengueje R.
+- Plataformas donde corre R.
+- Rstudio.
+- Instalacion de paquetes y documentación.
+- Libros.
+- Intro a objetos en R:
+                - Funciones.
+                - Datos y DataFrames.
+                - Algoritmos de simulación.
+                - Modelo y algoritmo de clasificación.
+                - Gráficos.
+  
 
 ## Unidad II: Programando gráficos estadísticos en R
 
