@@ -1,6 +1,30 @@
+# Herramientas y Recursos
+
+## RStudio
 <a href="https://github.com/rstudio/rstudio">
-   <img src="https://avatars.githubusercontent.com/u/513560?v=4" alt="RStudio GitHub">
+   <img src="https://avatars.githubusercontent.com/u/513560?v=4" alt="RStudio GitHub" width="100">
 </a>
+
+## Markdown
+<a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">
+   <img src="https://avatars.githubusercontent.com/u/19977?v=4" alt="Markdown GitHub" width="100">
+</a>
+
+## SQL
+<a href="https://github.com/topics/sql">
+   <img src="https://avatars.githubusercontent.com/u/9919?v=4" alt="SQL GitHub" width="100">
+</a>
+
+## Anaconda
+<a href="https://github.com/anaconda">
+   <img src="https://avatars.githubusercontent.com/u/730439?v=4" alt="Anaconda GitHub" width="100">
+</a>
+
+## LinkedIn
+<a href="https://github.com/linkedin">
+   <img src="https://avatars.githubusercontent.com/u/357098?v=4" alt="LinkedIn GitHub" width="100">
+</a>
+
 
 
 # Programación Estadística con R
