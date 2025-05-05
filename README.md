@@ -33,7 +33,7 @@ Curso de programación con R para análisis de datos. Curso para el Magíster en
 
 Foco del curso:
 - Programación en R.
-- Usar plataformas de complemento: Posit Cloud, Rstudio, Anaconda, GitHub, Linkedin.
+- Usar plataformas de complemento: Posit Cloud, Rstudio, Anaconda, GitHub, LinkedIn.
 - Lenguajes Complementarios: markdown y SQL.
 - Producto Final: proyecto aplicado de Data Science.
 
