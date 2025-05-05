@@ -1,3 +1,8 @@
+<a href="https://github.com/rstudio/rstudio">
+   <img src="https://avatars.githubusercontent.com/u/513560?v=4" alt="RStudio GitHub">
+</a>
+
+
 # Programación Estadística con R
 
 Curso de programación con R para análisis de datos. Curso para el Magíster en Data Science de la UDLA, Chile.
