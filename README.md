@@ -59,5 +59,7 @@ Foco del curso:
 ## Referencias
 - A First Course in Statistical Programming with R Third Edition. [Link](https://www.murdoch-sutherland.com/StatProg3/)
 - Jones, O., Maillardet, R., & Robinson, A. (2009). Introduction to scientific programming and simulation using R. Chapman and Hall/CRC. [Link](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
+- Advanced R [Link](https://adv-r.hadley.nz/)
+  
 ## Datos utilizados
 (Datos de alumnos)[https://github.com/jelincovil/A_course_R_programming/tree/main/Datos]
