@@ -2,11 +2,11 @@
 
 ### Objetivos
 
--- Introducir la sintaxis del Lenguaje R.
+- Introducir la sintaxis del Lenguaje R.
 
--- Donde corre R?
+- Donde corre R?
 
--- Donde estudiar R?
+- Donde estudiar R?
 
 <div align="center"> R es un lenguaje de programación y entorno de software para computación estadística y gráficos. </div>
 
@@ -24,8 +24,9 @@
 - https://www.youtube.com/watch?v=_V8eKsto3Ug
 - https://www.youtube.com/watch?v=KlsYCECWEWE&list=PLEiEAq2VkUUKAw0aAJ1W4jpZ1q9LpX4yG
 - https://www.youtube.com/watch?v=P15wMPd8CWo
-- 
+- ¿De que vale hacer este curso?
 
+<div align="center"> Obtendran guia para desarrollar un proyecto de data science técnico y contingente al mercado !! </div>
 
 
 ## *Rstudio* y *quarto*
