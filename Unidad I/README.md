@@ -18,6 +18,24 @@
 
 ## ¿Es relevante R para Data Science?
 
+[![Los mejores lenguajes de programación para la ciencia de datos en 2022 ...](https://tse3.mm.bing.net/th/id/OIP.HPMJNgFqaJjQ11fedN1yBQHaE7?cb=iwp1\&pid=Api)](https://topbigdata.es/los-mejores-lenguajes-de-programacion-para-la-ciencia-de-datos-en-2022/)
+
+R destaca en el ámbito de la ciencia de datos por su enfoque estadístico y su robusto ecosistema de paquetes especializados. Diseñado por y para estadísticos, R ofrece herramientas avanzadas para análisis estadístico, modelado y visualización de datos. Su amplia gama de paquetes facilita la realización de tareas complejas con eficiencia y precisión.
+
+A continuación, se presenta una tabla comparativa de R con otros lenguajes comúnmente utilizados en ciencia de datos:
+
+| Lenguaje   | Fortalezas Principales                                                                             | Casos de Uso Comunes                                                  | Referencias Académicas                                                                                                                       |                                |
+| ---------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| **R**      | Análisis estadístico avanzado, visualización de datos, amplia colección de paquetes especializados | Investigación académica, análisis estadístico, bioinformática         | [Ndaba, 2023](https://www.researchgate.net/publication/366617855_A_Review_of_the_use_of_R_Programming_for_Data_Science_Research_in_Botswana) |                                |
+| **Python** | Versatilidad, integración en producción, bibliotecas de aprendizaje automático                     | Desarrollo de aplicaciones, aprendizaje automático, análisis de datos | [DataCamp](https://www.datacamp.com/blog/python-vs-r-for-data-science-whats-the-difference)                                                  |                                |
+| **Julia**  | Alto rendimiento en cálculos numéricos, sintaxis matemática clara                                  | Computación científica, análisis numérico intensivo                   | [Wikipedia](https://en.wikipedia.org/wiki/Scientific_programming_language)                                                                   |                                |
+| **SAS**    | Análisis estadístico en entornos empresariales, soporte técnico robusto                            | Análisis en sectores regulados como finanzas y salud                  | [Wikipedia](https://en.wikipedia.org/wiki/SAS_%28software%29)                                                                                |                                |
+| **MATLAB** | Cálculo numérico, procesamiento de señales, simulaciones                                           | Ingeniería, procesamiento de imágenes, investigación académica        | [Wikipedia](https://en.wikipedia.org/wiki/MATLAB)                                                                                            | ([SSRN][1], [ResearchGate][2]) |
+
+Cada uno de estos lenguajes tiene sus propias fortalezas y áreas de aplicación. La elección entre ellos depende de las necesidades específicas del proyecto y del entorno en el que se desarrolle.
+
+[1]: https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5051680&utm_source=chatgpt.com "Python for Data Analytics: A Systematic Literature Review of Tools ..."
+[2]: https://www.researchgate.net/publication/390743029_Python_vs_Julia_Emerging_Programming_Languages_in_AI_Research?utm_source=chatgpt.com "Python vs. Julia: Emerging Programming Languages in AI Research"
 
 
 ## Sorpresa: los mejores cursos de R son gratis!!: 
@@ -37,7 +55,7 @@ el análisis de datos.
   
   <div align="center"> Markdown es un lenguaje de marcado ligero con sintaxis de formato de texto plano.</div>
   
-- Curso de Markdown (Link)[https://tutorialmarkdown.com/markdown]   
+- Curso de Markdown [Link](https://tutorialmarkdown.com/markdown) 
 - Documentación de Quarto:
 - Video: https://www.youtube.com/watch?v=CVcvXfRyfE0
 - En [Posit Cloud](https://posit.cloud/) pueden abrir una cuenta gratis de **Rstudio Cloud**.
