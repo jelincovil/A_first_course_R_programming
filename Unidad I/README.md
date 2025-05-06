@@ -31,11 +31,20 @@
 el análisis de datos.
 - *Quarto* es el paralelo de *Jupyter Notebook* para escribir codigos de R ejecutables
   y textos en *Markdown*.
+  
   <div align="center"> Markdown es un lenguaje de marcado ligero con sintaxis de formato de texto plano.</div>
+  
+- Curso de Markdown (Link)[https://tutorialmarkdown.com/markdown]   
 - Documentación de Quarto:
 - Video: https://www.youtube.com/watch?v=CVcvXfRyfE0
-- Documentación de Gander: https://simonpcouch.github.io/gander/
 - En [Posit Cloud](https://posit.cloud/) pueden abrir una cuenta gratis de **Rstudio Cloud**.
+
+## Actualizate en R
+
+- Canal de Youtube de Posit: https://www.youtube.com/@PositPBC
+- La revista cientifica de paquetes para R: https://journal.r-project.org/index.html
+- 
+- 
 
 ## Referencias
 - A First Course in Statistical Programming with R Third Edition. [Link](https://www.murdoch-sutherland.com/StatProg3/)
