@@ -47,7 +47,7 @@ Cada uno de estos lenguajes tiene sus propias fortalezas y áreas de aplicación
 <div align="center"> Obtendran guia para desarrollar un proyecto de data science técnico y contingente al mercado !! </div>
 
 
-## *Rstudio* y *quarto*
+## *Rstudio* y la libreria *Quarto*
 - Rstudio es un ambiente o aplicación en donde corre R con ciertas opción que mejoran
 el análisis de datos.
 - *Quarto* es el paralelo de *Jupyter Notebook* para escribir codigos de R ejecutables
