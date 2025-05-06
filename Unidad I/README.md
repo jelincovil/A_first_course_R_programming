@@ -3,7 +3,9 @@
 ### Objetivos
 
 -- Introducir la sintaxis del Lenguaje R.
+
 -- Donde corre R?
+
 -- Donde estudiar R?
 
 <div align="center"> R es un lenguaje de programación y entorno de software para computación estadística y gráficos. </div>
