@@ -10,6 +10,7 @@
 
 <div align="center"> R es un lenguaje de programación y entorno de software para computación estadística y gráficos. </div>
 
+El link de la clase grabada es este [video 06-05-2025](https://udla.zoom.us/rec/share/wjUX-4o6dai2r9dwHenu-g5MeEHJyjBX5dIoV9Ss5bXEXPXunAD6BmFj8DJlP8xM.JOCIY56_drCtyPjw?startTime=1746571342000&pwd=icivd_8rqBNxVM1OeYGJrnYcp4ShZTku)
 ## Donde puedo usar R?:
 - My compiler: https://www.mycompiler.io/es/new/r
 - Snippets en https://rdrr.io/snippets/
