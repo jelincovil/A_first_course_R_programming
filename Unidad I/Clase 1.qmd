@@ -1,0 +1,63 @@
+---
+title: "Clase 1"
+format: pdf
+editor: visual
+---
+
+# Primera experiencia con Rstudio
+
+## Carga de datos y resumen básico
+
+``` r
+data(mtcars)
+```
+
+```{r}
+# cargamos los datos mtcars 
+data(mtcars)
+head(mtcars)
+```
+
+```{r}
+help(mtcars)
+```
+
+Los datos fueron extraidos de la revista Motor trend US magazine del 1974 y resume las caracteristicas de 10 aspectos de un diseño de auto.
+
+-   `` `mpg ``\` Millas por galon (US)
+
+-   \`cyl\` Numero de cilindros.
+
+-   \`disp\` desplazamiento.
+
+Calculo del promedio y la varianza
+
+$$
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i; \quad s^2 = \frac{1}{n}\sum_{i=1}^{n}(x_i-\bar{x})^2 
+$$
+
+```{{r}}
+
+mean(mtcars$mpg) # promedio de las millas por galon
+var(mtcars$mpg) # varianza de mpg
+
+```
+
+## Gráficos exploratorios
+
+```{r}
+# True
+hist(mtcars$mpg, probability = TRUE, col= "orange" )
+```
+
+```{r}
+help(hist)
+
+```
+
+```{r}
+# Grafico por grupo de "tipo de cilindro"
+boxplot(mpg~cyl, data= mtcars, col="yellow")
+```
+
+## Conclusiones
