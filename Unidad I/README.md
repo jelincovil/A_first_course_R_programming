@@ -64,7 +64,7 @@ el análisis de datos.
 
 - Canal de Youtube de Posit: https://www.youtube.com/@PositPBC
 - La revista cientifica de paquetes para R: https://journal.r-project.org/index.html
-- 
+- Conoce los libros de R: https://bookdown.org/
 - 
 
 ## Referencias
