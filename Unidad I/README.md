@@ -65,7 +65,7 @@ el análisis de datos.
 - Canal de Youtube de Posit: https://www.youtube.com/@PositPBC
 - La revista cientifica de paquetes para R: https://journal.r-project.org/index.html
 - Conoce los libros de R: https://bookdown.org/
-- 
+- Un libro sobre Quarto: https://qmd4sci.njtierney.com/
 
 ## Referencias
 - A First Course in Statistical Programming with R Third Edition. [Link](https://www.murdoch-sutherland.com/StatProg3/)
