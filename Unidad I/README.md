@@ -70,17 +70,21 @@ el análisis de datos.
 - Conoce los libros de R: https://bookdown.org/
 - Un libro sobre Quarto: https://qmd4sci.njtierney.com/
 
-## Referencias
-- A First Course in Statistical Programming with R Third Edition. [Link](https://www.murdoch-sutherland.com/StatProg3/)
-- Jones, O., Maillardet, R., & Robinson, A. (2009). Introduction to scientific programming and simulation using R. Chapman and Hall/CRC. [Link](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
-- Advanced R [Link](https://adv-r.hadley.nz/)
-
 ## Sesión 2
 
 - Trabajo con data sets: lectura desde directorio de trabajo.
-- Lectua desde repositorios.
+  - Desde repositorio: https://github.com/jelincovil/A_first_course_R_programming/tree/main/Datos
+  - Desde un archivo local `sales.csv`.
+- Estructura de data frame.  
+
 - Análisis númerico de usando funciones: `summary`, `mean` y `sd` y `table`.
 - Análisis gráficos usando: barplot, histograma y boxplot.
 - GitHub: página de presentación y repositorio. Uso de Markdown.
 - Uso de Cloud Posit.
+- Revisión de las noticias de Posito Cloud.
+    
+## Referencias
+- A First Course in Statistical Programming with R Third Edition. [Link](https://www.murdoch-sutherland.com/StatProg3/)
+- Jones, O., Maillardet, R., & Robinson, A. (2009). Introduction to scientific programming and simulation using R. Chapman and Hall/CRC. [Link](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
+- Advanced R [Link](https://adv-r.hadley.nz/)
   
