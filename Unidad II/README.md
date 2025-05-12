@@ -6,8 +6,6 @@
 ¿Que es ?
 
 
-
-
 ## Personalizar el aspecto de un gráfico
 - ggtitle
 - xlab y ylab.
@@ -79,15 +77,18 @@ ggplot(mpg, aes(hwy, cty)) +
 
 ```
 
-## Crear grupos con *ggplot()*
+## Crear grupos con `ggplot()`
 
 ```r
+
 For example, with the mpg data set,
 ggplot(mpg, aes(hwy, fill = factor(cyl))) +
 geom_histogram(binwidth = 2)
+
 ```
 
 ## Otros sistemas gráficos
+
 ## El paquete lattice
 
 ```r
