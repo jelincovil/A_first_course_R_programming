@@ -1,19 +1,19 @@
 <img src="https://ggplot2.tidyverse.org/logo.png" alt="Logo de ggplot2" width="100">   <img src="https://ggplot2-book.org/cover.jpg" alt="Portada del libro ggplot2" width="100">
 
 
-## La gramatica de los g´raficos. Libreria `ggplot2`
+## La gramatica de los gráficos. Libreria `ggplot2`
 
 ¿Que es ?
 
 
 ## Personalizar el aspecto de un gráfico
-- ggtitle
-- xlab y ylab.
-- theme()
-- scale()
-- annotate()
-- geom_jitter()
-- windWin80: un conjunto de datos de *R*.
+- `ggtitle`
+- `xlab` y `ylab`.
+- `theme()`
+- `scale()`
+- `annotate()`
+- `geom_jitter()`
+- `windWin80`: un conjunto de datos de *R*.
 
 Data from the MPV package contains pairs of observations of wind speed at the Winnipeg International Airport. The columns
 give the wind speed in km per hour at midnight (h0) and noon (h12).
