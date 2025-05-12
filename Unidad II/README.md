@@ -1,3 +1,14 @@
+<img src="https://ggplot2.tidyverse.org/logo.png" alt="Logo de ggplot2" width="100">
+<img src="https://ggplot2-book.org/cover.jpg" alt="Portada del libro ggplot2" width="100">
+
+
+## La gramatica de los g´raficos. Libreria `ggplot2`
+
+¿Que es ?
+
+
+
+
 ## Personalizar el aspecto de un gráfico
 - ggtitle
 - xlab y ylab.
@@ -226,8 +237,9 @@ ggarrange(g1, g2,
 ```
 
 ## Referencias
-- ggplot2: Elegant Graphics for Data Analysis (3e) (ggplot2-book.org)[https://ggplot2-book.org/]
-- Introduction to Scientific Programming and Simulation Using R: https://nyu-cdsc.github.io/learningr/assets/simulation.pdf
+- ggplot2: Elegant Graphics for Data Analysis (3e) [ggplot2-book.org](https://ggplot2-book.org/)
+  
+- Introduction to Scientific Programming and Simulation Using R [Libro pdf](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
 
 
 
