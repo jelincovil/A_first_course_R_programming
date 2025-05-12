@@ -226,8 +226,9 @@ ggarrange(g1, g2,
 ```
 
 ## Referencias
+- ggplot2: Elegant Graphics for Data Analysis (3e) (ggplot2-book.org)[https://ggplot2-book.org/]
 - Introduction to Scientific Programming and Simulation Using R: https://nyu-cdsc.github.io/learningr/assets/simulation.pdf
 
-- ggplot2: Elegant Graphics for Data Analysis: ggplot2: Elegant Graphics for Data Analysis (3e) (ggplot2-book.org) https://ggplot2-book.org/
+
 
   
