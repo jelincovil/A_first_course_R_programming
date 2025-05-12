@@ -1,7 +1,9 @@
+
+
+
+# **La gramatica de los gráficos. Libreria `ggplot2`**
+
 <img src="https://ggplot2.tidyverse.org/logo.png" alt="Logo de ggplot2" width="100">   <img src="https://ggplot2-book.org/cover.jpg" alt="Portada del libro ggplot2" width="100">
-
-
-## La gramatica de los gráficos. Libreria `ggplot2`
 
 ¿Que es ?
 
