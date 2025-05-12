@@ -237,10 +237,13 @@ ggarrange(g1, g2,
 ```
 
 ## Referencias
+
+- Documentación oficial de la libreria `ggplot2`: [ggplot2](https://ggplot2.tidyverse.org/)
+  
 - ggplot2: Elegant Graphics for Data Analysis (3e) [ggplot2-book.org](https://ggplot2-book.org/)
   
 - Introduction to Scientific Programming and Simulation Using R [Libro pdf](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
-
+- Ejemplo de tutorial de `ggplot2` en youtube [Video](https://www.youtube.com/watch?v=0wpLOsqwhWs&list=PLN3jIazaJLCOWery5d_kCp5G5NUxu5wcd)
 
 
   
