@@ -1,6 +1,3 @@
-
-
-
 # **La gramatica de los gráficos. Libreria `ggplot2`**
 
 <img src="https://ggplot2.tidyverse.org/logo.png" alt="Logo de ggplot2" width="100">   <img src="https://ggplot2-book.org/cover.jpg" alt="Portada del libro ggplot2" width="100">
@@ -240,6 +237,7 @@ ggarrange(g1, g2,
 
 ## Referencias
 
+- The Grammar of Graphics. Leland Wilkinson. [Libro](https://link.springer.com/book/10.1007/0-387-28695-0)
 - Documentación oficial de la libreria `ggplot2`: [ggplot2](https://ggplot2.tidyverse.org/)
   
 - ggplot2: Elegant Graphics for Data Analysis (3e) [ggplot2-book.org](https://ggplot2-book.org/)
