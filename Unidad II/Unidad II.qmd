@@ -1,0 +1,202 @@
+---
+title: "Unidad II (pre)"
+format: pdf
+editor: visual
+---
+
+# Unidad II: gráficos de bajo y alto nivel
+
+## Gráficos usando librerías bases de R
+
+Los gráficos básicos en R permiten una visualización clara y efectiva de los datos, facilitando su exploración inicial. La función **`barplot()`** se utiliza para representar datos categóricos mediante barras, lo que permite comparar frecuencias o proporciones entre distintas categorías. Por su parte, **`hist()`** muestra la distribución de una variable numérica continua, agrupando los valores en intervalos y permitiendo identificar patrones como sesgos, simetrías o concentraciones. El **`boxplot()`**, o diagrama de caja, resume visualmente la distribución de una variable, destacando la mediana, los cuartiles y los valores atípicos, siendo útil para comparar varias distribuciones simultáneamente. Finalmente, **`plot()`** en su forma más básica genera gráficos de dispersión entre dos variables numéricas, revelando relaciones, tendencias o correlaciones. Estos gráficos constituyen herramientas fundamentales para el análisis exploratorio de datos.
+
+```{r}
+library("knitr")
+
+```
+
+### Gráfico de barras
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Gráfico de puntos
+
+```{r}
+
+```
+
+### Gráfico de barras por grupos
+
+```{r}
+
+```
+
+### Gráfico de torta
+
+```{r}
+
+```
+
+### Gráfico de histograma
+
+```{r}
+
+```
+
+### Gráfico de caja y bigotes
+
+```{r}
+
+
+
+```
+
+### Gráficos QQplots (quantile quantile)
+
+```{r}
+
+
+```
+
+## La gramatica de los gráficos
+
+El libro *The Grammar of Graphics* de Leland Wilkinson propone una visión estructurada y modular de la visualización de datos, en la que los gráficos no son simplemente imágenes estáticas, sino construcciones formales compuestas por elementos fundamentales. Esta obra establece una base teórica sólida para entender cómo se generan los gráficos, descomponiéndolos en componentes como datos, transformaciones estadísticas, geometrías, escalas, coordenadas y guías. Esta perspectiva ha influido profundamente en el desarrollo de herramientas modernas de visualización, como el paquete `ggplot2` en R, que implementa esta gramática de manera práctica y flexible, permitiendo a los usuarios construir gráficos complejos a partir de principios simples y combinables.
+
+La idea de “gramática” en este contexto se refiere a un conjunto de reglas y estructuras que, al igual que en el lenguaje natural, permiten construir expresiones complejas a partir de unidades básicas. En el caso de los gráficos, estas unidades incluyen los datos (el contenido), las geometrías (cómo se representan visualmente), las escalas (cómo se mapean los valores), y las coordenadas (el sistema de referencia). Esta gramática permite que los gráficos sean generados de forma coherente, reproducible y extensible, lo que resulta especialmente útil en programación, donde la claridad y la modularidad son esenciales. Así, crear un gráfico en `ggplot2` no es simplemente dibujar, sino componer una estructura visual con significado, basada en reglas bien definidas.
+
+`ggplot2` implementa una gramática de los gráficos inspirada en la obra de Leland Wilkinson, donde cada visualización se construye como una oración compuesta por elementos básicos que siguen reglas definidas. En esta gramática, los **datos** actúan como el sujeto, la **estética** como la estructura gramátical que conecta variables con atributos visuales, y la **geometría** como el verbo que define la forma del gráfico (puntos, líneas, barras, etc.). A estos se suman componentes como transformaciones estadísticas, escalas, coordenadas, temas y etiquetas, que enriquecen y completan el significado visual. Esta estructura modular permite construir gráficos complejos de manera lógica, clara y reproducible, haciendo de `ggplot2` una herramienta poderosa y elegante para el análisis visual de datos. La fórmula que resume esta lógica es:
+
+\
+**Gráfico = Datos + Estética + Geometría + (Transformaciones + Escalas + Coordenadas + Temas + Etiquetas)**,\
+
+lo que refleja cómo, al igual que en el lenguaje, se pueden formar expresiones ricas y precisas a partir de reglas simples y combinables.
+
+Un ejemplo concreto de esta gramática en acción puede verse en el siguiente código en R, que utiliza `ggplot2` para explorar la relación entre el peso y el consumo de combustible de automóviles:
+
+```{r}
+ 
+
+```
+
+En este gráfico, los datos (`mtcars`) se mapean a los ejes mediante `aes()`, se representan con puntos (`geom_point()`), se añade una capa de modelo lineal (`geom_smooth()`), y se etiquetan con `labs()`. Cada componente responde a una parte de la gramática, lo que permite construir visualizaciones claras, interpretables y adaptables a distintos contextos analíticos.
+
+## Gráficos personalizados con `ggplot2`
+
+```{r}
+
+
+
+
+```
+
+### Barplot con `ggplot2`
+
+```{r}
+
+
+
+```
+
+### Agregando la grid
+
+```{r}
+
+```
+
+### Gráfico circular en \`ggplot2\`
+
+```{r}
+
+
+
+```
+
+### Gráfico de poligono
+
+```{r}
+
+```
+
+### Boxplot con \`ggplot2\`
+
+```{r}
+
+
+```
+
+### Gráfico de violin con \`ggplot2\`
+
+```{r}
+
+```
+
+### Paleta de colores
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Personalizando gráficos con la paleta de colores
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Subdivisión de datos y gráficos separados (Faceting)
+
+Es una técnica utilizada en visualización de datos para analizar y mostrar relaciones complejas entre múltiples variables. La idea es dividir el conjunto de datos en grupos más pequeños (subconjuntos) basados en los valores de ciertas variables. Luego, se crean gráficos separados para cada subconjunto, mostrando cómo las otras variables se comportan dentro de esos grupos. Esto permite una comparación más clara y detallada de las relaciones entre las variables en diferentes contextos.
+
+```{r}
+
+
+
+```
+
+```{r}
+
+
+```
+
+### Gráficos separados en una misma grid
+
+```{r}
+
+```
+
+### Matrices de gráficos
+
+La función `ggarrange` del paquete `ggpubr` en R es una herramienta poderosa para organizar múltiples gráficos creados con `ggplot2` en una disposición de matriz. Esto es especialmente útil cuando se desea presentar varios gráficos de manera conjunta para facilitar la comparación visual y el análisis. Al utilizar `ggarrange`, puedes especificar el número de filas y columnas para la matriz de gráficos, así como ajustar el tamaño y la alineación de cada gráfico dentro del espacio común. Esta función simplifica la creación de paneles de gráficos complejos, permitiendo una presentación más clara y coherente de los datos.
+
+```{r}
+library(ggpubr)
+
+p1 <- ggplot(mpg, aes(hwy, fill = factor(cyl))) + geom_histogram(binwidth = 2)
+p2 <- ggplot(phones51, aes(Region, Telephones, fill = Telephones)) +
+geom_col()
+
+
+```
+
+```{r}
+ggarrange(p1, p2, 
+           labels = c("A", "B"),
+           ncol = 2, nrow = 1)
+```
