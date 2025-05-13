@@ -2,8 +2,6 @@
 
 <img src="https://ggplot2.tidyverse.org/logo.png" alt="Logo de ggplot2" width="100">   <img src="https://ggplot2-book.org/cover.jpg" alt="Portada del libro ggplot2" width="100">
 
-¿Que es ?
-
 
 ## Personalizar el aspecto de un gráfico
 - `ggtitle`
@@ -12,227 +10,261 @@
 - `scale()`
 - `annotate()`
 - `geom_jitter()`
-- `windWin80`: un conjunto de datos de *R*.
 
-Data from the MPV package contains pairs of observations of wind speed at the Winnipeg International Airport. The columns
-give the wind speed in km per hour at midnight (h0) and noon (h12).
+# Unidad II: gráficos de bajo y alto nivel
 
-### Mejorando el gráfico
-```r
+## Gráficos usando librerías bases de R
+
+Los gráficos básicos en R permiten una visualización clara y efectiva de los datos, facilitando su exploración inicial. La función **`barplot()`** se utiliza para representar datos categóricos mediante barras, lo que permite comparar frecuencias o proporciones entre distintas categorías. Por su parte, **`hist()`** muestra la distribución de una variable numérica continua, agrupando los valores en intervalos y permitiendo identificar patrones como sesgos, simetrías o concentraciones. El **`boxplot()`**, o diagrama de caja, resume visualmente la distribución de una variable, destacando la mediana, los cuartiles y los valores atípicos, siendo útil para comparar varias distribuciones simultáneamente. Finalmente, **`plot()`** en su forma más básica genera gráficos de dispersión entre dos variables numéricas, revelando relaciones, tendencias o correlaciones. Estos gráficos constituyen herramientas fundamentales para el análisis exploratorio de datos.
+
+```{r}
+library("knitr")
 library(MPV)
+data(WorldPhones)
+str(WorldPhones)
+```
+
+### Gráfico de barras
+
+```{r}
+WorldPhones51 <- WorldPhones[1, ]
+WorldPhones51
+```
+
+```{r}
+barplot(WorldPhones51, main = "Telephone Usage in 1951", cex.names = 0.75,
+cex.axis = 0.75, ylab = "Telephones (in Thousands)", xlab="Region")
+```
+
+### Gráfico de puntos
+
+```{r}
+dotchart(WorldPhones51, xlab = "Numbers of Phones ('000s)")
+```
+
+### Gráfico de barras por grupos
+
+```{r}
+barplot(VADeaths, beside = TRUE, legend = TRUE, ylim = c(0, 90),
+ylab = "Deaths per 1000",
+main = "Death rates in Virginia")
+```
+
+### Gráfico de torta
+
+```{r}
+groupsizes <- c(18, 30, 32, 10, 10)
+labels <- c("A", "B", "C", "D", "F")
+pie(groupsizes, labels,
+col = c("grey40", "white", "grey", "black", "grey90"))
+```
+
+### Gráfico de histograma
+
+```{r}
+hist(log(1000*islands, 10), xlab = "Area (on base 10 log scale)",
+main = "Areas of the World's Largest Landmasses")
+```
+
+### Gráfico de caja y bigotes
+
+```{r}
+
+data(iris)
+
+boxplot(Sepal.Length ~ Species, data = iris,
+ylab = "Sepal length (cm)", main = "Iris measurements",
+boxwex = 0.5)
+
+```
+
+### Gráficos QQplots (quantile quantile)
+
+```{r}
+par(mfrow = c(1,4))
+X <- rnorm(1000)
+A <- rnorm(1000)
+qqplot(X, A, main = "A and X are the same")
+B <- rnorm(1000, mean = 3, sd = 2)
+qqplot(X, B, main = "B is rescaled X")
+C <- rt(1000, df = 2)
+qqplot(X, C, main = "C has heavier tails")
+D <- rexp(1000)
+qqplot(X, D, main = "D is skewed to the right")
+
+```
+
+## La gramatica de los gráficos
+
+El libro *The Grammar of Graphics* de Leland Wilkinson propone una visión estructurada y modular de la visualización de datos, en la que los gráficos no son simplemente imágenes estáticas, sino construcciones formales compuestas por elementos fundamentales. Esta obra establece una base teórica sólida para entender cómo se generan los gráficos, descomponiéndolos en componentes como datos, transformaciones estadísticas, geometrías, escalas, coordenadas y guías. Esta perspectiva ha influido profundamente en el desarrollo de herramientas modernas de visualización, como el paquete `ggplot2` en R, que implementa esta gramática de manera práctica y flexible, permitiendo a los usuarios construir gráficos complejos a partir de principios simples y combinables.
+
+La idea de “gramática” en este contexto se refiere a un conjunto de reglas y estructuras que, al igual que en el lenguaje natural, permiten construir expresiones complejas a partir de unidades básicas. En el caso de los gráficos, estas unidades incluyen los datos (el contenido), las geometrías (cómo se representan visualmente), las escalas (cómo se mapean los valores), y las coordenadas (el sistema de referencia). Esta gramática permite que los gráficos sean generados de forma coherente, reproducible y extensible, lo que resulta especialmente útil en programación, donde la claridad y la modularidad son esenciales. Así, crear un gráfico en `ggplot2` no es simplemente dibujar, sino componer una estructura visual con significado, basada en reglas bien definidas.
+
+`ggplot2` implementa una gramática de los gráficos inspirada en la obra de Leland Wilkinson, donde cada visualización se construye como una oración compuesta por elementos básicos que siguen reglas definidas. En esta gramática, los **datos** actúan como el sujeto, la **estética** como la estructura gramátical que conecta variables con atributos visuales, y la **geometría** como el verbo que define la forma del gráfico (puntos, líneas, barras, etc.). A estos se suman componentes como transformaciones estadísticas, escalas, coordenadas, temas y etiquetas, que enriquecen y completan el significado visual. Esta estructura modular permite construir gráficos complejos de manera lógica, clara y reproducible, haciendo de `ggplot2` una herramienta poderosa y elegante para el análisis visual de datos. La fórmula que resume esta lógica es:
+
+\
+**Gráfico = Datos + Estética + Geometría + (Transformaciones + Escalas  + Coordenadas + Temas + Etiquetas)**,\
+
+lo que refleja cómo, al igual que en el lenguaje, se pueden formar expresiones ricas y precisas a partir de reglas simples y combinables.
+
+Un ejemplo concreto de esta gramática en acción puede verse en el siguiente código en R, que utiliza `ggplot2` para explorar la relación entre el peso y el consumo de combustible de automóviles:
+
+```{r}
+library(ggplot2)  
+data(mtcars)
+
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +   
+  geom_point() +   
+  geom_smooth(method = "lm", se = FALSE) +   
+  labs(title = "Consumo vs Peso del Vehículo",
+       x = "Peso (1000 lbs)",  
+       y = "Millas por galón") 
+
+```
+
+En este gráfico, los datos (`mtcars`) se mapean a los ejes mediante `aes()`, se representan con puntos (`geom_point()`), se añade una capa de modelo lineal (`geom_smooth()`), y se etiquetan con `labs()`. Cada componente responde a una parte de la gramática, lo que permite construir visualizaciones claras, interpretables y adaptables a distintos contextos analíticos.
+
+## Gráficos personalizados con `ggplot2`
+
+```{r}
+
+#library(ggplot2)
+data("windWin80")
+str(windWin80)
+
+
+```
+
+### Barplot con `ggplot2`
+
+```{r}
+
 library(ggplot2)
-a1 <- 3/2; a2 <- 5/3; b0 <- 108; b1 <- 5.3; b2 <- 65
-grid <- with(MPV::windWin80,
-             expand.grid(x1 = seq(0, max(h0), len=101),
-                         x2 = seq(0, max(h12), len=101)))
-grid$z <- with(grid, a1*a2*exp(-x1^a1/b2 - x2^a2/
-                                 (b0+b1*x1))*x1^(a1-1)*x2^(a2-1)/(b2*(b0+b1*x1)) )
-# Plot the data on top of the density function
-ggplot(MPV::windWin80, aes(x = h0, y = h12)) +
-  geom_contour(data = grid, aes(x = x1, y = x2, z = z) ) +
-  geom_point()
-```
-
-- Sacar o destacar datos que se super ponen: geom_jitter()
-- Usar xlab() and ylab(). para dejar más información en los ejes.
-- Agregar lineas de contorno en base a los datos y no ecuaciones. Para hacer esto, podríamos agregar una función PDF estimada a
-el gráfico usando geom_density2d():
-- La función o theme() podría ayudar a destacar la cuadricula.
-- 
-
-```r
-ggplot(MPV::windWin80, aes(x = h0, y = h12)) +
-  geom_density2d(col = "red") +
-  geom_contour(data = grid, aes(x = x1, y = x2, z = z) ) +
-  geom_jitter() +
-  xlab("Wind speed at midnight (km/h)") +
-  ylab("Wind speed at noon (km/h)") +
-  theme(panel.grid = element_blank()) +
-  annotate("text", x = 46, y = 20, hjust = 0, label = "Too many points") +
-  annotate("segment", x = 46, y = 20, xend = 35, yend = 34) +
-  annotate("text", x = 5, y = 50, vjust = -1, label = "Too few points") +
-  annotate("segment", x = 5, y = 50, xend = 6, yend = 11)
+region <- names(WorldPhones51)
+phones51 <- data.frame(Region = factor(region, levels = region),
+Telephones = WorldPhones51)
+ggplot(data = phones51, aes(x = Region, y = Telephones)) + geom_col()
 
 ```
-## Subdividir el gráfico por grupo
 
-Usaremos la función facet_grid()
+### Agregando la grid
 
-```r
+```{r}
+g1 <- ggplot(phones51, aes(Region, Telephones))
+g1
+```
+
+### Gráfico circular en \`ggplot2\`
+
+```{r}
+
+ggplot(phones51, aes(x = "", y = Telephones, fill = Region)) +
+coord_polar(theta = "y") +
+geom_col()
+
+```
+
+### Gráfico de poligono
+
+```{r}
+ggplot(phones51, aes(Region, Telephones)) +
+geom_col() +
+geom_line(col = "blue", aes(x = as.numeric(Region))) +
+geom_point(col = "red")
+```
+
+### Boxplot con \`ggplot2\`
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_boxplot()
+
+```
+
+### Gráfico de violin con \`ggplot2\`
+
+```{r}
+ggplot(iris, aes(x = Species, y = Sepal.Length)) + geom_violin()
+```
+
+### Paleta de colores
+
+```{r}
+str(colors())
+```
+
+```{r}
+palette.pals()
+```
+
+```{r}
+palette()
+```
+
+### Personalizando gráficos con la paleta de colores
+
+```{r}
+ggplot(phones51, aes(Region, Telephones, fill = Region)) +
+geom_col() +
+scale_fill_brewer(palette = "Set2")
+```
+
+```{r}
+ggplot(phones51, aes(Region, Telephones, fill = Telephones)) +
+geom_col()
+```
+
+### Subdivisión de datos y gráficos separados (Faceting)
+
+Es una técnica utilizada en visualización de datos para analizar y mostrar relaciones complejas entre múltiples variables. La idea es dividir el conjunto de datos en grupos más pequeños (subconjuntos) basados en los valores de ciertas variables. Luego, se crean gráficos separados para cada subconjunto, mostrando cómo las otras variables se comportan dentro de esos grupos. Esto permite una comparación más clara y detallada de las relaciones entre las variables en diferentes contextos.
+
+```{r}
+
+phones <- data.frame(Year = as.numeric(rep(rownames(WorldPhones), 7)),
+Region = rep(colnames(WorldPhones), each = 7),
+Telephones = as.numeric(WorldPhones))
 
 ggplot(phones, aes(x = Region, y = Telephones, fill = Region)) +
-  geom_col() +
-  facet_wrap(vars(Year)) +
-  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
-  xlab(element_blank())
+geom_col() +
+facet_wrap(vars(Year)) +
+theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+xlab(element_blank())
 
 ```
 
-```r
-data(mtcars)
+```{r}
 ggplot(mpg, aes(hwy, cty)) +
-  geom_point() +
-  facet_grid(cut_number(displ, 3) ~ cyl)
+geom_point() +
+facet_grid(cut_number(displ, 3) ~ cyl)
 
 ```
 
-## Crear grupos con `ggplot()`
+### Gráficos separados en una misma grid
 
-```r
-
-For example, with the mpg data set,
+```{r}
 ggplot(mpg, aes(hwy, fill = factor(cyl))) +
 geom_histogram(binwidth = 2)
-
 ```
 
-## Otros sistemas gráficos
+### Matrices de gráficos
 
-## El paquete lattice
+La función `ggarrange` del paquete `ggpubr` en R es una herramienta poderosa para organizar múltiples gráficos creados con `ggplot2` en una disposición de matriz. Esto es especialmente útil cuando se desea presentar varios gráficos de manera conjunta para facilitar la comparación visual y el análisis. Al utilizar `ggarrange`, puedes especificar el número de filas y columnas para la matriz de gráficos, así como ajustar el tamaño y la alineación de cada gráfico dentro del espacio común. Esta función simplifica la creación de paneles de gráficos complejos, permitiendo una presentación más clara y coherente de los datos.
 
-```r
-library(lattice)
-xyplot(Telephones ˜ Year | Region, data = phones)
+```{r}
+library(ggpubr)
+
+p1 <- ggplot(mpg, aes(hwy, fill = factor(cyl))) + geom_histogram(binwidth = 2)
+p2 <- ggplot(phones51, aes(Region, Telephones, fill = Telephones)) +
+geom_col()
+
+ggarrange(p1, p2, 
+           labels = c("A", "B"),
+           ncol = 1, nrow = 2)
 ```
 
-## El paquete grid
-
-```r
-library(grid)
-grid.rect() # draw black rectangle containing original viewport
-vp <- viewport(h = 0.4, w = 0.6, angle = 60)
-pushViewport(vp) # create viewport rotated 60 degrees (counter clockwise)
-# with height 40% and width 60% of original box
-grid.rect(gp = gpar(col = "red")) # draw red rectangle around new viewport
-pushViewport(vp) # create new viewport nested in previous viewport,
-# rotated 60 degrees and with height 40%
-# and width 60% of previous viewport.
-grid.rect(gp = gpar(col = "blue"))
-```
-
-# Creación de funciones que automatizan el trabajo.
-
-## Función para variable categorica
-
-## Función para dos variables categoricas.
-
-## Referencia sobre Programación funcional en R
-
-Programación funcional R, en esencia, es un lenguaje de programación funcional (FP). Esto significa que proporciona muchas herramientas para la creación y manipulación de funciones. En particular, R tiene lo que se conoce como funciones de primera clase. Puedes hacer cualquier cosa con funciones que puedas hacer con vectores: puedes asignarlas a variables, almacenarlas en listas, pasarlas como argumentos a otras funciones, crearlas dentro de funciones e incluso devolverlas como resultado de una función.
-
-Comienzamos mostrando un ejemplo motivador, eliminando la redundancia y la duplicación en el código utilizado para limpiar y resumir datos. Luego aprenderá sobre los tres componentes básicos de la programación funcional: funciones anónimas, cierres (funciones escritas por funciones) y listas de funciones. Estas piezas se entrelazan en la conclusión que muestra cómo construir un conjunto de herramientas para la integración numérica, a partir de primitivas muy simples. Este es un tema recurrente en FP: comenzar con bloques de construcción pequeños y fáciles de entender, combinarlos en estructuras más complejas y aplicarlos con confianza.
-
-La discusión sobre la programación funcional continúa en los dos capítulos siguientes: funcionales explora funciones que toman funciones como argumentos y devuelven vectores como salida, y operadores de funciones explora funciones que toman funciones como entrada y las devuelven como salida.
-
-- Describir. La motivación motiva la programación funcional utilizando un problema común: limpiar y resumir datos antes de un análisis serio.
-
-- Funciones anónimas le muestra un lado de las funciones que quizás no conocía: puede usar funciones sin darles un nombre.
-
-- Cierres introduce el cierre, una función escrita por otra función. Un cierre puede acceder a sus propios argumentos y variables definidas en su padre.
-
-- Listas de funciones muestra cómo colocar funciones en una lista y explica por qué podría interesarle.
-
-- La integración numérica concluye el capítulo con un estudio de caso que utiliza funciones anónimas, cierres y listas de funciones para construir un conjunto de herramientas flexible para la integración numérica.
-
-Referencia: http://adv-r.had.co.nz/Functional-programming.html
-
-## Ejemplo de verificación paso a peso de una función
-
-```r
-data(mtcars)
-
-# Step by step
-df = mtcars
-colores = viridis(10)[4:6]
-variable = "cyl"
-
-c1 <- colores[1] ; c2 <- colores[2] ; c3 <- colores[3] # sacar los colores en 3 caracteres
-
-c(c1,c2,c3)
-
-grupo <- names(table(df[, variable]))
-
-n <- as.vector(table(df[, variable]))
-
-as.vector(table(df[, variable]))
-length(df[, variable])
-
-
-prop <- as.vector(table(df[, variable]))/length(df[, variable])
-
-
-count.data <- data.frame(
-  grupo = names(table(df[, variable])),
-  n = as.vector(table(df[, variable])),
-  prop = round(n/length(df[, variable])*100, 3)
-)
-
-count.data
-
-help(arrange)
-
-count.data <- count.data %>%
-  arrange(desc(grupo)) %>%
-  mutate(lab.ypos = cumsum(prop) - 0.5*prop)
-
-count.data
-
-g1 <- ggplot(count.data, aes(x = grupo, y=n ) ) +
-  geom_bar(stat="identity", width= 1, fill= c1 , 
-           color = c2, alpha=2.5) +
-  geom_text(aes(label = n, y = n + 1), color = "black",
-            position = position_dodge(width = 1)) +
-  ggtitle(paste("Gráfico de barras para", variable)) +
-  xlab(variable) + 
-  ylab(paste("Número de casos por", variable))+
-  theme(panel.background = element_rect(fill = c3, 
-                                        colour = c3, size = 2, linetype = "solid"))
-g1
-
-# abro llaves
-c1 <- colores[1] ; c2 <- colores[2] ; c3 <- colores[3] # sacar los colores en 3 caracteres
-
-grupo <- names(table(df[, variable]))
-n <- as.vector(table(df[, variable]))
-prop <- as.vector(table(df[, variable]))/length(df[, variable])
-
-count.data <- data.frame(
-  grupo = names(table(df[, variable])),
-  n = as.vector(table(df[, variable])),
-  prop = round(n/length(df[, variable])*100, 3)
-)
-
-count.data <- count.data %>%
-  arrange(desc(grupo)) %>%
-  mutate(lab.ypos = cumsum(prop) - 0.5*prop)
-
-g1 <- ggplot(count.data, aes(x = grupo, y=n ) ) +
-  geom_bar(stat="identity", width= 1, fill= c1 , 
-           color = c2, alpha=2.5) +
-  geom_text(aes(label = n, y = n + 1), color = "black",
-            position = position_dodge(width = 1)) +
-  ggtitle(paste("Gráfico de barras para", variable)) +
-  xlab(variable) + 
-  ylab(paste("Número de casos por", variable))+
-  theme(panel.background = element_rect(fill = c3, 
-                                        colour = c3, size = 2, linetype = "solid"))
-
-
-g2 <- ggplot(count.data, aes(x = "", y = prop)) +
-  geom_bar(width = 1, stat = "identity", fill= c1, 
-           color = c2, alpha=2.5) +
-  coord_polar("y", start = 0)+
-  geom_text(aes(y = lab.ypos, label = prop), color = "white")+
-  ggtitle(paste("Gráfico de torta (%) para", variable)) +
-  theme(panel.background = element_rect(fill = c3, 
-                                        colour = c3, size = 2, linetype = "solid"))
-
-g2
-
-ggarrange(g1, g2, 
+```{r}
+ggarrange(p1, p2, 
            labels = c("A", "B"),
            ncol = 2, nrow = 1)
-
 ```
 
 ## Referencias
