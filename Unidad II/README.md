@@ -15,6 +15,8 @@
 
 # **SESIÓN 1: primeros códigos**
 
+Link del video del 14-05-2025 [Video](https://udla.zoom.us/rec/share/LOPwzXsheRVkUssluOA-4OuowKLl3-WW57v_nPB1zX36y3pZKHh6TFgevVZF7MIn.pNIDMEf_-B_4OgD5?startTime=1747177227000&pwd=jHtlMW0ivbmingK4JLxEfooheUGlGHjB)
+
 ## Gráficos usando librerías bases de R
 
 Los gráficos básicos en R permiten una visualización clara y efectiva de los datos, facilitando su exploración inicial. La función **`barplot()`** se utiliza para representar datos categóricos mediante barras, lo que permite comparar frecuencias o proporciones entre distintas categorías. Por su parte, **`hist()`** muestra la distribución de una variable numérica continua, agrupando los valores en intervalos y permitiendo identificar patrones como sesgos, simetrías o concentraciones. El **`boxplot()`**, o diagrama de caja, resume visualmente la distribución de una variable, destacando la mediana, los cuartiles y los valores atípicos, siendo útil para comparar varias distribuciones simultáneamente. Finalmente, **`plot()`** en su forma más básica genera gráficos de dispersión entre dos variables numéricas, revelando relaciones, tendencias o correlaciones. Estos gráficos constituyen herramientas fundamentales para el análisis exploratorio de datos.
