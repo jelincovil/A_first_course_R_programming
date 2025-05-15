@@ -270,7 +270,73 @@ ggarrange(p1, p2,
            labels = c("A", "B"),
            ncol = 2, nrow = 1)
 ```
+
+---
+
 # **SESIÓN 2: aplicación a un proyecto de Data Science**
+
+### Dataset *Breast Cancer Diagnostic*
+
+Este conjunto de datos proviene del estudio **Wisconsin Diagnostic Breast Cancer (WDBC)**, desarrollado para asistir en el diagnóstico médico de **tumores mamarios**. A través de imágenes digitalizadas obtenidas por **aspiración con aguja fina (FNA)** de masas mamarias, se segmentaron núcleos celulares y se calcularon automáticamente una serie de características geométricas y texturales. La información oficial esta presente en el siguiente [link](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html).
+
+---
+
+### 🎯 Objetivo del estudio
+
+El objetivo es construir modelos predictivos que clasifiquen de forma automática los tumores como **malignos** o **benignos**, utilizando exclusivamente variables cuantitativas derivadas de imágenes médicas. Esto tiene aplicaciones clínicas relevantes, al permitir un diagnóstico temprano, no invasivo y respaldado por evidencia computacional.
+
+---
+
+###  Variables del dataset
+
+Cada muestra corresponde a una imagen de tejido mamario. A partir de cada imagen se extrajeron **30 variables explicativas continuas**, agrupadas de la siguiente manera:
+
+1. **Media de características** (`mean`)
+2. **Error estándar de características** (`se`)
+3. **Valor extremo o peor observación** (`worst`)
+
+Las 10 características básicas medidas para cada grupo son:
+
+* `radius`: distancia promedio del centro al borde del núcleo.
+* `texture`: desviación estándar de los valores de intensidad.
+* `perimeter`, `area`, `smoothness`, `compactness`, `concavity`, `concave points`, `symmetry`, `fractal dimension`.
+
+Combinando 10 características × 3 estadísticas → se obtienen **30 variables numéricas**.
+
+La variable objetivo (`target`) es binaria:
+
+* `0` = **maligno**
+* `1` = **benigno**
+
+---
+
+###  Enfoque de modelado
+
+Se planea aplicar dos enfoques complementarios para modelar este conjunto de datos:
+
+1. **Regresión logística con regularización**
+
+   * Justificación: modelo interpretativo, robusto frente a multicolinealidad al usar **regularización L1 (Lasso)** o **L2 (Ridge)**.
+   * Requiere: escalado de variables, análisis de correlación, posible selección de variables.
+
+2. **Random Forest**
+
+   * Justificación: modelo de árbol no paramétrico que **captura no linealidades** y **interacciones automáticas** entre variables.
+   * Proporciona medidas de **importancia de variables** y suele requerir menos preprocesamiento.
+   * Se utilizará como referencia de desempeño y para interpretación global del problema.
+
+---
+
+### 🔍 Análisis exploratorio sugerido
+
+Antes de aplicar los modelos, es recomendable realizar un análisis exploratorio para:
+
+*  **Visualizar las distribuciones**: detectar variables sesgadas, multimodales o con valores atípicos.
+*  **Comparar clases**: usar `boxplots` o `violin plots` para ver cómo se distribuyen las variables según el tipo de tumor.
+*  **Detectar correlaciones fuertes** entre variables (útil para la regresión logística regularizada).
+*  **Reducir la dimensión** con PCA: puede ser útil para interpretación y validación visual de la separación de clases.
+*  **Evaluar la importancia preliminar de las variables** mediante análisis univariado.
+
 
 ## Referencias
 
