@@ -337,6 +337,8 @@ Antes de aplicar los modelos, es recomendable realizar un análisis exploratorio
 *  **Reducir la dimensión** con PCA: puede ser útil para interpretación y validación visual de la separación de clases.
 *  **Evaluar la importancia preliminar de las variables** mediante análisis univariado.
 
+### Estudio exploraorio gráfico con `ggplot2`
+
 
 ## Referencias
 
