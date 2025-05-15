@@ -277,11 +277,11 @@ ggarrange(p1, p2,
 
 ### Dataset *Breast Cancer Diagnostic*
 
-Este conjunto de datos proviene del estudio **Wisconsin Diagnostic Breast Cancer (WDBC)**, desarrollado para asistir en el diagnóstico médico de **tumores mamarios**. A través de imágenes digitalizadas obtenidas por **aspiración con aguja fina (FNA)** de masas mamarias, se segmentaron núcleos celulares y se calcularon automáticamente una serie de características geométricas y texturales. La información oficial esta presente en el siguiente [link](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html).
+Este conjunto de datos proviene del estudio **Wisconsin Diagnostic Breast Cancer (WDBC)**, desarrollado para asistir en el diagnóstico médico de **tumores mamarios**. A través de imágenes digitalizadas obtenidas por **aspiración con aguja fina (FNA)** de masas mamarias, se segmentaron núcleos celulares y se calcularon automáticamente una serie de características geométricas y texturales. La información oficial esta presente en el siguiente [Link 1](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html) y en [Link 2](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic).
 
 ---
 
-### 🎯 Objetivo del estudio
+### Objetivo del estudio
 
 El objetivo es construir modelos predictivos que clasifiquen de forma automática los tumores como **malignos** o **benignos**, utilizando exclusivamente variables cuantitativas derivadas de imágenes médicas. Esto tiene aplicaciones clínicas relevantes, al permitir un diagnóstico temprano, no invasivo y respaldado por evidencia computacional.
 
