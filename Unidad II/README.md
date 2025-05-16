@@ -339,6 +339,129 @@ Antes de aplicar los modelos, es recomendable realizar un análisis exploratorio
 
 ### Estudio exploraorio gráfico con `ggplot2`
 
+#### Librerias y carga del dataset
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+library(ggrepel)
+library(patchwork)
+library(GGally)
+library(FactoMineR)
+library(factoextra)
+```
+
+```{r}
+# Carga de datos
+df = read.csv("breast_cancer_data.csv")
+head(df)
+
+```
+
+### Creación de las columnas de tipo de tumores según areas
+
+```{r}
+
+summary(df$mean.area) ## milimetros
+
+
+#Crear una nueva variable categórica basada en mean.area
+df <- df %>%
+  mutate(tamano_tumor = case_when(
+    mean.area < 420.3 ~ "Pequeño",
+    mean.area >= 420.3 & mean.area <= 782.7 ~ "Mediano",
+    mean.area > 782.7 ~ "Grande"
+  ))
+
+# Verificar los primeros 6 registros
+head(df %>% select(mean.area, tamano_tumor))
+
+```
+
+### Densidades de las covariables por tamaño de tumor
+
+```{r}
+# 1. Gráfico de distribuciones por tipo de tumor
+p1 <-     df %>%
+  pivot_longer(cols = -tamano_tumor) %>%
+  ggplot(aes(x = value, fill = tamano_tumor)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~ name, scales = "free", ncol = 3) +
+  labs(title = "Distribuciones por variable y tipo de tumor",
+       x = "Valor", y = "Densidad") +
+  theme_minimal()
+
+p1
+```
+
+### Boxplot/violin para \`mean.compactness\` por tamaño de tumor
+
+```{r}
+# 2. Boxplots para comparar grupos en una variable
+p2 <-   df %>%
+  ggplot(aes(x = tamano_tumor, y = mean.compactness, fill = tamano_tumor)) +
+  geom_violin(trim = FALSE, alpha = 0.5) +
+  geom_boxplot(width = 0.1, outlier.shape = NA) +
+  labs(title = "Distribución de 'mean.compactness' según tipo de tumor",
+       y = "mean.compactness", x = "Tipo de tumor") +
+  theme_classic()
+
+p2
+```
+
+### Diagrama de puntos de los Principal Components Analysis según tamaño de tumor
+
+```{r}
+
+# 3. PCA con visualización de clases
+# Asumiendo que solo columnas numéricas están en cols 2:11
+df_pca <- df %>% select(-tamano_tumor)
+pca_result <- PCA(df_pca, graph = FALSE)
+
+# Agregamos clase a resultados para graficar
+pca_df <- data.frame(pca_result$ind$coord[, 1:2]) %>%
+  mutate(diagnosis = df$tamano_tumor)
+
+p3 <- ggplot(pca_df, aes(x = Dim.1, y = Dim.2, color = diagnosis)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "PCA: Visualización de clases en 2D",
+       x = "PC1", y = "PC2") +
+  theme_minimal()
+
+p3
+```
+
+### Gráfico de calor para la correlación de todas las variables númericas
+
+```{r}
+
+# Cargar paquetes necesarios
+library(tidyverse)
+library(reshape2)  # Para convertir la matriz de correlación en formato largo
+
+# Seleccionar solo variables numéricas
+df_numeric <- df %>% select(where(is.numeric))
+
+# Calcular la matriz de correlación
+cor_matrix <- cor(df_numeric, use = "complete.obs")
+
+# Convertir la matriz en formato largo para ggplot2
+cor_data <- melt(cor_matrix)
+
+# Crear el gráfico de calor
+p4 <- ggplot(cor_data, aes(x = Var1, y = Var2, fill = value)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient2(low = "red", high = "blue", mid = "white",
+                       midpoint = 0, limit = c(-1, 1), space = "Lab",
+                       name = "Correlación") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Mapa de calor de correlaciones",
+       x = "", y = "")
+
+p4
+
+```
 
 ## Referencias
 
