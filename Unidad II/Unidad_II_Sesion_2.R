@@ -17,6 +17,16 @@ head(df)
 
 summary(df$mean.area) ## milimetros
 
+---
+El operador `%>%` permite encadenar funciones de forma clara, por ejemplo:
+
+```r
+mtcars %>% filter(mpg > 20) %>% summarise(media_hp = mean(hp))
+```
+
+> Filtra autos con más de 20 mpg y calcula el promedio de caballos de fuerza.
+
+---
 
 #Crear una nueva variable categórica basada en mean.area
 df <- df %>%
