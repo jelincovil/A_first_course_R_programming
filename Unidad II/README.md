@@ -463,6 +463,16 @@ p4
 
 ```
 
+#### Apéndice
+
+El operador `%>%` permite encadenar funciones de forma clara, por ejemplo:
+
+```r
+mtcars %>% filter(mpg > 20) %>% summarise(media_hp = mean(hp))
+```
+ Filtra autos con más de 20 mpg y calcula el promedio de caballos de fuerza.
+
+
 ## Referencias
 
 - The Grammar of Graphics. Leland Wilkinson. [Libro](https://link.springer.com/book/10.1007/0-387-28695-0)
