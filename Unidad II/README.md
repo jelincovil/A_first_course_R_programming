@@ -380,6 +380,29 @@ head(df %>% select(mean.area, tamano_tumor))
 
 ### Densidades de las covariables por tamaño de tumor
 
+La función `pivot_longer(cols = -tamano_tumor)` **convierte el dataframe de formato ancho a largo**, es decir:
+Convierte todas las columnas **excepto** `tamano_tumor` en dos columnas nuevas:
+
+* `name`: contiene los nombres originales de las columnas (ej. `mean.area`, `mean.texture`, etc.)
+* `value`: contiene los valores correspondientes de cada variable
+
+Antes (`wide`):
+
+| tamano\_tumor | mean.area | mean.texture |
+| ------------- | --------- | ------------ |
+| Pequeño       | 500       | 10           |
+| Grande        | 900       | 20           |
+
+Después (`long`):
+
+| tamano\_tumor | name         | value |
+| ------------- | ------------ | ----- |
+| Pequeño       | mean.area    | 500   |
+| Pequeño       | mean.texture | 10    |
+| Grande        | mean.area    | 900   |
+| Grande        | mean.texture | 20    |
+
+
 ```{r}
 # 1. Gráfico de distribuciones por tipo de tumor
 p1 <-     df %>%
