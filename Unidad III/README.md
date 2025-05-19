@@ -1,6 +1,6 @@
 # Unidad III:   Programando con R
 
-# Clase del sábado 28-05-2024
+# Clase del Martes
 
 La programación implica escribir sistemas de instrucciones relativamente complejos.
 Hay dos estilos amplios de programación: el estilo **imperativo** implica encadenar 
