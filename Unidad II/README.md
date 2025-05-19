@@ -275,6 +275,8 @@ ggarrange(p1, p2,
 
 # **SESIÓN 2: aplicación a un proyecto de Data Science**
 
+Link del video del sabado [17-05-2025](https://udla.zoom.us/rec/share/69cgwzbpwmigpKAyO6kt_wCn_oAgtq8gTAq9U3PVytSexpANeozS6hC1Zd6qsQRQ.I_2ZtxOURbJqEB7B?startTime=1747483469000&pwd=WrKf5SiJeFmflrj8flILu8la1BdhLwxK)
+
 ### Dataset *Breast Cancer Diagnostic*
 
 Este conjunto de datos proviene del estudio **Wisconsin Diagnostic Breast Cancer (WDBC)**, desarrollado para asistir en el diagnóstico médico de **tumores mamarios**. A través de imágenes digitalizadas obtenidas por **aspiración con aguja fina (FNA)** de masas mamarias, se segmentaron núcleos celulares y se calcularon automáticamente una serie de características geométricas y texturales. La información oficial esta presente en el siguiente [Link 1](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_breast_cancer.html) y en [Link 2](https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic).
