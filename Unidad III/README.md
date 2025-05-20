@@ -40,279 +40,539 @@ F --> J[Fin]
 * Si la condición es **sí**, el flujo vuelve al nodo **G** para ejecutar el bloque de código nuevamente.
 * Si la condición es **no**, el flujo sale del bucle **while** y pasa al nodo **F (No)**.
 * Finalmente, el flujo termina en el nodo **J (Fin)**.
-* 
-### El loop *for ( )*
+ 
+# Primeros pasos en programación en R
 
-Calculo de un factorial:
+El dominio de la programación en R es una competencia esencial en la formación de un estudiante de Magíster en Ciencia de Datos. En este capítulo, aprenderemos a controlar el flujo de ejecución mediante estructuras como `for()`, `while()`, `if()` y `repeat()`, aplicables en tareas como la iteración sobre datos, la evaluación condicional de modelos y la automatización de procesos analíticos. Se introducirá la definición de funciones propias con `function()`, el uso de `replicate()` para simulaciones estadísticas, y técnicas de depuración con `debug()` y `browser()` para asegurar la corrección del código. Al finalizar este capítulo, el estudiante será capaz de construir scripts modulares, eficientes y mantenibles, fundamentales para resolver problemas complejos de clasificación, predicción o procesamiento masivo de datos.
 
-```r
+## SESION 1: Control del flujo de operaciones por medio de loops
+
+### Uso de `for`
+
+::: {align="center"}
+para (`for`) cada elemento\_`i` en una lista:
+
+     hacer algo con elemento\_`i`
+:::
+
+### Ejemplo de n!
+
+El factorial n! cuenta cuántas formas diferentes se pueden ordenar  n objetos diferentes. Se define como:
+
+$$
+n! = 1 \cdot 2 \cdot 3 \cdots (n - 1) \cdot n
+$$
+
+Una forma de calcularlo sería usar una declaración `for()`. Por ejemplo, podríamos encontrar el valor de 100! usando el siguiente código:
+
+```{r}
 n <- 100
 result <- 1
 for (i in 1:n)
 result <- result * i
 result
 ```
-Calculo de la sequencia de Fibonacci:
 
-```r
-Fibonacci <- numeric(12)
+### Ejemplo Fibonacci
+
+La secuencia de Fibonacci es una secuencia famosa en matemáticas. Los dos primeros elementos se definen como {1, 1}. Los elementos subsecuentes se definen como la suma de los dos elementos anteriores.
+
+Por ejemplo:
+
+\- El tercer elemento es 2 (= 1 + 1)
+
+\- El cuarto elemento es 3 (= 1 + 2)
+
+\- El quinto elemento es 5 (= 2 + 3)
+
+\- Y así sucesivamente.
+
+Para obtener los primeros 12 números de Fibonacci en R, podemos usar:
+
+```{r}
+
+Fibonacci <- numeric(12) # vector con ceros para completar
 Fibonacci[1] <- Fibonacci[2] <- 1
 for (i in 3:12)
 Fibonacci[i] <- Fibonacci[i - 2] + Fibonacci[i - 1]
+
+print(Fibonacci)
 ```
 
+Visualización de los números
 
+```{r}
+# Crear ángulos para la espiral
+angles <- seq(0, 4 * pi, length.out = length(Fibonacci))
 
+# Graficar en coordenadas polares
+library(ggplot2)
 
-### El condicionador *if (  )*
+# Crear un data frame
+df <- data.frame(
+  angle = angles,
+  radius = Fibonacci,
+  label = Fibonacci
+)
 
-Syntax
+# Convertir a coordenadas cartesianas para ggplot
+df$x <- df$radius * cos(df$angle)
+df$y <- df$radius * sin(df$angle)
 
-```r
-if (condition) {commands when TRUE}
-if (condition) {commands when TRUE} else {commands when FALSE}
+# Graficar
+ggplot(df, aes(x, y)) +
+  geom_path(color = "blue") +
+  geom_point(size = 3, color = "red") +
+  geom_text(aes(label = label), vjust = -1, size = 4) +
+  coord_equal() +
+  theme_minimal() +
+  ggtitle("Espiral de Fibonacci")
+
 ```
-Un ejemplo simple
 
-```r
-x <- 3
-if (x > 2) y <- 2 * x else y <- 3 * x
-```
+### Uso de `if`
 
-```r
-Eratosthenes <- function(n) {
-# Return all prime numbers up to n (based on the sieve of Eratosthenes)
-if (n >= 2) {
-sieve <- seq(2, n)
-primes <- c()
-for (i in seq(2, n)) {
-if (any(sieve == i)) {
-primes <- c(primes, i)
-sieve <- c(sieve[(sieve %% i) != 0], i)
-}
-}
-return(primes)
+::: {align="center"}
+if (condición){ comandos cuando es VERDADERO}else{comandos cuando es FALSO}
+:::
+
+```{r}
+edad <- 20
+
+if (edad >= 18) {
+  print("Eres mayor de edad")
 } else {
-stop("Input value of n should be at least 2.")
-}
-}
-
-Eratosthenes(50)
-```
-
-### El loop *while ( )*
-
-Syntax
-```r
-while (condition) {statements}
-
-```
-
-Calculo de números de la secuencia de Fibonacci:
-```r
-Fib1 <- 1
-Fib2 <- 1
-Fibonacci <- c(Fib1, Fib2)
-while (Fib2 < 300) {
-Fibonacci <- c(Fibonacci, Fib2)
-oldFib2 <- Fib2
-Fib2 <- Fib1 + Fib2
-Fib1 <- oldFib2
+  print("Eres menor de edad")
 }
 
-Fibonacci
+```
+
+#### Creación de una función condicionada
+
+```{r}
+
+x1 <- rnorm(30, 1,2)
+x2 <- 2 + 10*x1 + rnorm(30, 0,10)
+
+# pequeña función
+corplot <- function(x, y, plotit) {
+if (plotit == TRUE) plot(x, y)
+cor(x, y)
+}
+
+corplot(x1, x2,FALSE)
 
 ```
 
-```r
-```
-### El loop *repeat* y el *break* y proximos declaraciones
+### Uso de `while`
 
-Syntax
-```r
-repeat { statements } if (condition) break
+::: {align="center"}
+establecer x en 1 mientras (x \<= 5): mostrar x aumentar x en 1
+:::
+
+```{r}
+x <- 1
+
+while (x <= 5) {
+  print(x)
+  x <- x + 1
+}
+
 ```
 
-```r
-x <- x0
-tolerance <- 0.000001
+### ¿Cuantos lanzamientos de una moneda requiero realizar para obtener 10 caras ?
+
+```{r}
+
+# Inicializamos variables
+caras <- 0
+lanzamientos <- 0
+
+# Bucle while: se repite hasta obtener 10 caras
+while (caras < 10) {
+  lanzamiento <- sample(c("cara", "cruz"), 1)
+  lanzamientos <- lanzamientos + 1
+  if (lanzamiento == "cara") {
+    caras <- caras + 1
+  }
+}
+
+# Resultado
+cat("Se necesitaron", lanzamientos, "lanzamientos para obtener 10 caras.\n")
+
+
+```
+
+### Uso de `repeat` and `break`
+
+::: {align="center"}
+repetir: mostrar x aumentar x en 1 hasta que (x \> 5)
+:::
+
+```{r}
+x <- runif(1,0,7)
+
 repeat {
-f <- xˆ3 + 2 * xˆ2 - 7
-if (abs(f) < tolerance) break
-f.prime <- 3 * xˆ2 + 4 * x
-x <- x - f / f.prime
-}
-x
-```
-
-```r
-```
-
-
-
-## *GESTION DE LA COMPLEJIDAD ATRAVEZ DE FUNCIONES*
-
-La mayoría de los programas informáticos reales son mucho más largos que los ejemplos que damos en este libro. La mayoría de las personas no pueden tener todos los detalles en la cabeza a la vez, por lo que es extremadamente importante encontrar formas de reducir la complejidad. A lo largo de los años se han desarrollado diversas estrategias de diseño de programas. En esta sección damos un breve resumen de algunas de las estrategias que nos han funcionado.
-
-Las funciones son unidades autónomas de código R con un propósito bien definido. En general, las funciones toman entradas, hacen cálculos (posiblemente imprimiendo resultados intermedios, dibujando gráficos, llamando a otras funciones, etc.) y producen resultados. Si las entradas y salidas están bien definidas, el programador puede estar razonablemente seguro de si la función funciona o no: y una vez que funciona, puede pasar al siguiente problema.
-
-
-
-### ¿Qué son las funciones?
-
-En el análisis de datos, podrías definir funciones para realizar tareas comunes como la limpieza de datos, la transformación de datos, o el ajuste de modelos. Por ejemplo, aquí hay una función que podría usar para calcular la media de una columna en un dataframe:
-
-Sintaxis
-```r
-func_name <- function (parameters) {
-statement
-}
-```
-
-```r
-annuityAmt <- function(n, R, i) {
-R*((1 + i)ˆn - 1) / i
-}
-annuityAmt(10, 400, 0.05)
-```
-
-```r
-# define a function to compute power
-power <- function(a = 2, b) {
-    print(paste("a raised to the power b is: ", a^b))
+  print(x)
+  x <- x + 1
+  if (x > 14) break
 }
 
-# call the power function with arguments
-power(2, 3)
-
-# call function with default arguments
-power(b=3)
 ```
 
-```r
-# define a function to compute power
-power <- function(a, b) {
-    return (a^b)
+En este ejemplo se utiliza un bucle `repeat` junto con `break` para recorrer el conjunto de datos `mtcars` y encontrar el primer automóvil cuyo rendimiento en millas por galón (`mpg`) sea superior a 30. El bucle se ejecuta indefinidamente hasta que se cumple la condición deseada, momento en el cual se imprime el nombre del auto y su valor de `mpg`, y se interrumpe la ejecución con `break`. Este enfoque es útil cuando se desea identificar rápidamente el primer caso que cumple un criterio específico dentro de un conjunto de datos.
+
+```{r}
+
+# Cargar el dataset
+data(mtcars)
+
+# Convertir los nombres de fila en una columna para poder accederlos
+mtcars$car <- rownames(mtcars)
+
+# Inicializar índice
+i <- 1
+
+repeat {
+  if (mtcars$mpg[i] > 30) {
+    cat("El primer auto con mpg > 30 es:", mtcars$car[i], "con", mtcars$mpg[i], "mpg.\n")
+    break
+  }
+  i <- i + 1
 }
 
-# call the power function with arguments
-print(paste("a raised to the power b is: ", power(2, 3)))
 ```
 
+### Aplicación de loops al analisis de datos
 
+En análisis de datos, es común encontrarse con valores faltantes (`NA`) que deben ser tratados antes de realizar cualquier análisis estadístico. Este ejemplo utiliza el dataset `airquality`, incluido en R, que contiene mediciones diarias de calidad del aire en Nueva York. El objetivo es demostrar cómo usar los bucles `for`, `while`, `repeat` y `break` para:
 
-### Devolución de varios objetos en listas
+1.  **Detectar columnas con datos faltantes**.
+2.  **Imputar los valores faltantes con la media de cada variable**.
+3.  **Verificar que no queden `NA`**.
+4.  **Generar un resumen estadístico del dataset limpio**.
 
-```r
-annuityValues <- function(n, R, i) {
-amount <- R*((1 + i)ˆn - 1) / i
-PV <- amount * (1 + i)ˆ(-n)
-list(amount = amount, PV = PV)
+Este caso nos permitirá practicar estructuras de control en R dentro de un contexto realista y útil para la limpieza de datos.
+
+```{r}
+
+# Cargar dataset
+data("airquality")
+
+```
+```{}
+
+str(airquality)
+ncol(airquality)
+nrow(airquality)
+nombres <- names(airquality)
+
+airquality[nombres[1]]
+airquality["Ozone"]
+airquality[["Ozone"]]
+airquality[[1]]
+
+if(FALSE){print("Hello world")}
+
+is.na(airquality[["Ozone"]])
+any(is.na(airquality[["Ozone"]]))
+
+# La matriz completa
+any(is.na(airquality))
+
+# Operadores Logicos
+if(4>10 && 4>100) {print("Correcto")}
+if(4<10 && 4<100) {print("Correcto")}
+
+```
+```{r}
+str(airquality)
+ncol(airquality)
+nrow(airquality)
+nombres <- names(airquality)
+
+airquality[nombres[1]]
+airquality["Ozone"]
+airquality[["Ozone"]]
+airquality[[1]]
+
+if(FALSE){print("Hello world")}
+
+is.na(airquality[["Ozone"]])
+any(is.na(airquality[["Ozone"]]))
+
+# La matriz completa
+any(is.na(airquality))
+
+# Operadores Logicos
+if(4>10 && 4>100) {print("Correcto")}
+if(4<10 && 4<100) {print("Correcto")}
+
+```
+
+```         
+cat("Columnas con valores NA:\n")
+for (col in names(airquality)) {
+  if (any(is.na(airquality[[col]]))) {
+    cat("-", col, "\n")
+  }
 }
-annuityValues(10, 400, 0.05)
 ```
 
-### Uso de clases de S3 para controlar la impresión
+```{r}
 
-Una solución general a este problema es declarar el tipo de valor de retorno y decirle a R cómo imprimir cosas así. Este es un tipo de programación orientada a objetos. De hecho, hay varias formas de hacer esto y una discusión completa está más allá del alcance de este texto, pero en esta sección mostraremos una de las formas más simples: usar métodos S3.
+# 1. Identificar columnas con NA usando un bucle for
+cat("Columnas con valores NA:\n")
+for (col in names(airquality)) {
+  if (any(is.na(airquality[[col]]))) {
+    cat("-", col, "\n")
+  }
+}
+```
 
-Además de tener valores, los objetos en R pueden tener atributos con nombre. La clase S3 es (en el caso más simple) una cadena de caracteres llamada clase que contiene la clase del objeto.
-
-```r
-annuityValues <- function(n, R, i) {
-amount <- R*((1 + i)^n - 1) / i
-PV <- amount * (1 + i)^(-n)
-list(amount = amount, PV = PV)
+```{}
+# 2. Imputar valores NA con la media de la columna usando while
+col_index <- 1
+while (col_index <= ncol(airquality)) {
+  columna <- airquality[[col_index]]
+  if (is.numeric(columna) && any(is.na(columna))) {
+    media <- mean(columna, na.rm = TRUE)
+    columna[is.na(columna)] <- media
+    airquality[[col_index]] <- columna
+  }
+  col_index <- col_index + 1
 }
 
-# Aplicar la función
-annuityValues(10, 400, 0.05)
+```
 
-# Creo la clase Annuity
-values <- annuityValues(10, 400, 0.05)
-class(values) <- "annuity"
-
-# Creo una forma bacana de imprimir los resultados
- 
-print.annuity <- function(x, ...) {
-cat("An annuity object with present value", x$PV, "and final value",
-x$amount, "\n")
-invisible(x)
+```{r}
+# 2. Imputar valores NA con la media de la columna usando while
+col_index <- 1
+while (col_index <= ncol(airquality)) {
+  columna <- airquality[[col_index]]
+  if (is.numeric(columna) && any(is.na(columna))) {
+    media <- mean(columna, na.rm = TRUE)
+    columna[is.na(columna)] <- media
+    airquality[[col_index]] <- columna
+  }
+  col_index <- col_index + 1
 }
 
-values
-
-values$PV
 ```
 
-# Clase del martes 28-05-2024
-
-
-### El operador %>% del paquete *magrittr*
-
-```r
-# Para aplicar una función f de dos argumentos f(x,y), podemos escribir
-x %>% f(x, y)
-# Simbolizando, dado el objeto x, aplicar la función f en los
-# argumentos f(x,y)
+```{}
+repeat {
+  if (any(is.na(airquality))) {
+    cat("Aún hay valores NA.\n")
+    break
+  } else {
+    cat("Todos los valores NA han sido imputados correctamente.\n")
+    break
+  }
+}
 ```
 
+```{r}
+# 3. Verificar que no queden NA usando repeat y break
+repeat {
+  if (any(is.na(airquality))) {
+    cat("Aún hay valores NA.\n")
+    break
+  } else {
+    cat("Todos los valores NA han sido imputados correctamente.\n")
+    break
+  }
+}
 
-```r
-boxplot(Sepal.Length ~ Species, data = iris,
-        ylab = "Sepal length (cm)",
-        main = "Iris measurements",
-        boxwex = 0.5)
 ```
 
-```r
-iris %>% boxplot(Sepal.Length ~ Species, data = .,
-                 ylab = "Sepal length (cm)",
-                 main = "Iris measurements",
-                 boxwex = 0.5)
+```{r}
+# 4. Resumen estadístico del dataset limpio
+cat("\nResumen estadístico del dataset limpio:\n")
+print(summary(airquality))
 ```
 
+## Reproduciendo operaciones con functiones `function(arg)`
 
-El operador `%>%` del paquete `magrittr` en R es muy útil para encadenar operaciones. Veamos otros dos ejemplos utilizando el conjunto de datos `iris`:
-**Ejemplo 1: Resumen estadístico de las variables numéricas**
-```r
-library(dplyr)
-library(magrittr)
+### ¿Qué es una función en R?
 
-iris %>%
-  summarise_at(vars(-Species), funs(mean(., na.rm = TRUE), sd(., na.rm = TRUE)))
-```
-Este código calcula la media y la desviación estándar de todas las columnas numéricas en el conjunto de datos `iris`, excluyendo la columna `Species`.
+Una **función** en R es un bloque de código que realiza una tarea específica. Sirve para **organizar** y **reutilizar** código de forma más clara y eficiente.
 
-**Ejemplo 2: Filtrado y ordenamiento**
-```r
-iris %>%
-  filter(Species == "setosa") %>%
-  arrange(desc(Sepal.Length))
-```
-Este código filtra el conjunto de datos `iris` para incluir solo las filas donde `Species` es "setosa", y luego ordena estas filas en orden descendente por `Sepal.Length`.
+#### ¿Cómo se define una función?
 
-###  La función *replicate ( )*
+Una función se define con la palabra clave `function`, seguida de paréntesis con los **argumentos** (si los hay), y luego un bloque de código entre llaves `{ }`.
 
-- Replica una funcition un número **n** de veces.
-- 
-syntaxis
-```r
-replicate(n, { statements })
+### Definir una función
+
+``` r
+definir función con nombre:
+    (opcionalmente con argumentos)
+    {
+        hacer algo con esos argumentos
+        devolver un resultado
+    }
 ```
 
-Replicar 5 veces de una muestra de 1:5
-```r
-replicate(5, 1:5)
+### Ejemplo de función
+
+```{}
+corplot_v2 <- function(x, y, plotit = TRUE, method = "pearson", main = NULL, xlab = NULL, ylab = NULL) {
+  # Validaciones
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  if (!method %in% c("pearson", "spearman", "kendall")) stop("Método no válido.")
+  
+  # Gráfico opcional
+  if (plotit) {
+    plot(x, y, main = main, xlab = xlab, ylab = ylab)
+  }
+  
+  # Calcular correlación
+  return(cor(x, y, method = method))
+}
 ```
 
-5 muestras de tamaño 6 de una variable Normal con media 2 y varianza 1
-```r
-replicate(5, rnorm(6, 2,1))
+```{r}
+
+corplot_v2 <- function(x, y, plotit = TRUE, method = "pearson", main = NULL, xlab = NULL, ylab = NULL) {
+  # Validaciones
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  if (!method %in% c("pearson", "spearman", "kendall")) stop("Método no válido.")
+  
+  # Gráfico opcional
+  if (plotit) {
+    plot(x, y, main = main, xlab = xlab, ylab = ylab)
+  }
+  
+  # Calcular correlación
+  return(cor(x, y, method = method))
+}
 ```
 
-```r
+```{r}
+corplot_v2(x1,x2,TRUE)
+```
 
+### Output con multiples objetos
+
+```{}
+library(ggplot2)
+
+corplot_multi <- function(x, y, alpha = 0.05) {
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  
+  # Calcular correlación y prueba
+  test <- cor.test(x, y)
+  
+  # Crear gráfico con ggplot2
+  df <- data.frame(x = x, y = y)
+  p <- ggplot(df, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, col = "blue") +
+    ggtitle("Gráfico de dispersión con línea de tendencia")
+  
+  # Salida como lista con descripciones
+  return(list(
+    correlacion = test$estimate,
+    p_valor = test$p.value,
+    significativa = test$p.value < alpha,
+    grafico = p
+  ))
+}
+
+```
+
+```{r}
+library(ggplot2)
+
+corplot_multi <- function(x, y, alpha = 0.05) {
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  
+  # Calcular correlación y prueba
+  test <- cor.test(x, y)
+  
+  # Crear gráfico con ggplot2
+  df <- data.frame(x = x, y = y)
+  p <- ggplot(df, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, col = "blue") +
+    ggtitle("Gráfico de dispersión con línea de tendencia")
+  
+  # Salida como lista con descripciones
+  return(list(
+    correlacion = test$estimate,
+    p_valor = test$p.value,
+    significativa = test$p.value < alpha,
+    grafico = p
+  ))
+}
+
+```
+
+```{r}
+# res <- corplot_multi(mtcars$mpg, mtcars$hp)
+# print(res$correlacion)
+# print(res$significativa)
+# print(res$grafico)
+
+```
+
+```{r}
+
+corplot_multi(x1,x2)$p
+```
+
+### Output en clase `S3`
+
+En R, los **objetos** pueden pertenecer a diferentes **clases**, que determinan cómo se comportan y cómo se interpretan por funciones genéricas como `print()`, `summary()` o `plot()`. Estas clases permiten organizar y estructurar los datos de forma coherente. Una de las formas más comunes y flexibles de definir clases en R es mediante el sistema **S3**, que es simple, dinámico y ampliamente utilizado.
+
+El sistema **S3** no requiere una definición formal de clases. En cambio, se basa en la asignación de un atributo de clase a un objeto y en la creación de funciones específicas para esa clase. Por ejemplo, si se crea un objeto de clase `"corplot_result"`, se puede definir una función `print.corplot_result()` que se ejecutará automáticamente cuando se use `print()` sobre ese objeto. Esto permite personalizar el comportamiento de funciones genéricas según el tipo de objeto.
+
+```{}
+# Crear una función que devuelva un objeto con clase S3
+corplot_s3 <- function(x, y) {
+  resultado <- list(
+    correlacion = cor(x, y),
+    resumen = summary(lm(y ~ x))
+  )
+  class(resultado) <- "corplot_result"  # Asignar clase S3
+  return(resultado)
+}
+
+# Definir un método print específico para la clase
+print.corplot_result <- function(obj) {
+  cat("Correlación:", obj$correlacion, "\n")
+  cat("Resumen del modelo lineal:\n")
+  print(obj$resumen)
+}
+```
+
+```{r}
+
+# Crear una función que devuelva un objeto con clase S3
+corplot_s3 <- function(x, y) {
+  resultado <- list(
+    correlacion = cor(x, y),
+    resumen = summary(lm(y ~ x))
+  )
+  class(resultado) <- "corplot_result"  # Asignar clase S3
+  return(resultado)
+}
+
+# Definir un método print específico para la clase
+print.corplot_result <- function(obj) {
+  cat("Correlación:", obj$correlacion, "\n")
+  cat("Resumen del modelo lineal:\n")
+  print(obj$resumen)
+}
+```
+
+```{r}
+res <- corplot_s3(mtcars$mpg, mtcars$hp)
+print(res)  # Llama automáticamente a print.corplot_result()
 ```
 
 ## *Consejos de programación miscelánea*
