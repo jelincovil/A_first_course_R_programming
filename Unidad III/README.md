@@ -2,6 +2,8 @@
 
 # Clase del Martes
 
+Link de clase correspondiente al dia [20-05-2025](https://udla.zoom.us/rec/share/8etIVOMg5Zk1qgUw7yhvKtv-G4CbM0vgRLW3s4VdWoPYRjlHB9A9ae4U5RPhwOo5.YMz1lYl09CxbsbS5?startTime=1747781431000&pwd=H1lBJRwRH7OC3R36cZwJ-KvIG_jUrNxs)
+
 La programación implica escribir sistemas de instrucciones relativamente complejos.
 Hay dos estilos amplios de programación: el estilo **imperativo** implica encadenar 
 instrucciones que le dicen a la computadora qué hacer. El estilo **declarativo** implica
