@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Unidad III pre</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Unidad III_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Unidad III_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Unidad III_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Unidad III_files/libs/quarto-html/popper.min.js"></script>
+<script src="Unidad III_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Unidad III_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Unidad III_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Unidad III_files/libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Unidad III_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Unidad III_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Unidad III_files/libs/bootstrap/bootstrap-c55efa1fd218a545ebab9e5bcab7af02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unidad III pre</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="primeros-pasos-en-programación-en-r" class="level1">
+<h1>Primeros pasos en programación en R</h1>
+<p>El dominio de la programación en R es una competencia esencial en la formación de un estudiante de Magíster en Ciencia de Datos. En este capítulo, aprenderemos a controlar el flujo de ejecución mediante estructuras como <code>for()</code>, <code>while()</code>, <code>if()</code> y <code>repeat()</code>, aplicables en tareas como la iteración sobre datos, la evaluación condicional de modelos y la automatización de procesos analíticos. Se introducirá la definición de funciones propias con <code>function()</code>, el uso de <code>replicate()</code> para simulaciones estadísticas, y técnicas de depuración con <code>debug()</code> y <code>browser()</code> para asegurar la corrección del código. Al finalizar este capítulo, el estudiante será capaz de construir scripts modulares, eficientes y mantenibles, fundamentales para resolver problemas complejos de clasificación, predicción o procesamiento masivo de datos.</p>
+<section id="sesion-1-control-del-flujo-de-operaciones-por-medio-de-loops" class="level2">
+<h2 class="anchored" data-anchor-id="sesion-1-control-del-flujo-de-operaciones-por-medio-de-loops">SESION 1: Control del flujo de operaciones por medio de loops</h2>
+<section id="uso-de-for" class="level3">
+<h3 class="anchored" data-anchor-id="uso-de-for">Uso de <code>for</code></h3>
+<div data-align="center">
+<p>para (<code>for</code>)&nbsp;cada&nbsp;elemento_<code>i</code>&nbsp;en&nbsp;una&nbsp;lista:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; hacer&nbsp;algo&nbsp;con&nbsp;elemento_<code>i</code></p>
+</div>
+</section>
+<section id="ejemplo-de-n" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-n">Ejemplo&nbsp;de n!</h3>
+<p>El&nbsp;factorial&nbsp;n! cuenta&nbsp;cuántas&nbsp;formas&nbsp;diferentes&nbsp;se&nbsp;pueden&nbsp;ordenar&nbsp; n&nbsp;objetos&nbsp;diferentes.&nbsp;Se&nbsp;define&nbsp;como:</p>
+<p><span class="math display">\[
+n!&nbsp;=&nbsp;1&nbsp;\cdot&nbsp;2&nbsp;\cdot&nbsp;3&nbsp;\cdots&nbsp;(n&nbsp;-&nbsp;1)&nbsp;\cdot&nbsp;n
+\]</span></p>
+<p>Una&nbsp;forma&nbsp;de&nbsp;calcularlo&nbsp;sería&nbsp;usar&nbsp;una&nbsp;declaración&nbsp;<code>for()</code>.&nbsp;Por&nbsp;ejemplo,&nbsp;podríamos&nbsp;encontrar&nbsp;el&nbsp;valor&nbsp;de 100!&nbsp;usando&nbsp;el&nbsp;siguiente&nbsp;código:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">*</span> i</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.332622e+157</code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-fibonacci" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-fibonacci">Ejemplo Fibonacci</h3>
+<p>La secuencia de Fibonacci es una secuencia famosa en matemáticas. Los dos primeros elementos se definen como {1, 1}. Los elementos subsecuentes se definen como la suma de los dos elementos anteriores.</p>
+<p>Por ejemplo:</p>
+<p>- El tercer elemento es 2 (= 1 + 1)</p>
+<p>- El cuarto elemento es 3 (= 1 + 2)</p>
+<p>- El quinto elemento es 5 (= 2 + 3)</p>
+<p>- Y así sucesivamente.</p>
+<p>Para obtener los primeros 12 números de Fibonacci en R, podemos usar:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>Fibonacci <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">12</span>) <span class="co"># vector con ceros para completar</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Fibonacci[<span class="dv">1</span>] <span class="ot">&lt;-</span> Fibonacci[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Fibonacci[i] <span class="ot">&lt;-</span> Fibonacci[i <span class="sc">-</span> <span class="dv">2</span>] <span class="sc">+</span> Fibonacci[i <span class="sc">-</span> <span class="dv">1</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(Fibonacci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]   1   1   2   3   5   8  13  21  34  55  89 144</code></pre>
+</div>
+</div>
+<p>Visualización de los números</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear ángulos para la espiral</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>angles <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="fu">length</span>(Fibonacci))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar en coordenadas polares</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un data frame</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">angle =</span> angles,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">radius =</span> Fibonacci,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">label =</span> Fibonacci</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir a coordenadas cartesianas para ggplot</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>x <span class="ot">&lt;-</span> df<span class="sc">$</span>radius <span class="sc">*</span> <span class="fu">cos</span>(df<span class="sc">$</span>angle)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>y <span class="ot">&lt;-</span> df<span class="sc">$</span>radius <span class="sc">*</span> <span class="fu">sin</span>(df<span class="sc">$</span>angle)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Graficar</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> label), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Espiral de Fibonacci"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad-III_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="uso-de-if" class="level3">
+<h3 class="anchored" data-anchor-id="uso-de-if">Uso de <code>if</code></h3>
+<div data-align="center">
+<p>if (condición){ comandos cuando es VERDADERO}else{comandos cuando es FALSO}</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>edad <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (edad <span class="sc">&gt;=</span> <span class="dv">18</span>) {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Eres mayor de edad"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"Eres menor de edad"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Eres mayor de edad"</code></pre>
+</div>
+</div>
+<section id="creación-de-una-función-condicionada" class="level4">
+<h4 class="anchored" data-anchor-id="creación-de-una-función-condicionada">Creación de una función condicionada</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">10</span><span class="sc">*</span>x1 <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">0</span>,<span class="dv">10</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pequeña función</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>corplot <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, plotit) {</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (plotit <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="fu">plot</span>(x, y)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">corplot</span>(x1, x2,<span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9500651</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="uso-de-while" class="level3">
+<h3 class="anchored" data-anchor-id="uso-de-while">Uso de <code>while</code></h3>
+<div data-align="center">
+<p>establecer x en 1 mientras (x &lt;= 5): mostrar x aumentar x en 1</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (x <span class="sc">&lt;=</span> <span class="dv">5</span>) {</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5</code></pre>
+</div>
+</div>
+</section>
+<section id="cuantos-lanzamientos-de-una-moneda-requiero-realizar-para-obtener-10-caras" class="level3">
+<h3 class="anchored" data-anchor-id="cuantos-lanzamientos-de-una-moneda-requiero-realizar-para-obtener-10-caras">¿Cuantos lanzamientos de una moneda requiero realizar para obtener 10 caras ?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializamos variables</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>caras <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>lanzamientos <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Bucle while: se repite hasta obtener 10 caras</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (caras <span class="sc">&lt;</span> <span class="dv">10</span>) {</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  lanzamiento <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"cara"</span>, <span class="st">"cruz"</span>), <span class="dv">1</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  lanzamientos <span class="ot">&lt;-</span> lanzamientos <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lanzamiento <span class="sc">==</span> <span class="st">"cara"</span>) {</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    caras <span class="ot">&lt;-</span> caras <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Se necesitaron"</span>, lanzamientos, <span class="st">"lanzamientos para obtener 10 caras.</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Se necesitaron 17 lanzamientos para obtener 10 caras.</code></pre>
+</div>
+</div>
+</section>
+<section id="uso-de-repeat-and-break" class="level3">
+<h3 class="anchored" data-anchor-id="uso-de-repeat-and-break">Uso de <code>repeat</code> and <code>break</code></h3>
+<div data-align="center">
+<p>repetir: mostrar x aumentar x en 1 hasta que (x &gt; 5)</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">7</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(x)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (x <span class="sc">&gt;</span> <span class="dv">14</span>) <span class="cf">break</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6.798146
+[1] 7.798146
+[1] 8.798146
+[1] 9.798146
+[1] 10.79815
+[1] 11.79815
+[1] 12.79815
+[1] 13.79815</code></pre>
+</div>
+</div>
+<p>En este ejemplo se utiliza un bucle&nbsp;<code>repeat</code>&nbsp;junto con&nbsp;<code>break</code>&nbsp;para recorrer el conjunto de datos&nbsp;<code>mtcars</code>&nbsp;y encontrar el primer automóvil cuyo rendimiento en millas por galón (<code>mpg</code>) sea superior a 30. El bucle se ejecuta indefinidamente hasta que se cumple la condición deseada, momento en el cual se imprime el nombre del auto y su valor de&nbsp;<code>mpg</code>, y se interrumpe la ejecución con&nbsp;<code>break</code>. Este enfoque es útil cuando se desea identificar rápidamente el primer caso que cumple un criterio específico dentro de un conjunto de datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar el dataset</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convertir los nombres de fila en una columna para poder accederlos</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>mtcars<span class="sc">$</span>car <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mtcars)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializar índice</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="cf">repeat</span> {</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (mtcars<span class="sc">$</span>mpg[i] <span class="sc">&gt;</span> <span class="dv">30</span>) {</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"El primer auto con mpg &gt; 30 es:"</span>, mtcars<span class="sc">$</span>car[i], <span class="st">"con"</span>, mtcars<span class="sc">$</span>mpg[i], <span class="st">"mpg.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">break</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  i <span class="ot">&lt;-</span> i <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>El primer auto con mpg &gt; 30 es: Fiat 128 con 32.4 mpg.</code></pre>
+</div>
+</div>
+</section>
+<section id="aplicación-de-loops-al-analisis-de-datos" class="level3">
+<h3 class="anchored" data-anchor-id="aplicación-de-loops-al-analisis-de-datos">Aplicación de loops al analisis de datos</h3>
+<p>En análisis de datos, es común encontrarse con valores faltantes (<code>NA</code>) que deben ser tratados antes de realizar cualquier análisis estadístico. Este ejemplo utiliza el dataset <code>airquality</code>, incluido en R, que contiene mediciones diarias de calidad del aire en Nueva York. El objetivo es demostrar cómo usar los bucles <code>for</code>, <code>while</code>, <code>repeat</code> y <code>break</code> para:</p>
+<ol type="1">
+<li><strong>Detectar columnas con datos faltantes</strong>.</li>
+<li><strong>Imputar los valores faltantes con la media de cada variable</strong>.</li>
+<li><strong>Verificar que no queden <code>NA</code></strong>.</li>
+<li><strong>Generar un resumen estadístico del dataset limpio</strong>.</li>
+</ol>
+<p>Este caso nos permitirá practicar estructuras de control en R dentro de un contexto realista y útil para la limpieza de datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar dataset</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"airquality"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>
+str(airquality)
+ncol(airquality)
+nrow(airquality)
+nombres &lt;- names(airquality)
+
+airquality[nombres[1]]
+airquality["Ozone"]
+airquality[["Ozone"]]
+airquality[[1]]
+
+if(FALSE){print("Hello world")}
+
+is.na(airquality[["Ozone"]])
+any(is.na(airquality[["Ozone"]]))
+
+# La matriz completa
+any(is.na(airquality))
+
+# Operadores Logicos
+if(4&gt;10 &amp;&amp; 4&gt;100) {print("Correcto")}
+if(4&lt;10 &amp;&amp; 4&lt;100) {print("Correcto")}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Completar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>cat("Columnas con valores NA:\n")
+for (col in names(airquality)) {
+  if (any(is.na(airquality[[col]]))) {
+    cat("-", col, "\n")
+  }
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Identificar columnas con NA usando un bucle for</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># 2. Imputar valores NA con la media de la columna usando while
+col_index &lt;- 1
+while (col_index &lt;= ncol(airquality)) {
+  columna &lt;- airquality[[col_index]]
+  if (is.numeric(columna) &amp;&amp; any(is.na(columna))) {
+    media &lt;- mean(columna, na.rm = TRUE)
+    columna[is.na(columna)] &lt;- media
+    airquality[[col_index]] &lt;- columna
+  }
+  col_index &lt;- col_index + 1
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Imputar valores NA con la media de la columna usando while</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>repeat {
+  if (any(is.na(airquality))) {
+    cat("Aún hay valores NA.\n")
+    break
+  } else {
+    cat("Todos los valores NA han sido imputados correctamente.\n")
+    break
+  }
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Verificar que no queden NA usando repeat y break</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Resumen estadístico del dataset limpio</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Resumen estadístico del dataset limpio:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Resumen estadístico del dataset limpio:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(airquality))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Ozone           Solar.R           Wind             Temp      
+ Min.   :  1.00   Min.   :  7.0   Min.   : 1.700   Min.   :56.00  
+ 1st Qu.: 18.00   1st Qu.:115.8   1st Qu.: 7.400   1st Qu.:72.00  
+ Median : 31.50   Median :205.0   Median : 9.700   Median :79.00  
+ Mean   : 42.13   Mean   :185.9   Mean   : 9.958   Mean   :77.88  
+ 3rd Qu.: 63.25   3rd Qu.:258.8   3rd Qu.:11.500   3rd Qu.:85.00  
+ Max.   :168.00   Max.   :334.0   Max.   :20.700   Max.   :97.00  
+ NA's   :37       NA's   :7                                       
+     Month            Day      
+ Min.   :5.000   Min.   : 1.0  
+ 1st Qu.:6.000   1st Qu.: 8.0  
+ Median :7.000   Median :16.0  
+ Mean   :6.993   Mean   :15.8  
+ 3rd Qu.:8.000   3rd Qu.:23.0  
+ Max.   :9.000   Max.   :31.0  
+                               </code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sesión-2" class="level1">
+<h1>SESIÓN 2</h1>
+<section id="reproduciendo-operaciones-con-functiones-functionarg" class="level2">
+<h2 class="anchored" data-anchor-id="reproduciendo-operaciones-con-functiones-functionarg">Reproduciendo operaciones con functiones <code>function(arg)</code></h2>
+<section id="qué-es-una-función-en-r" class="level3">
+<h3 class="anchored" data-anchor-id="qué-es-una-función-en-r">¿Qué es una función en R?</h3>
+<p>Una<strong>función</strong> en R es un bloque de código que realiza una tarea específica. Sirve para <strong>organizar</strong> y <strong>reutilizar</strong> código de forma más clara y eficiente.</p>
+<section id="cómo-se-define-una-función" class="level4">
+<h4 class="anchored" data-anchor-id="cómo-se-define-una-función">¿Cómo se define una función?</h4>
+<p>Una función se define con la palabra clave <code>function</code>, seguida de paréntesis con los <strong>argumentos</strong>(si los hay), y luego un bloque de código entre llaves <code>{ }</code>.</p>
+</section>
+</section>
+<section id="definir-una-función" class="level3">
+<h3 class="anchored" data-anchor-id="definir-una-función">Definir una función</h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>definir función con nombre<span class="sc">:</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    (opcionalmente con argumentos)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        hacer algo con esos argumentos</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        devolver un resultado</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="ejemplo-de-función" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-función">Ejemplo de función</h3>
+<pre><code>corplot_v2 &lt;- function(x, y, plotit = TRUE, method = "pearson", main = NULL, xlab = NULL, ylab = NULL) {
+  # Validaciones
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  if (!method %in% c("pearson", "spearman", "kendall")) stop("Método no válido.")
+  
+  # Gráfico opcional
+  if (plotit) {
+    plot(x, y, main = main, xlab = xlab, ylab = ylab)
+  }
+  
+  # Calcular correlación
+  return(cor(x, y, method = method))
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Completar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#corplot_v2(x1,x2,TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="output-con-multiples-objetos" class="level3">
+<h3 class="anchored" data-anchor-id="output-con-multiples-objetos">Output con multiples objetos</h3>
+<pre><code>library(ggplot2)
+
+corplot_multi &lt;- function(x, y, alpha = 0.05) {
+  if (!is.numeric(x) || !is.numeric(y)) stop("Ambos vectores deben ser numéricos.")
+  if (length(x) != length(y)) stop("Los vectores deben tener la misma longitud.")
+  
+  # Calcular correlación y prueba
+  test &lt;- cor.test(x, y)
+  
+  # Crear gráfico con ggplot2
+  df &lt;- data.frame(x = x, y = y)
+  p &lt;- ggplot(df, aes(x, y)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, col = "blue") +
+    ggtitle("Gráfico de dispersión con línea de tendencia")
+  
+  # Salida como lista con descripciones
+  return(list(
+    correlacion = test$estimate,
+    p_valor = test$p.value,
+    significativa = test$p.value &lt; alpha,
+    grafico = p
+  ))
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Completar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- corplot_multi(mtcars$mpg, mtcars$hp)</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(res$correlacion)</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># print(res$significativa)</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print(res$grafico)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#corplot_multi(x1,x2)$p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="output-en-clase-s3" class="level3">
+<h3 class="anchored" data-anchor-id="output-en-clase-s3">Output en clase <code>S3</code></h3>
+<p>En R, los <strong>objetos</strong> pueden pertenecer a diferentes <strong>clases</strong>, que determinan cómo se comportan y cómo se interpretan por funciones genéricas como <code>print()</code>, <code>summary()</code> o <code>plot()</code>. Estas clases permiten organizar y estructurar los datos de forma coherente. Una de las formas más comunes y flexibles de definir clases en R es mediante el sistema <strong>S3</strong>, que es simple, dinámico y ampliamente utilizado.</p>
+<p>El sistema <strong>S3</strong> no requiere una definición formal de clases. En cambio, se basa en la asignación de un atributo de clase a un objeto y en la creación de funciones específicas para esa clase. Por ejemplo, si se crea un objeto de clase <code>"corplot_result"</code>, se puede definir una función <code>print.corplot_result()</code> que se ejecutará automáticamente cuando se use <code>print()</code> sobre ese objeto. Esto permite personalizar el comportamiento de funciones genéricas según el tipo de objeto.</p>
+<p>La siguiente función toma un dataset con NAs y lo convierte en otro dataframe sin NA usando inputación simple.</p>
+<pre><code># ---------------------------------------------------------------------------
+# Paso: definimos la funcion, argumentos y bloques
+
+imputar_na_num &lt;- function(data, metodo = "media") {
+  # data: El dataframe de entrada.
+  # metodo: "media" (por defecto) o "mediana" para la imputación.
+ 
+  # 1. Validación de entradas
+  
+  # 2. Copia del dataframe para no modificar el original
+  
+  # 3. Imputación de NAs en columnas numéricas
+  
+  # 4. Preparar la salida con clase S3
+  
+  # 5. Asignamos una clase a la lista. Esto permite un 'print' personalizado.
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso: definimos la funcion, argumentos y bloques</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># --------------------------------------------------------------------------
+# Paso 1: Validación de entradas
+
+if (!is.data.frame(data)) {
+  stop("Error: 'data' debe ser un dataframe.")
+}
+if (!metodo %in% c("media", "mediana")) {
+  stop("Error: 'metodo' debe ser 'media' o 'mediana'.")
+}</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 1: Validación de entradas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># ----------------------------------------------------------------------------
+# Paso 2: Copia del dataframe para no modificar el original
+
+df_imputado &lt;- data
+columnas_imputadas &lt;- character(0) # Para registrar qué columnas se modifican</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ----------------------------------------------------------------------------</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 2: Copia del dataframe para no modificar el original</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># -------------------------------------------------------------------------------
+# Paso 3: Imputación de NAs en columnas numéricas
+for (col_name in names(df_imputado)) {
+  columna &lt;- df_imputado[[col_name]]
+  
+  if (is.numeric(columna) &amp;&amp; any(is.na(columna))) {
+    # Calcula el valor de imputación (media o mediana)
+    valor_imputacion &lt;- switch(metodo,
+                               "media" = mean(columna, na.rm = TRUE),
+                               "mediana" = median(columna, na.rm = TRUE))
+    
+    # Realiza la imputación
+    df_imputado[is.na(df_imputado[[col_name]]), col_name] &lt;- valor_imputacion
+    columnas_imputadas &lt;- c(columnas_imputadas, col_name)
+  }
+}
+</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------------------</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 3: Imputación de NAs en columnas numéricas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># -------------------------------------------------------------------------------
+# Paso 4: Preparar la salida como lista
+# La función devuelve una lista con el dataframe imputado y un resumen breve.
+resultado &lt;- list(
+  data_imputed = df_imputado,
+  method_used = metodo,
+  columns_affected = columnas_imputadas
+)
+</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------------------------------------------------------------</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 4: Preparar la salida como lista</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># Paso 5: Asignamos una clase a la lista. Esto permite un 'print' personalizado.
+class(resultado) &lt;- "imputacion_data"
+
+return(resultado)
+</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 5: Asignamos una clase a la lista. Esto permite un 'print' personalizado.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La función completa resultante es la siguiente</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>imputar_na_num <span class="ot">&lt;-</span> <span class="cf">function</span>(data, <span class="at">metodo =</span> <span class="st">"media"</span>) {</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># data: El dataframe de entrada.</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># metodo: "media" (por defecto) o "mediana" para la imputación.</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1. Validación de entradas</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.data.frame</span>(data)) {</span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: 'data' debe ser un dataframe."</span>)</span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>metodo <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"media"</span>, <span class="st">"mediana"</span>)) {</span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Error: 'metodo' debe ser 'media' o 'mediana'."</span>)</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2. Copia del dataframe para no modificar el original</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  df_imputado <span class="ot">&lt;-</span> data</span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  columnas_imputadas <span class="ot">&lt;-</span> <span class="fu">character</span>(<span class="dv">0</span>) <span class="co"># Para registrar qué columnas se modifican</span></span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3. Imputación de NAs en columnas numéricas</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col_name <span class="cf">in</span> <span class="fu">names</span>(df_imputado)) {</span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>    columna <span class="ot">&lt;-</span> df_imputado[[col_name]]</span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">is.numeric</span>(columna) <span class="sc">&amp;&amp;</span> <span class="fu">any</span>(<span class="fu">is.na</span>(columna))) {</span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Calcula el valor de imputación (media o mediana)</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>      valor_imputacion <span class="ot">&lt;-</span> <span class="cf">switch</span>(metodo,</span>
+<span id="cb51-24"><a href="#cb51-24" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"media"</span> <span class="ot">=</span> <span class="fu">mean</span>(columna, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb51-25"><a href="#cb51-25" aria-hidden="true" tabindex="-1"></a>                                 <span class="st">"mediana"</span> <span class="ot">=</span> <span class="fu">median</span>(columna, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb51-26"><a href="#cb51-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb51-27"><a href="#cb51-27" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Realiza la imputación</span></span>
+<span id="cb51-28"><a href="#cb51-28" aria-hidden="true" tabindex="-1"></a>      df_imputado[<span class="fu">is.na</span>(df_imputado[[col_name]]), col_name] <span class="ot">&lt;-</span> valor_imputacion</span>
+<span id="cb51-29"><a href="#cb51-29" aria-hidden="true" tabindex="-1"></a>      columnas_imputadas <span class="ot">&lt;-</span> <span class="fu">c</span>(columnas_imputadas, col_name)</span>
+<span id="cb51-30"><a href="#cb51-30" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb51-31"><a href="#cb51-31" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb51-32"><a href="#cb51-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-33"><a href="#cb51-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 4. Preparar la salida como lista</span></span>
+<span id="cb51-34"><a href="#cb51-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># La función devuelve una lista con el dataframe imputado y un resumen breve.</span></span>
+<span id="cb51-35"><a href="#cb51-35" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb51-36"><a href="#cb51-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_imputed =</span> df_imputado,</span>
+<span id="cb51-37"><a href="#cb51-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">method_used =</span> metodo,</span>
+<span id="cb51-38"><a href="#cb51-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">columns_affected =</span> columnas_imputadas</span>
+<span id="cb51-39"><a href="#cb51-39" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb51-40"><a href="#cb51-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-41"><a href="#cb51-41" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 5. Asignamos una clase a la lista. Esto permite un 'print' personalizado.</span></span>
+<span id="cb51-42"><a href="#cb51-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(resultado) <span class="ot">&lt;-</span> <span class="st">"imputacion_data"</span></span>
+<span id="cb51-43"><a href="#cb51-43" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb51-44"><a href="#cb51-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(resultado)</span>
+<span id="cb51-45"><a href="#cb51-45" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">imputar_na_num</span>(airquality)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">any</span>(<span class="fu">is.na</span>(df<span class="sc">$</span>data_imputed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>Con el objetivo personalizar el ouput de la función <code>imputar_na_num</code>, se agregan atributos especiales a esta (clase S3)</p>
+<pre><code># Clase S3: proveemos una opcion de impresión más informativa al objeto "imputacion_data"
+
+print.imputacion_data &lt;- function(x, ...) {
+  
+  # Paso 6: encabezado de la salida  
+  
+  # Paso 7: identificamos las columnas afectadas
+  
+  # Paso 8: preparamos el texto de salida 
+
+}
+</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clase S3: proveemos una opcion de impresión más informativa al objeto "imputacion_data"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># Paso 6: encabezado de la salida  
+  cat("--- Resultado de la Imputación de NAs ---\n")
+  cat("Método de imputación usado:", x$method_used, "\n")</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 6: encabezado de la salida  </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code># Paso 7: identificamos las columnas afectadas
+  if (length(x$columns_affected) &gt; 0) {
+    cat("Columnas numéricas afectadas por la imputación:\n")
+    for (col in x$columns_affected) {
+      cat("-", col, "\n")
+    }
+  } else {
+    cat("No se encontraron NAs en columnas numéricas o no se realizaron imputaciones.\n")
+  }
+  </code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 7: identificamos las columnas afectadas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>  # Paso 8: preparamos el texto de salida 
+  cat("\nPrimeras filas del dataframe imputado:\n")
+  print(head(x$data_imputed))
+  cat("\nPara acceder al dataframe completo, usa: 'nombre_tu_resultado$data_imputed'.\n")
+  </code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 8: preparamos el texto de salida </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>El código completo es:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clase S3: proveemos una opcion de impresión más informativa al objeto "imputacion_data"</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>print.imputacion_data <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 6: encabezado de la salida  </span></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"--- Resultado de la Imputación de NAs ---</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Método de imputación usado:"</span>, x<span class="sc">$</span>method_used, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 7: identificamos las columnas afectadas</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(x<span class="sc">$</span>columns_affected) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Columnas numéricas afectadas por la imputación:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (col <span class="cf">in</span> x<span class="sc">$</span>columns_affected) {</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">"-"</span>, col, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"No se encontraron NAs en columnas numéricas o no se realizaron imputaciones.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Paso 8: preparamos el texto de salida </span></span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Primeras filas del dataframe imputado:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">head</span>(x<span class="sc">$</span>data_imputed))</span>
+<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para acceder al dataframe completo, usa: 'nombre_tu_resultado$data_imputed'.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">imputar_na_num</span>(airquality)</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>--- Resultado de la Imputación de NAs ---
+Método de imputación usado: media 
+Columnas numéricas afectadas por la imputación:
+- Ozone 
+- Solar.R 
+
+Primeras filas del dataframe imputado:
+     Ozone  Solar.R Wind Temp Month Day
+1 41.00000 190.0000  7.4   67     5   1
+2 36.00000 118.0000  8.0   72     5   2
+3 12.00000 149.0000 12.6   74     5   3
+4 18.00000 313.0000 11.5   62     5   4
+5 42.12931 185.9315 14.3   56     5   5
+6 28.00000 185.9315 14.9   66     5   6
+
+Para acceder al dataframe completo, usa: 'nombre_tu_resultado$data_imputed'.</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="depuración-debugging-y-mantenimiento" class="level2">
+<h2 class="anchored" data-anchor-id="depuración-debugging-y-mantenimiento">Depuración (debugging) y mantenimiento</h2>
+<p>Los errores en los programas se llaman <strong>bugs</strong>. El proceso de eliminarlos se llama <strong>depuración</strong>. Aunque el objetivo es escribir programas sin errores, a veces cometemos equivocaciones.</p>
+<section id="cinco-pasos-para-depurar-un-programa" class="level3">
+<h3 class="anchored" data-anchor-id="cinco-pasos-para-depurar-un-programa">Cinco pasos para depurar un programa:</h3>
+<ol type="1">
+<li><strong>Reconocer que existe un error.</strong></li>
+<li><strong>Hacer que el error sea reproducible.</strong></li>
+<li><strong>Identificar la causa del error.</strong></li>
+<li><strong>Corregir el error y probar.</strong></li>
+<li><strong>Buscar errores similares.</strong></li>
+</ol>
+</section>
+<section id="reconociendo-que-existe-un-error" class="level3">
+<h3 class="anchored" data-anchor-id="reconociendo-que-existe-un-error">Reconociendo que existe un error</h3>
+<p>A veces es evidente: el programa no funciona. Pero en otros casos, el programa parece funcionar, aunque da resultados incorrectos o falla con ciertos datos de entrada. Este tipo de errores son más difíciles de detectar.</p>
+<p><strong>Estrategia recomendada:</strong><br>
+Dividir el programa en partes simples, como se sugiere en secciones anteriores del texto.</p>
+</section>
+</section>
+<section id="buenas-prácticas-para-escribir-y-probar-funciones" class="level2">
+<h2 class="anchored" data-anchor-id="buenas-prácticas-para-escribir-y-probar-funciones">Buenas Prácticas para Escribir y Probar Funciones</h2>
+<p>Al desarrollar funciones en programación, es importante seguir estas recomendaciones:</p>
+<ul>
+<li><strong>Documentar entradas y salidas</strong>: Especificar claramente qué datos recibe y qué devuelve la función.</li>
+<li><strong>Probar supuestos sobre las entradas</strong>: Verificar que los datos de entrada cumplen con lo esperado.</li>
+<li><strong>Considerar casos límite</strong>: Asegurarse de que la función maneje correctamente situaciones extremas o inusuales.</li>
+<li><strong>Escribir dos versiones de la función</strong>:
+<ul>
+<li>Una versión simple para verificar la <strong>corrección</strong>.</li>
+<li>Una versión optimizada para mejorar el <strong>rendimiento</strong>.</li>
+</ul></li>
+</ul>
+</section>
+<section id="identificar-la-causa-del-error" class="level2">
+<h2 class="anchored" data-anchor-id="identificar-la-causa-del-error">Identificar la Causa del Error</h2>
+<p>Una vez que se confirma la existencia de un bug, el siguiente paso es <strong>identificar su causa</strong>.</p>
+<section id="pasos-recomendados" class="level3">
+<h3 class="anchored" data-anchor-id="pasos-recomendados">Pasos recomendados:</h3>
+<ul>
+<li><strong>Leer los mensajes de error</strong>: Intenta comprenderlos lo mejor posible.</li>
+<li><strong>Buscar ayuda</strong>:
+<ul>
+<li>Si el mensaje no es claro, intenta buscarlo en línea.</li>
+<li>También puedes pedir ayuda a alguien con más experiencia.</li>
+</ul></li>
+<li><strong>Usar <code>traceback()</code> en R</strong>:
+<ul>
+<li>Esta función muestra la pila de funciones activas en el momento del error.</li>
+<li>Es útil para rastrear dónde ocurrió el problema.</li>
+</ul></li>
+</ul>
+</section>
+<section id="ejemplos" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplos">Ejemplos</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Var: función de varinza</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="co"># sqrt(var)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(randompackage)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co">#if(x==NA)print("NA")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print.imputacion_data(iris$Species)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La función <code>traceback()</code> en R muestra la secuencia de llamadas a funciones (la pila de ejecución) que llevó al error, ayudando a identificar dónde ocurrió el problema en el código.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar en la consola</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="co"># traceback()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="cómo-funciona-debug-en-r-para-depuración" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-funciona-debug-en-r-para-depuración">Cómo Funciona <code>debug()</code> en R para Depuración</h2>
+<p>La función <strong><code>debug()</code></strong> en R es una herramienta esencial para inspeccionar el código de una función paso a paso y entender su comportamiento o encontrar errores. Cuando aplicas <code>debug()</code> a una función, R entra en un modo interactivo especial (<strong>modo de depuración</strong>) la próxima vez que esa función es llamada.</p>
+<p><strong>Mecanismo:</strong></p>
+<ol type="1">
+<li><strong>Activación:</strong> Usas <code>debug(nombre_de_tu_funcion)</code>.</li>
+<li><strong>Ejecución:</strong> La próxima vez que llamas a <code>nombre_de_tu_funcion</code>, R no la ejecuta normalmente. En su lugar, detiene la ejecución al principio de la función.</li>
+<li><strong>Modo Interactivo:</strong> Tu consola de R cambiará a un <em>prompt</em> especial, usualmente <code>Browse[1]&gt;</code>. En este modo, puedes ejecutar comandos de depuración para controlar el flujo del código y examinar el estado de las variables.</li>
+<li><strong>Desactivación:</strong> Para que la función vuelva a ejecutarse normalmente, usas <code>undebug(nombre_de_tu_funcion)</code>.</li>
+</ol>
+<hr>
+</section>
+<section id="comandos-útiles-en-modo-de-depuración-browse1" class="level2">
+<h2 class="anchored" data-anchor-id="comandos-útiles-en-modo-de-depuración-browse1">Comandos Útiles en Modo de Depuración (<code>Browse[1]&gt;</code>)</h2>
+<p>Cuando estás en el <em>prompt</em> <code>Browse[1]&gt;</code>, puedes usar los siguientes comandos para navegar por tu código:</p>
+<ul>
+<li><strong><code>n</code></strong> (Next): Ejecuta la <strong>siguiente línea</strong> de código. Si la siguiente línea es una llamada a otra función, no entrará en esa función; simplemente ejecutará la función como un todo.</li>
+<li><strong><code>s</code></strong> (Step Into): Ejecuta la siguiente línea. Si la siguiente línea es una <strong>llamada a otra función</strong>, <code>s</code> te permite <strong>entrar</strong> en esa función para depurarla también, paso a paso.</li>
+<li><strong><code>f</code></strong> (Finish): Ejecuta el <strong>resto del bucle actual o la función actual</strong> y sale de ella, volviendo al nivel de depuración superior o a la ejecución normal.</li>
+<li><strong><code>c</code></strong> (Continue): Ejecuta el código <strong>hasta el final</strong> de la función o hasta el próximo punto de interrupción (si lo hubiera).</li>
+<li><strong><code>Q</code></strong> (Quit): <strong>Sale inmediatamente del modo de depuración</strong> y detiene la ejecución de la función.</li>
+<li><strong><code>where</code></strong>: Muestra la <strong>pila de llamadas</strong> (<code>call stack</code>), indicando en qué funciones anidadas te encuentras actualmente. Es útil para saber dónde estás en el flujo de ejecución.</li>
+<li><strong><code>ls()</code></strong>: Lista las variables y objetos disponibles en el <strong>entorno actual</strong> (dentro de la función o bucle).</li>
+<li><strong><code>nombre_de_variable</code></strong>: Simplemente escribe el nombre de cualquier variable que esté en el entorno actual para <strong>ver su valor</strong>.</li>
+</ul>
+<hr>
+</section>
+<section id="otras-opciones-de-depuración" class="level2">
+<h2 class="anchored" data-anchor-id="otras-opciones-de-depuración">Otras Opciones de Depuración</h2>
+<p>Además de <code>debug()</code>, R ofrece otras herramientas para depurar. <strong><code>browser()</code></strong> permite insertar pausas específicas en el código. <strong><code>debugonce()</code></strong> depura solo la siguiente ejecución de la función. Para usuarios de RStudio, los <strong>puntos de interrupción gráficos</strong> son la forma más visual y sencilla de depurar paso a paso, sin modificar el código.</p>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="co">#debug(imputar_na_num)</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co">#imputar_na_num(iris)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co">#debug(imputar_na_num)</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co">#imputar_na_num(iris$Species)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
