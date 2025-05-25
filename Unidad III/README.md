@@ -1,6 +1,6 @@
 # Unidad III:   Programando con R
 
-# Clase del Martes
+# SESIÓN 1: Clase del Martes
 
 Link de clase correspondiente al dia [20-05-2025](https://udla.zoom.us/rec/share/8etIVOMg5Zk1qgUw7yhvKtv-G4CbM0vgRLW3s4VdWoPYRjlHB9A9ae4U5RPhwOo5.YMz1lYl09CxbsbS5?startTime=1747781431000&pwd=H1lBJRwRH7OC3R36cZwJ-KvIG_jUrNxs)
 
@@ -526,6 +526,9 @@ corplot_multi <- function(x, y, alpha = 0.05) {
 
 corplot_multi(x1,x2)$p
 ```
+## sesión 2: Funciones con output de clase S3
+
+Link de la clase del sabado [link](https://udla.zoom.us/rec/share/aUus2JqlpsNiTihY51wAf3TJI_Uc8fa4AqNjvBtTPOdLI89vLIBCHY7_osSLPu2S.mKJiqmDlbuJNQAsS?startTime=1748087991000&pwd=7eHH27nh2kXNItTx5M3X4J3kYetsx-go)
 
 ### Output en clase `S3`
 
