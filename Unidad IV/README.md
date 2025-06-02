@@ -535,6 +535,8 @@ print(tabla_output)
 
 ### SESIÓN 2: Modelos descriptivos y predictivos con `tidymodels`
 
+Link de la clase del 31-05-2025 [Link](https://udla.zoom.us/rec/share/zUgXpqE6HcMZ_iItcVQY-7cenJc8gIRHJWYQ-3S0kYSWwZ-_rAP3IKTeRAMTvejv.ch0s9GMrb23vjwb3?startTime=1748888936000&pwd=_PnqblyVLSDnP2oXxE5xMRidzOwX_Ino)
+
 ## Entrenamiento de un modelo logistico para clasificación
 
 ```{r}
