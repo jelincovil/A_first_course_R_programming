@@ -1,0 +1,905 @@
+---
+title: "Unidad V: Generación de datos desde modelos de probabilidad"
+format: html
+editor: visual
+---
+
+### **Sesión 1: Martes 10-06-2026**
+
+# Simulación/generación de datos desde modelos de probabilidad
+
+::: preponderante-frase
+**Principio: Los datos iniciales me dan una idea del proceso aleatorio que los generó. Con este proceso puedo generar datos aumentados para extraer el máximo de información**.
+:::
+
+-   **1 Estudios de modelos generando datos en base de hipótesis**
+-   **2 Aumento y robustez de datos**
+-   **3 Estudio de propiedades estadísticas**
+-   **4 Verificación y validación de métodos estadísticos**
+
+```{mermaid}
+
+graph TD
+    A[Generación de Datos con Modelos] --> C{Estudios de Modelos e Hipótesis};
+    A --> D{Aumento y Robustez de Datos};
+    A --> E{Estudio de Propiedades Estadísticas};
+    A --> F{Verificación y Validación de Métodos};
+
+    C -- "Proporciona bases para" --> D;
+    D -- "Alimenta análisis para" --> E;
+    E -- "Ayuda a la fiabilidad de" --> F;
+    F -- "Refina Modelos/Supuestos para" --> C;
+    C -- "Guía la especificación del modelo" --> E;
+    D -- "Mejora la calidad de la estimación" --> E;
+    E -- "Fundamental para inferencia" --> F;
+
+```
+
+La simulación de datos, anclada en modelos probabilísticos, es una piedra angular en la estadística moderna. Permite explorar fenómenos aleatorios sin información empírica, facilitando la formulación de hipótesis y el diseño experimental. Además, es crucial para aumentar y robustecer análisis con datos escasos, permitiendo un estudio profundo de la variabilidad y estabilidad de las estimaciones. La técnica también es indispensable para la estimación de propiedades de estadísticos, como las distribuciones de muestreo y los intervalos de confianza, mediante métodos como Monte Carlo. Finalmente, la simulación es vital para verificar y validar la robustez y precisión de los métodos estadísticos bajo diversas condiciones controladas.
+
+## **1. Estudios de modelos generando datos en base de hipótesis**
+
+Este principio recomienda explorar fenómenos aleatorios sin datos reales, facilitando la formulación y prueba de hipótesis sobre su comportamiento y el diseño de experimentos futuros. Es esencial para obtener una comprensión inicial del sistema antes de cualquier recolección empírica.
+
+## **2. Aumento y Robustez de Datos**
+
+La simulación es útil para enriquecer análisis con datos empíricos escasos, generando información a partir de modelos ajustados. Esto permite estudiar la variabilidad y estabilidad de las estimaciones y obtener conclusiones más robustas a partir de conjuntos de datos limitados.
+
+## **3. Estudio de Propiedades Estadísticas**
+
+Si la hipótesis sobre mis datos fuesen ciertas ¿Qué propiedades tiene cada método estadístico? Este principio se centra en estimar propiedades de estadísticos con distribuciones desconocidas analíticamente. Mediante simulaciones como Monte Carlo, se pueden aproximar distribuciones de muestreo, calcular intervalos de confianza y determinar la potencia de pruebas, vital para la inferencia.
+
+## **4. Verificación y Validación de Métodos**
+
+Si algunas de mis supuestos sobre el modelo no fuesen verdaderos, ¿cómo afectaria esto a mis métodos estadísticos? La simulación es clave para probar la validez y robustez de los métodos estadísticos. Permite verificar si un método produce resultados precisos y confiables bajo condiciones controladas y diversos escenarios, asegurando su aplicabilidad y exactitud.
+
+# **Ejemplos**
+
+## **5. Ejemplo de exploración y Generación de Hipótesis**
+
+### Generador de realizaciones de variables aleatorias de una dimensión
+
+Este apartado, generamos datos de distribuciones de probabilidad univariadas comunes en R, lo que permite explorar hipótesis sobre la naturaleza de una sola variable.
+
+#### **1. Generando números uniformes** (`runif()`)
+
+La función `runif(n, min=0, max=1)` genera `n` números aleatorios de una distribución uniforme. Cada valor en el rango `[min, max]` tiene la misma probabilidad de ser generado.
+
+Densidad asociada: dunif(x, min=0, max=1)
+
+```{r}
+# Generar 5 números uniformes entre 0 y 1
+runif(5)
+
+# Generar 10 números uniformes entre 10 y 20
+runif(10, min = 10, max = 20)
+
+# Visualizar la densidad de una muestra uniforme
+hist(runif(1000, min = 0, max = 1), freq = FALSE,
+     main = "Densidad de Muestra Uniforme", xlab = "Valor")
+curve(dunif(x, min = 0, max = 1), add = TRUE, col = "red", lwd = 2)
+
+```
+
+#### **2. Generando números binomiales** (`rbinom()`)
+
+La función `rbinom(n, size, prob)` genera `n` números aleatorios de una distribución binomial. Esta distribución describe el número de éxitos (`x`) en un número fijo de ensayos (`size`), donde cada ensayo tiene una probabilidad de éxito (`prob`).
+
+Densidad (función de masa de probabilidad) asociada: dbinom(x, size, prob)
+
+Código de ejemplo:
+
+```         
+# Simular el número de caras al lanzar una moneda 10 veces, repetido 5 veces
+rbinom(n = 5, size = 10, prob = 0.5)
+
+# Simular el número de estudiantes que aprueban de 20, si la prob de aprobar es 0.7
+rbinom(n = 1, size = 20, prob = 0.7)
+
+# Visualizar la densidad de una muestra binomial
+sim_binomial <- rbinom(n = 1000, size = 10, prob = 0.5)
+barplot(table(sim_binomial) / length(sim_binomial),
+        main = "Densidad de Muestra Binomial", xlab = "Número de Éxitos", ylab = "Probabilidad")
+points(x = 0:10, y = dbinom(0:10, size = 10, prob = 0.5), col = "red", pch = 16) # Puntos de densidad
+```
+
+------------------------------------------------------------------------
+
+#### **3. Generando números de Poisson** (`rpois()`)
+
+La función `rpois(n, lambda)` genera `n` números aleatorios de una distribución de Poisson, donde `lambda` es la tasa promedio de ocurrencias en un intervalo fijo de tiempo o espacio.
+
+Densidad (función de masa de probabilidad) asociada: dpois(x, lambda)
+
+```{r}
+# Simular el número de llamadas recibidas en una hora, si el promedio es 5 llamadas/hora
+rpois(n = 1, lambda = 5)
+
+# Simular el número de defectos por metro de tela, si el promedio es 0.2 defectos/metro
+rpois(n = 10, lambda = 0.2)
+
+# Visualizar la densidad de una muestra de Poisson
+sim_poisson <- rpois(n = 1000, lambda = 3)
+barplot(table(sim_poisson) / length(sim_poisson),
+        main = "Densidad de Muestra de Poisson", xlab = "Número de Eventos", ylab = "Probabilidad")
+points(x = 0:max(sim_poisson), y = dpois(0:max(sim_poisson), lambda = 3), col = "red", pch = 16)
+
+```
+
+#### **4. Generando números normales** (`rnorm()`)
+
+La función `rnorm(n, mean=0, sd=1)` genera `n` números aleatorios de una distribución normal (gaussiana) con una media (`mean`) y desviación estándar (`sd`) especificadas.
+
+Densidad asociada: dnorm(x, mean=0, sd=1)
+
+```{r}
+# Simular la altura de 10 personas, con media 170 cm y desviación estándar 5 cm
+rnorm(n = 10, mean = 170, sd = 5)
+
+# Generar 1000 valores de una distribución normal estándar y visualizar su densidad
+hist(rnorm(1000, mean = 0, sd = 1), freq = FALSE,
+     main = "Densidad de Muestra Normal", xlab = "Valor")
+curve(dnorm(x, mean = 0, sd = 1), add = TRUE, col = "red", lwd = 2)
+
+```
+
+#### **5. Generando números exponenciales** (`rexp()`)
+
+La función `rexp(n, rate=1)` genera `n` números aleatorios de una distribución exponencial, donde `rate` (tasa) es 1/media.
+
+Densidad asociada: dexp(x, rate=1)
+
+```{r}
+# Simular el tiempo de espera hasta la siguiente llegada de un cliente, si la tasa es 0.5 llegadas/minuto
+rexp(n = 1, rate = 0.5)
+
+# Generar 20 tiempos de falla de un componente con una tasa de 0.1 fallas/hora
+rexp(n = 20, rate = 0.1)
+
+# Visualizar la densidad de una muestra exponencial
+hist(rexp(1000, rate = 1), freq = FALSE,
+     main = "Densidad de Muestra Exponencial", xlab = "Valor")
+curve(dexp(x, rate = 1), add = TRUE, col = "red", lwd = 2)
+
+```
+
+#### **6. Asegurando la reproducibilidad** (`set.seed()`)
+
+Para que tus simulaciones generen los mismos resultados cada vez que se ejecutan (esencial para la verificación de hipótesis y compartir código reproducible), se usa `set.seed()`.
+
+```{r}
+# Sin set.seed(), cada ejecución dará números diferentes
+rnorm(3)
+rnorm(3)
+
+# Con set.seed(), siempre obtendrás los mismos números
+set.seed(42)
+rnorm(3) # La primera ejecución con esta semilla
+set.seed(42)
+rnorm(3) # La segunda ejecución con la misma semilla da los mismos resultados
+```
+
+### Generador de realizaciones de variables aleatorias de dos dimensiones
+
+Simular datos bidimensionales nos permite explorar cómo dos variables podrían estar relacionadas o no. Esto es clave para probar ideas sobre cómo funcionan los sistemas.
+
+#### **1. Variables Normales Correlacionadas**
+
+Generar dos variables normales con una relación específica.
+
+```{r}
+set.seed(123) # Para reproducibilidad
+n <- 100     # Cantidad de puntos
+rho <- 0.7   # Correlación deseada
+
+# Generar variables normales independientes
+z1 <- rnorm(n)
+z2 <- rnorm(n)
+
+# Transformar para crear correlación (ej. altura y peso)
+altura <- 170 + 10 * z1
+peso <- 70 + 10 * (rho * z1 + sqrt(1 - rho^2) * z2)
+
+# Ver datos y correlación
+datos_simulados <- data.frame(Altura = altura, Peso = peso)
+print(head(datos_simulados))
+print(cor(datos_simulados$Altura, datos_simulados$Peso))
+
+# Visualizar la relación
+plot(datos_simulados$Altura, datos_simulados$Peso,
+     main = "Altura vs. Peso (Correlacionados)",
+     xlab = "Altura (cm)", ylab = "Peso (kg)")
+
+```
+
+#### **2. Relación Lineal con Ruido (Regresión Simple)**
+
+Simular una variable que depende linealmente de otra, con algo de aleatoriedad.
+
+```{r}
+set.seed(456) # Para reproducibilidad
+n <- 50      # Cantidad de puntos
+
+# Variable independiente (ej. publicidad)
+publicidad <- runif(n, min = 10, max = 100)
+
+# Variable dependiente (ej. ventas = 200 + 3*publicidad + ruido)
+ventas <- 200 + 3 * publicidad + rnorm(n, mean = 0, sd = 50)
+
+# Ver datos
+datos_simulados_reg <- data.frame(Publicidad = publicidad, Ventas = ventas)
+print(head(datos_simulados_reg))
+
+# Visualizar la relación
+plot(datos_simulados_reg$Publicidad, datos_simulados_reg$Ventas,
+     main = "Ventas vs. Publicidad (Relación Lineal)",
+     xlab = "Inversión en Publicidad", ylab = "Ventas")
+abline(lm(Ventas ~ Publicidad, data = datos_simulados_reg), col = "red")
+
+```
+
+#### **3. Variables Independientes (sin relación)**
+
+Generar dos variables donde una no afecta a la otra.
+
+```{r}
+set.seed(789) # Para reproducibilidad
+n <- 100     # Cantidad de puntos
+
+# Variable 1 (ej. examen 1)
+examen_1 <- rnorm(n, mean = 70, sd = 10)
+
+# Variable 2 (ej. tiempo de traslado)
+tiempo_traslado <- runif(n, min = 5, max = 60)
+
+# Ver datos y correlación (cercana a cero)
+datos_independientes <- data.frame(Examen1 = examen_1, TiempoTraslado = tiempo_traslado)
+print(head(datos_independientes))
+print(cor(datos_independientes$Examen1, datos_independientes$TiempoTraslado))
+
+# Visualizar la ausencia de relación
+plot(datos_independientes$Examen1, datos_independientes$TiempoTraslado,
+     main = "Calificación Examen vs. Tiempo Traslado (Independientes)",
+     xlab = "Calificación Examen 1", ylab = "Tiempo de Traslado (min)")
+
+```
+
+#### **4. Relación No Lineal (Exponencial)**
+
+Simular una variable que crece o decrece exponencialmente con respecto a otra.
+
+```{r}
+set.seed(1011) # Para reproducibilidad
+n <- 70      # Cantidad de puntos
+
+# Variable independiente (ej. tiempo)
+tiempo <- seq(0, 10, length.out = n)
+
+# Variable dependiente: crecimiento exponencial con ruido
+poblacion <- 50 * exp(0.5 * tiempo) + rnorm(n, mean = 0, sd = 400)
+
+# Ver datos
+datos_exponenciales <- data.frame(Tiempo = tiempo, Poblacion = poblacion)
+print(head(datos_exponenciales))
+
+# Visualizar la relación exponencial
+plot(datos_exponenciales$Tiempo, datos_exponenciales$Poblacion,
+     main = "Crecimiento Poblacional (Exponencial)",
+     xlab = "Tiempo", ylab = "Tamaño de Población")
+curve(50 * exp(0.5 * x), add = TRUE, col = "red", lwd = 2, lty = 2) # Curva teórica
+
+```
+
+### Simulación de cadenas de Markov
+
+Una **cadena de Markov** es un proceso estocástico que describe una secuencia de eventos donde la probabilidad de cada evento futuro depende únicamente del estado actual, y no de la secuencia de eventos que lo precedieron. Matemáticamente, esto se conoce como la **propiedad de Markov**. Se define por un conjunto de estados y una **matriz de probabilidades de transición** P, donde Pij​ es la probabilidad de pasar del estado i al estado j. $$
+\{X_1, X_{2}, X_{3}, \ldots, X_n\} = \{X_n\}
+$$ $$
+P(X_{n+1}=j|X_{n}=i,  X_{n-1}=s, \ldots, X_{1}=f) = P(X_{n+1}=j|X_{n}=i)=P_{ij}
+$$
+
+### **Simulación de Cadenas de Markov: Ejemplos con R**
+
+Las cadenas de Markov modelan sistemas que cambian de estado discretamente a lo largo del tiempo, donde el próximo estado solo depende del estado actual. Esto es útil para explorar la dinámica de sistemas con transiciones probabilísticas.
+
+#### **1. Clima Simple: Soleado o Lluvioso**
+
+Simular la secuencia de estados del clima (soleado o lluvioso) día a día, basándose en la probabilidad de que cambie o permanezca igual.
+
+|              | Soleado | Lluvioso |
+|--------------|---------|----------|
+| **Soleado**  | 0.8     | 0.2      |
+| **Lluvioso** | 0.3     | 0.7      |
+
+```{r}
+set.seed(101) # Para reproducibilidad
+
+# Definir los posibles estados del clima
+estados <- c("Soleado", "Lluvioso")
+
+# Matriz de probabilidades de transición
+# P(Soleado -> Soleado) = 0.8, P(Soleado -> Lluvioso) = 0.2
+# P(Lluvioso -> Soleado) = 0.3, P(Lluvioso -> Lluvioso) = 0.7
+matriz_transicion <- matrix(c(0.8, 0.2,  # Desde "Soleado"
+                              0.3, 0.7), # Desde "Lluvioso"
+                            nrow = 2, byrow = TRUE,
+                            dimnames = list(estados, estados))
+
+n_dias <- 30 # Simular 30 días
+estado_actual <- "Soleado" # Empezamos con un día soleado
+secuencia_clima <- character(n_dias)
+secuencia_clima[1] <- estado_actual
+
+# Simular la cadena de Markov día a día
+for (i in 2:n_dias) {
+  # Obtener las probabilidades de transición desde el estado actual
+  prob_siguientes <- matriz_transicion[estado_actual, ]
+  
+  # Muestrear el siguiente estado basado en esas probabilidades
+  estado_actual <- sample(estados, size = 1, prob = prob_siguientes)
+  secuencia_clima[i] <- estado_actual
+}
+
+print("Secuencia de Clima Simulada:")
+print(secuencia_clima)
+
+# Frecuencia de estados en la simulación
+print("Frecuencia de estados:")
+print(table(secuencia_clima))
+
+```
+
+#### **2. Movimiento de un Cliente entre Secciones de una Tienda**
+
+Simular el recorrido de un cliente por diferentes secciones de una tienda (e.g., Entrada, Ropa, Comida, Salida), con probabilidades de moverse de una a otra.
+
+```{r}
+set.seed(202) # Para reproducibilidad
+
+# Definir las secciones de la tienda
+secciones <- c("Entrada", "Ropa", "Comida", "Salida")
+
+# Matriz de probabilidades de transición
+# Ejemplo:
+# De Entrada: 50% Ropa, 30% Comida, 20% Salida
+# De Ropa: 10% Entrada, 40% Ropa, 30% Comida, 20% Salida
+# De Comida: 0% Entrada, 20% Ropa, 50% Comida, 30% Salida
+# De Salida: 100% Salida (estado absorbente)
+matriz_tienda <- matrix(c(0.0, 0.5, 0.3, 0.2, # Desde Entrada
+                          0.1, 0.4, 0.3, 0.2, # Desde Ropa
+                          0.0, 0.2, 0.5, 0.3, # Desde Comida
+                          0.0, 0.0, 0.0, 1.0), # Desde Salida
+                        nrow = 4, byrow = TRUE,
+                        dimnames = list(secciones, secciones))
+
+n_pasos_max <- 15 # Simular hasta 15 movimientos
+trayectoria_cliente <- character(n_pasos_max)
+estado_actual <- "Entrada" # El cliente siempre empieza en la Entrada
+trayectoria_cliente[1] <- estado_actual
+
+# Simular la trayectoria
+for (i in 2:n_pasos_max) {
+  if (estado_actual == "Salida") { # Si ya salió, se queda en "Salida"
+    trayectoria_cliente[i] <- "Salida"
+    next
+  }
+  
+  prob_siguientes <- matriz_tienda[estado_actual, ]
+  estado_actual <- sample(secciones, size = 1, prob = prob_siguientes)
+  trayectoria_cliente[i] <- estado_actual
+}
+
+print("Trayectoria del Cliente Simulada:")
+print(trayectoria_cliente)
+
+# Contar cuántas veces estuvo en cada sección
+print("Visitas por sección:")
+print(table(trayectoria_cliente))
+
+```
+
+### Métodos de aceptación y rechazo
+
+Este método simula valores de distribuciones complejas (como las bimodales) usando una distribución más simple. Se generan propuestas de la simple y se aceptan o rechazan según una regla de probabilidad, permitiendo muestrear formas inusuales.
+
+Acepta una muestra propuesta x si:
+
+$$
+U<M⋅g(x)f(x)​
+$$ Donde:
+
+-   U: Es un número aleatorio generado de una distribución uniforme entre 0 y 1 ($U∼Unif(0,1)$).
+-   f(x): Es la función de densidad de probabilidad (FDP) de la **distribución objetivo** de la que quieres muestrear.
+-   g(x): Es la FDP de la **distribución propuesta** (o envolvente), de la cual es fácil generar muestras.
+-   M: Es una constante tal que M⋅g(x)≥f(x) para todo x. Es decir, M⋅g(x) debe ser una "envolvente" de f(x).
+
+El **muestreo de aceptación/rechazo** genera números aleatorios de una distribución objetivo f(x) (compleja) usando una distribución propuesta g(x) (fácil de muestrear) y una constante M tal que M⋅g(x)≥f(x). Se acepta una muestra propuesta x (generada de g(x)) si un número uniforme aleatorio U (entre 0 y 1) es menor que la razón f(x)/(M⋅g(x)), de lo contrario se rechaza, asegurando que los puntos aceptados provengan efectivamente de la distribución f(x).
+
+Hipótesis: Queremos muestrear una mezcla de dos distribuciones normales (una densidad bimodal), con la siguiente función de densidad:
+
+$$
+f(x)=w1​⋅N(x∣μ1​,σ1​)+w2​⋅N(x∣μ2​,σ2​) donde w1​+w2​=1.
+$$
+
+En nuestro ejemplo, $f(x)=0.4⋅N(x∣μ1​=2,σ1​=0.5)+0.6⋅N(x∣μ2​=5,σ2​=1$).
+
+```{r}
+# función de densidad bimodal
+f_x <- function(x) {
+  0.4 * dnorm(x, mean = 2, sd = 0.5) + 0.6 * dnorm(x, mean = 5, sd = 1)
+}
+
+#  la curva de densidad
+curve(f_x(x), from = -1, to = 8,
+      main = "Densidad Bimodal",
+      xlab = "x", ylab = "f(x)",
+      col = "blue", lwd = 2)
+
+```
+
+```{r}
+set.seed(1233) # Para reproducibilidad
+
+# 1. Densidad objetivo (la que queremos muestrear: bimodal)
+target_density <- function(x) {
+  0.4 * dnorm(x, mean = 2, sd = 0.5) + 0.6 * dnorm(x, mean = 5, sd = 1)
+}
+
+# 2. Densidad propuesta (una normal simple que la "envuelve")
+proposal_density <- function(x) {
+  dnorm(x, mean = 3.5, sd = 2)
+}
+
+# 3. Encontrar M (constante para escalar la propuesta)
+x_range <- seq(-2, 8, length.out = 1000)
+M <- max(target_density(x_range) / proposal_density(x_range))
+cat("Valor de M:", M, "\n") # M debe ser > 1
+
+# 4. Generar muestras por Aceptación-Rechazo
+n_muestras_deseadas <- 5000
+muestras_aceptadas <- numeric(n_muestras_deseadas)
+conteo_aceptadas <- 0
+conteo_propuestas <- 0
+
+while (conteo_aceptadas < n_muestras_deseadas) {
+  propuesta_x <- rnorm(1, mean = 3.5, sd = 2) # Generar de la propuesta
+  u <- runif(1) # Valor para decisión
+
+  # Aceptar si la propuesta está "debajo" de la densidad objetivo ajustada
+  if (proposal_density(propuesta_x) > 0 && u < (target_density(propuesta_x) / (M * proposal_density(propuesta_x)))) {
+    conteo_aceptadas <- conteo_aceptadas + 1
+    muestras_aceptadas[conteo_aceptadas] <- propuesta_x
+  }
+  conteo_propuestas <- conteo_propuestas + 1 # Contar todas las propuestas
+}
+
+cat("Propuestas generadas:", conteo_propuestas, "\n")
+cat("Eficiencia:", n_muestras_deseadas / conteo_propuestas, "\n")
+
+# 5. Visualizar resultados
+hist(muestras_aceptadas, breaks = 50, freq = FALSE,
+     main = "Muestras Bimodales por Aceptación-Rechazo",
+     xlab = "Valor de X", ylab = "Densidad", col = "lightblue",
+     ylim = c(0,0.43))
+
+# Añadir curvas para comparación
+curve(target_density(x), add = TRUE, col = "red", lwd = 2) # Objetivo
+curve(M * proposal_density(x), add = TRUE, col = "darkgreen", lty = 2, lwd = 2) # Propuesta escalada
+
+legend("topright", legend = c("Densidad Objetivo", "Densidad Estimada"),
+       col = c("red", "darkgreen"), lty = c(1, 2), lwd = 2)
+
+```
+
+### **Sesión 2: Sabado 14-06-2026**
+
+## **6. Ejemplo del aumento y robustez de los datos**
+
+### Estimación de la Varianza y Construcción de Intervalos de Confianza via Bootstrapping
+
+El bootstrapping remuestra los datos originales para estimar la variabilidad de una estadística compleja, como el AUC, o para construir intervalos de confianza robustos cuando las fórmulas analíticas son difíciles de obtener o las suposiciones no se cumplen. Permite entender la fiabilidad de una métrica de rendimiento de un modelo sin depender de teorías distributivas restrictivas.
+
+![5-folds](https://media.geeksforgeeks.org/wp-content/uploads/20240610153827/Bootstrap-Method.png){width="60%"}
+
+```{r}
+# Cargar paquete
+library(boot)
+
+# 1. Muestra original de ejemplo
+set.seed(123)
+original_sample <- rnorm(n = 50, mean = 50, sd = 10) # 30 tiempos de respuesta
+
+# Media de la muestra original
+observada_media <- mean(original_sample)
+
+
+# 2. Función del estadístico (la media)
+calcular_media <- function(data, indices) {
+  return(mean(data[indices]))
+}
+
+# 3. Realizar Bootstrapping (10,000 réplicas)
+set.seed(456)
+boot_results <- boot(data = original_sample, statistic = calcular_media, R = 10000)
+
+# 4. Estudiar la Distribución del Promedio e Inferencias
+# Visualizar distribución de medias bootstrap
+hist(boot_results$t, breaks = 50, main = "Distribución de Medias Bootstrap",
+     xlab = "Medias Bootstrap", col = "lightgreen", border = "white")
+abline(v = observada_media, col = "red", lty = 2, lwd = 2) # Media original
+
+```
+
+-   El promedio es insesgado para estimar \$\\mu\$,
+
+    $$
+    E(\bar{X})= \mu.
+    $$
+
+```{r}
+
+# Estimar Error Estándar de la Media
+estimated_se <- sd(boot_results$t)
+cat("Error Estándar (Bootstrapping):", estimated_se, "\n")
+
+# Calcular Intervalos de Confianza (percentil y BCa)
+boot_ci_perc <- boot.ci(boot_results, type = "perc")
+boot_ci_bca <- boot.ci(boot_results, type = "bca")
+
+cat("\nIC 95% (Percentil):\n")
+print(boot_ci_perc)
+cat("\nIC 95% (BCa):\n")
+print(boot_ci_bca)
+
+
+
+```
+
+**Ejemplo:** **Intervalo de Confianza para el Área Bajo la Curva ROC (AUC) de un Modelo Predictivo de Enfermedad.**
+
+```{r}
+# Cargar paquetes
+suppressPackageStartupMessages({library(pROC) ; library(boot)})
+
+# Datos de ejemplo 'aSAH' (predicción de enfermedad)
+data(aSAH)
+
+# Ajustar modelo logístico simple
+modelo_logistico <- glm(outcome ~ s100b, data = aSAH, family = binomial)
+aSAH$prob_predicha <- predict(modelo_logistico, type = "response")
+
+# Función para calcular AUC (para bootstrapping)
+calcular_auc <- function(data, indices) {
+  d <- data[indices, ]
+  if (length(unique(d$outcome)) < 2) return(NA) # Evitar errores si falta una clase
+  roc_obj <- roc(response = d$outcome, predictor = d$prob_predicha, quiet = TRUE)
+  return(auc(roc_obj))
+}
+
+# Realizar bootstrapping (2000 remuestreos)
+set.seed(123) 
+boot_results <- boot(data = aSAH, statistic = calcular_auc, R = 10000)
+# Considerando lamisma predicción
+# Mostrar resultados e intervalo de confianza BCa
+print(boot_results)
+boot_ci <- boot.ci(boot_results, type = "bca")
+print(boot_ci)
+```
+
+### Evaluación Robusta del Rendimiento de Modelos via Cross-Validation
+
+La validación cruzada divide los datos en múltiples subconjuntos para entrenar y probar un modelo repetidamente, ofreciendo una estimación más confiable de su rendimiento en datos nuevos y ayudando a seleccionar los mejores hiperparámetros. Es esencial para evitar el sobreajuste y obtener una medida realista de la capacidad de generalización del modelo, especialmente con datasets limitados o con muchas variables.
+
+**Ejemplo:** **Estimación del Error de Predicción de un Modelo de Regresión Penalizada (Lasso/Ridge) en Genómica.**
+
+![5-folds](https://miro.medium.com/v2/resize:fit:520/1*z3OmZ2Vp3uskfgLIZVIeTQ.jpeg){width="40%"}
+
+```{r}
+# Cargar paquetes
+suppressPackageStartupMessages({library(glmnet) ; library(caret) })
+
+# Datos de ejemplo 'diabetes' (predicción de enfermedad)
+data(diabetes, package = "lars")
+X <- as.matrix(diabetes$x)
+Y <- diabetes$y # Target
+
+# Configuración para validación cruzada (10-fold CV)
+ctrl <- trainControl(method = "cv", number = 10)
+
+# Entrenar modelo Lasso con CV para encontrar el mejor lambda
+set.seed(456) # Para reproducibilidad
+lasso_model_cv <- train(x = X, y = Y,
+                        method = "glmnet",
+                        trControl = ctrl,
+                        tuneGrid = expand.grid(alpha = 1, # Regresión tipo Lasso
+                                               lambda = seq(0.01, 1, length = 100)))
+
+# Mostrar resultados y mejor lambda/RMSE
+print(lasso_model_cv)
+
+```
+
+```{r}
+cat("\nMejor lambda por CV:", lasso_model_cv$bestTune$lambda, "\n")
+```
+
+### Estudio de las Propiedades de Estimadores en Muestras Pequeñas via Simulación Monte Carlo
+
+La simulación Monte Carlo permite evaluar el comportamiento de los estimadores (como su sesgo o tasa de error Tipo I) en escenarios específicos donde no hay soluciones analíticas simples, como con distribuciones de datos no estándar o tamaños de muestra pequeños. Consiste en repetir el proceso de muestreo y estimación miles de veces para observar las propiedades empíricas del estimador.
+
+**Ejemplo:** **Tasa de Error Tipo I de una Prueba de Hipótesis para la Media de una Distribución Altamente Asimétrica (e.g., Datos de Costos Sanitarios).**
+
+$$
+H_0: \mu = 100 \quad \mbox{versus} \quad \mu \neq 100. 
+$$ Fórmula LaTeX para calcular la Tasa de Error Tipo I empírica:
+
+$$
+P(``\mbox{Rechazar $H_0$ cuando es verdadera''})= \int_{A}f_{T}(t)dt \leq \alpha.
+$$
+
+$$
+\text{Tasa de Error Tipo I Empírica} = \frac{\text{Número de } p\text{-valores} < \alpha}{\text{Número Total de Simulaciones}}
+$$
+
+```{r}
+# Parámetros de simulación
+n_sims <- 10000
+tamano_muestra <- 5000  # n
+alfa <- 0.05 # 5%         
+
+# Parámetros de la distribución log-normal (H0: media = 100)
+sdlog_val <- 0.8
+meanlog_val <- log(100) - (sdlog_val^2 / 2)
+
+# Simulación Monte Carlo
+p_valores <- numeric(n_sims)
+set.seed(789) 
+
+for (i in 1:n_sims) {
+  # Generar datos log-normales bajo H0
+  datos_simulados <- rlnorm(n = tamano_muestra, meanlog = meanlog_val, sdlog = sdlog_val)
+  
+  # Realizar prueba t y guardar p-valor
+  t_test_result <- t.test(datos_simulados, mu = 100)
+  p_valores[i] <- t_test_result$p.value
+}
+
+# Calcular Tasa de Error Tipo I empírica
+tasa_error_tipo_I <- sum(p_valores < alfa) / n_sims
+
+cat("\nAlfa nominal:", alfa, "\n")
+cat("Tasa de Error Tipo I empírica:", tasa_error_tipo_I, "\n", "Tamaño muestra,", tamano_muestra)
+```
+
+-   Taza: 0.12, n= 10.
+-   Taza: 0.07 , n= 70
+-   Taza: 0.06 , n = 200
+-   Taza: 0.05, n=1000 Respetar la taza de error.
+-   Taza: 0.05, n=5000
+
+### Manejo de Datos Faltantes Imputation Multiple:
+
+Cuando un dataset es limitado y presenta valores perdidos, se puede utilizar la **imputación múltiple**. Esta técnica implica ajustar un modelo estadístico (basado en los datos observados) para predecir y generar múltiples conjuntos de valores plausibles para los datos faltantes.
+
+La imputación múltiple rellena los datos faltantes generando varias versiones completas del conjunto de datos, rellenando los valores perdidos de forma probabilística. Esto permite analizar los datos sin sesgos significativos por la pérdida de información y combinar los resultados para una inferencia más robusta, incorporando la incertidumbre de la imputación. Es crucial para estudios con patrones de datos faltantes complejos o no aleatorios.
+
+**Ejemplo:** **Análisis de Impacto de Factores de Salud en la Presión Sanguínea en un Estudio con Datos Faltantes.**
+
+```{r}
+# Cargar paquete
+library(mice)
+
+# Usar datos de ejemplo 'nhanes' con NA
+data(nhanes)
+View(nhanes)
+
+```
+
+```{r}
+md.pattern(nhanes) # Patrón de faltantes
+```
+
+------------------------------------------------------------------------
+
+#### Rellenar los Datos Faltantes (Múltiples Veces)
+
+-   `set.seed(42)`: Esto asegura que si ejecutas el código varias veces, el proceso de imputación sea el mismo y los resultados sean **reproducibles**.
+-   `imputed_data <- mice(nhanes, m = 5, method = "pmm", printFlag = FALSE)`: Aquí actua la **imputación múltiple**:
+    -   `mice(nhanes, ...)`: Le dice a la función `mice` que trabaje con tu dataset `nhanes`.
+    -   `m = 5`: Le indica que cree **5 conjuntos de datos completos diferentes**. Cada uno de estos 5 conjuntos tendrá los valores `NA` rellenos con \*\*estimaciones plausibles\*\*, pero ligeramente distintas. Esto refleja la incertidumbre de no conocer el valor real.
+    -   `method = "pmm"`: Este es el método que `mice` usa para rellenar los datos. "Predictive Mean Matching" (PMM) es popular y funciona bien para varios tipos de datos, buscando observaciones "similares" para copiar sus valores.
+    -   `printFlag = FALSE`: Solo evita que la función imprima demasiada información detallada mientras trabaja.
+
+```{r}
+# Realizar imputación múltiple (5 datasets)
+set.seed(42) 
+imputed_data <- mice(nhanes, m = 5, method = "pmm", printFlag = FALSE)
+
+# Ajustar modelo lineal en cada dataset imputado
+model_fits <- with(imputed_data, lm(chl ~ bmi + hyp))
+
+# Combinar los resultados de los modelos
+pooled_results <- pool(model_fits)
+
+# 4. Mostrar resumen combinado
+print(summary(pooled_results))
+
+```
+
+```{r}
+View(imputed_data)
+```
+
+# Pendiente
+
+## **7. Ejemplo de Estudio de Propiedades Estadísticas**
+
+Este principio utiliza la simulación para **resolver el problema** de comprender y verificar el comportamiento asintótico de los estimadores y métodos inferenciales. La simulación nos da una visión empírica vital de su fiabilidad en escenarios prácticos.
+
+#### **Convergencia de un Estimador (Consistencia): Evaluar la Fiabilidad del Estimador de Tasa de Fallas de Componentes**
+
+En ingeniería, estimar la tasa de fallas ($\lambda$) de componentes es crucial para la planificación del mantenimiento. El Estimador de Máxima Verosimilitud (MLE), $1/\bar{x}$, es comúnmente usado para datos de tiempo hasta la falla (distribución exponencial). La siguiente simulación verificar empíricamente si este estimador es consistente, es decir, si sus estimaciones se acercan al valor real de la tasa de fallas a medida que se recolectan más datos.
+
+```{r}
+# Parámetros
+true_lambda <- 0.5 # Tasa real
+sample_sizes <- c(10, 50, 100, 500, 1000, 5000) # Tamaños de muestra
+n_runs_per_size <- 500 # Repeticiones
+
+estimates_list <- vector("list", length(sample_sizes))
+set.seed(123) # Para reproducibilidad
+
+# Simular y estimar
+for (s_idx in seq_along(sample_sizes)) {
+  n <- sample_sizes[s_idx]
+  current_estimates <- numeric(n_runs_per_size)
+  for (i in 1:n_runs_per_size) {
+    data_exp <- rexp(n, rate = true_lambda)
+    current_estimates[i] <- 1 / mean(data_exp) # MLE lambda
+  }
+  estimates_list[[s_idx]] <- current_estimates
+}
+
+# Visualizar convergencia
+par(mfrow = c(2, 3))
+for (s_idx in seq_along(sample_sizes)) {
+  n <- sample_sizes[s_idx]
+  hist(estimates_list[[s_idx]], breaks = 30, freq = FALSE,
+       main = paste("n =", n), xlab = "Estimación de Tasa", xlim = c(0, 2 * true_lambda))
+  abline(v = true_lambda, col = "red", lty = 2, lwd = 2) # Tasa verdadera
+}
+par(mfrow = c(1, 1))
+
+# Medias de las estimaciones
+cat("Medias de estimaciones por tamaño de muestra:\n")
+print(sapply(estimates_list, mean))
+cat("Tasa verdadera:", true_lambda, "\n")
+```
+
+#### **Propiedades de un Intervalo de Confianza: Verificar la Fiabilidad de un IC para el Consumo Promedio en Marketing**
+
+Una empresa de marketing quiere estimar el consumo promedio de un producto en un nuevo segmento de clientes y desea saber si sus intervalos de confianza del 95% realmente capturan la media poblacional el 95% de las veces. La simulación puede verificar empíricamente la tasa de cobertura de su intervalo de confianza (usando la prueba t, con varianza desconocida), asegurando que sus afirmaciones sobre la precisión de la estimación del consumo promedio son válidas y fiables.
+
+```{r}
+# Parámetros
+true_mu <- 10 # Media verdadera
+true_sigma <- 5 # Desviación estándar verdadera
+sample_size <- 20 # Tamaño de muestra
+confidence_level <- 0.95 # Nivel de confianza
+n_sims <- 10000 # Simulaciones
+
+contains_true_mu <- logical(n_sims)
+set.seed(456) # Para reproducibilidad
+
+# Simular y calcular ICs
+for (i in 1:n_sims) {
+  sample_data <- rnorm(n = sample_size, mean = true_mu, sd = true_sigma)
+  t_test_result <- t.test(sample_data, conf.level = confidence_level)
+  
+  # Verificar si IC contiene la media verdadera
+  contains_true_mu[i] <- (true_mu >= t_test_result$conf.int[1] && true_mu <= t_test_result$conf.int[2])
+}
+
+# Tasa de cobertura empírica
+coverage_rate <- sum(contains_true_mu) / n_sims
+
+cat("Nivel de confianza nominal:", confidence_level, "\n")
+cat("Tasa de cobertura empírica:", coverage_rate, "\n")
+```
+
+### **8. Ejemplo de Verificación y Validación de Métodos**
+
+#### **Estudio de Sensibilidad de un Modelo Lineal: Evaluar la Robustez de Predicciones de Precios Inmobiliarios bajo Colinealidad**
+
+Al predecir precios de casas, variables como tamaño de la casa y número de habitaciones pueden estar altamente correlacionadas (colinealidad). La simulación nos ayuda a entender y cuantificar cómo esta colinealidad puede hacer que las contribuciones individuales de estas variables al precio estimado sean inestables o contradictorias en diferentes muestras, incluso si el modelo general predice bien. Esto ayuda a los analistas inmobiliarios a comprender las limitaciones y la sensibilidad de sus modelos estándar.
+
+```{r}
+# Parámetros
+n_obs <- 50 # Casas
+n_sims <- 1000 # Simulaciones
+beta0_true <- 5 # Intercepto real
+beta1_true <- 2 # Coef. real X1
+beta2_true <- -1 # Coef. real X2
+sigma_error <- 1 # Ruido
+
+correlation_x1_x2 <- 0.9 # Colinealidad
+
+beta1_estimates <- numeric(n_sims)
+beta2_estimates <- numeric(n_sims)
+set.seed(789) # Para reproducibilidad
+
+# Simular y ajustar modelos
+for (i in 1:n_sims) {
+  X1 <- rnorm(n_obs)
+  Z <- rnorm(n_obs)
+  X2 <- correlation_x1_x2 * X1 + sqrt(1 - correlation_x1_x2^2) * Z # X2 correlacionado
+  
+  Y <- beta0_true + beta1_true * X1 + beta2_true * X2 + rnorm(n_obs, sd = sigma_error) # Precio
+  model <- lm(Y ~ X1 + X2)
+  
+  beta1_estimates[i] <- coef(model)["X1"]
+  beta2_estimates[i] <- coef(model)["X2"]
+}
+
+# Visualizar variabilidad
+par(mfrow = c(1, 2))
+hist(beta1_estimates, breaks = 30, main = "Estimaciones Beta1", xlab = "Coef. Tamaño", col = "lightblue")
+abline(v = beta1_true, col = "red", lty = 2, lwd = 2)
+
+hist(beta2_estimates, breaks = 30, main = "Estimaciones Beta2", xlab = "Coef. Habitaciones", col = "lightgreen")
+abline(v = beta2_true, col = "red", lty = 2, lwd = 2)
+par(mfrow = c(1, 1))
+
+cat("SD Beta1:", sd(beta1_estimates), "\n")
+cat("SD Beta2:", sd(beta2_estimates), "\n")
+```
+
+#### **Estudio de Puntos Influyentes: Validar la Fiabilidad de un Modelo de Rendimiento Agrícola ante Errores de Medición**
+
+En agricultura, se usa regresión para predecir el rendimiento de cultivos (Y) basado en fertilizantes (X). Un error de medición accidental al registrar el fertilizante o el rendimiento de una parcela (un outlier) puede distorsionar el modelo. La simulación demuestra cuán vulnerable es la regresión estándar a estos errores. Al introducir un punto anómalo, se valida la necesidad de métodos robustos o de detección de outliers para asegurar que las recomendaciones agrícolas no se basen en estimaciones sesgadas.
+
+```{r}
+# Parámetros base
+n_points <- 20 # Parcelas
+true_beta0 <- 5
+true_beta1 <- 2
+error_sd <- 1
+
+# Generar datos "limpios"
+set.seed(987) # Reproducibilidad
+X <- runif(n_points, min = 0, max = 10) # Fertilizante
+Y <- true_beta0 + true_beta1 * X + rnorm(n_points, sd = error_sd) # Rendimiento
+
+# Crear outlier influyente (error de medición)
+outlier_X <- 15
+outlier_Y <- 0
+
+# 1. Ajustar modelo sin outlier
+data_clean <- data.frame(X, Y)
+model_clean <- lm(Y ~ X, data = data_clean)
+
+# 2. Ajustar modelo con outlier
+X_outlier <- c(X, outlier_X)
+Y_outlier <- c(Y, outlier_Y)
+data_with_outlier <- data.frame(X = X_outlier, Y = Y_outlier)
+model_with_outlier <- lm(Y ~ X, data = data_with_outlier)
+
+# 3. Visualizar impacto
+plot(X, Y, main = "Impacto de Outlier en Modelo Agrícola",
+     xlab = "Fertilizante", ylab = "Rendimiento",
+     col = "blue", pch = 16, xlim = c(0, 16), ylim = c(0, 40))
+points(outlier_X, outlier_Y, col = "red", pch = 17, cex = 2) # Outlier
+text(outlier_X, outlier_Y + 2, "Outlier", col = "red", pos = 3)
+
+abline(model_clean, col = "blue", lty = 2, lwd = 2) # Línea sin outlier
+abline(model_with_outlier, col = "red", lty = 1, lwd = 2) # Línea con outlier
+
+legend("topleft", legend = c("Datos originales", "Outlier", "Modelo sin Outlier", "Modelo con Outlier"),
+       col = c("blue", "red", "blue", "red"),
+       pch = c(16, 17, NA, NA), lty = c(NA, NA, 2, 1), lwd = 2)
+
+cat("Coeficientes SIN outlier:\n")
+print(coef(model_clean))
+cat("\nCoeficientes CON outlier:\n")
+print(coef(model_with_outlier))
+```
