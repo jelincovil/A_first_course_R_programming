@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.22">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Unidad V: Generación de datos desde modelos de probabilidad</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="Unidad_V_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Unidad_V_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="Unidad_V_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Unidad_V_files/libs/quarto-html/popper.min.js"></script>
+<script src="Unidad_V_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Unidad_V_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Unidad_V_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Unidad_V_files/libs/quarto-html/quarto-syntax-highlighting-7b4406b7675125bc2ba204020e191172.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Unidad_V_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Unidad_V_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Unidad_V_files/libs/bootstrap/bootstrap-c55efa1fd218a545ebab9e5bcab7af02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Unidad_V_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="Unidad_V_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="Unidad_V_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unidad V: Generación de datos desde modelos de probabilidad</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="sesión-1-martes-10-06-2026" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-1-martes-10-06-2026"><strong>Sesión 1: Martes 10-06-2026</strong></h3>
+</section>
+<section id="simulación-de-datos-desde-modelos-de-probabilidad" class="level1">
+<h1>Simulación de datos desde modelos de probabilidad</h1>
+<div class="preponderante-frase">
+<p><strong>Principio: Los datos iniciales me dan una idea del proceso aleatorio que los generó. Con este proceso puedo generar datos aumentados para extraer el máximo de información</strong>.</p>
+</div>
+<ul>
+<li><strong>1 Estudios de modelos generando datos en base de hipótesis</strong></li>
+<li><strong>2 Aumento y robustez de datos</strong></li>
+<li><strong>3 Estudio de propiedades estadísticas</strong></li>
+<li><strong>4 Verificación y validación de métodos estadísticos</strong></li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A[Generación de Datos con Modelos] --&gt; C{Estudios de Modelos e Hipótesis};
+    A --&gt; D{Aumento y Robustez de Datos};
+    A --&gt; E{Estudio de Propiedades Estadísticas};
+    A --&gt; F{Verificación y Validación de Métodos};
+
+    C -- "Proporciona bases para" --&gt; D;
+    D -- "Alimenta análisis para" --&gt; E;
+    E -- "Ayuda a la fiabilidad de" --&gt; F;
+    F -- "Refina Modelos/Supuestos para" --&gt; C;
+    C -- "Guía la especificación del modelo" --&gt; E;
+    D -- "Mejora la calidad de la estimación" --&gt; E;
+    E -- "Fundamental para inferencia" --&gt; F;
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>La simulación de datos, anclada en modelos probabilísticos, es una piedra angular en la estadística moderna. Permite explorar fenómenos aleatorios sin información empírica, facilitando la formulación de hipótesis y el diseño experimental. Además, es crucial para aumentar y robustecer análisis con datos escasos, permitiendo un estudio profundo de la variabilidad y estabilidad de las estimaciones. La técnica también es indispensable para la estimación de propiedades de estadísticos, como las distribuciones de muestreo y los intervalos de confianza, mediante métodos como Monte Carlo. Finalmente, la simulación es vital para verificar y validar la robustez y precisión de los métodos estadísticos bajo diversas condiciones controladas.</p>
+<section id="estudios-de-modelos-generando-datos-en-base-de-hipótesis" class="level2">
+<h2 class="anchored" data-anchor-id="estudios-de-modelos-generando-datos-en-base-de-hipótesis"><strong>1. Estudios de modelos generando datos en base de hipótesis</strong></h2>
+<p>Este principio recomienda explorar fenómenos aleatorios sin datos reales, facilitando la formulación y prueba de hipótesis sobre su comportamiento y el diseño de experimentos futuros. Es esencial para obtener una comprensión inicial del sistema antes de cualquier recolección empírica.</p>
+</section>
+<section id="aumento-y-robustez-de-datos" class="level2">
+<h2 class="anchored" data-anchor-id="aumento-y-robustez-de-datos"><strong>2. Aumento y Robustez de Datos</strong></h2>
+<p>La simulación es útil para enriquecer análisis con datos empíricos escasos, generando información a partir de modelos ajustados. Esto permite estudiar la variabilidad y estabilidad de las estimaciones y obtener conclusiones más robustas a partir de conjuntos de datos limitados.</p>
+</section>
+<section id="estudio-de-propiedades-estadísticas" class="level2">
+<h2 class="anchored" data-anchor-id="estudio-de-propiedades-estadísticas"><strong>3. Estudio de Propiedades Estadísticas</strong></h2>
+<p>Si la hipótesis sobre mis datos fuesen ciertas ¿Qué propiedades tiene cada método estadístico? Este principio se centra en estimar propiedades de estadísticos con distribuciones desconocidas analíticamente. Mediante simulaciones como Monte Carlo, se pueden aproximar distribuciones de muestreo, calcular intervalos de confianza y determinar la potencia de pruebas, vital para la inferencia.</p>
+</section>
+<section id="verificación-y-validación-de-métodos" class="level2">
+<h2 class="anchored" data-anchor-id="verificación-y-validación-de-métodos"><strong>4. Verificación y Validación de Métodos</strong></h2>
+<p>Si algunas de mis supuestos sobre el modelo no fuesen verdaderos, ¿cómo afectaria esto a mis métodos estadísticos? La simulación es clave para probar la validez y robustez de los métodos estadísticos. Permite verificar si un método produce resultados precisos y confiables bajo condiciones controladas y diversos escenarios, asegurando su aplicabilidad y exactitud.</p>
+</section>
+</section>
+<section id="ejemplos" class="level1">
+<h1><strong>Ejemplos</strong></h1>
+<section id="ejemplo-de-exploración-y-generación-de-hipótesis" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-de-exploración-y-generación-de-hipótesis"><strong>5. Ejemplo de exploración y Generación de Hipótesis</strong></h2>
+<section id="generador-de-realizaciones-de-variables-aleatorias-de-una-dimensión" class="level3">
+<h3 class="anchored" data-anchor-id="generador-de-realizaciones-de-variables-aleatorias-de-una-dimensión">Generador de realizaciones de variables aleatorias de una dimensión</h3>
+<p>Este apartado, generamos datos de distribuciones de probabilidad univariadas comunes en R, lo que permite explorar hipótesis sobre la naturaleza de una sola variable.</p>
+<section id="generando-números-uniformes-runif" class="level4">
+<h4 class="anchored" data-anchor-id="generando-números-uniformes-runif"><strong>1. Generando números uniformes</strong> (<code>runif()</code>)</h4>
+<p>La función <code>runif(n, min=0, max=1)</code> genera <code>n</code> números aleatorios de una distribución uniforme. Cada valor en el rango <code>[min, max]</code> tiene la misma probabilidad de ser generado.</p>
+<p>Densidad asociada: dunif(x, min=0, max=1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar 5 números uniformes entre 0 y 1</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.29745666 0.82447822 0.71494669 0.48246437 0.05568168</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar 10 números uniformes entre 10 y 20</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>, <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 19.92096 14.83114 16.82535 14.12373 15.13371 11.61854 18.40187 11.01300
+ [9] 17.00603 12.66839</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la densidad de una muestra uniforme</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">runif</span>(<span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>), <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Densidad de Muestra Uniforme"</span>, <span class="at">xlab =</span> <span class="st">"Valor"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dunif</span>(x, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="generando-números-binomiales-rbinom" class="level4">
+<h4 class="anchored" data-anchor-id="generando-números-binomiales-rbinom"><strong>2. Generando números binomiales</strong> (<code>rbinom()</code>)</h4>
+<p>La función <code>rbinom(n, size, prob)</code> genera <code>n</code> números aleatorios de una distribución binomial. Esta distribución describe el número de éxitos (<code>x</code>) en un número fijo de ensayos (<code>size</code>), donde cada ensayo tiene una probabilidad de éxito (<code>prob</code>).</p>
+<p>Densidad (función de masa de probabilidad) asociada: dbinom(x, size, prob)</p>
+<p>Código de ejemplo:</p>
+<pre><code># Simular el número de caras al lanzar una moneda 10 veces, repetido 5 veces
+rbinom(n = 5, size = 10, prob = 0.5)
+
+# Simular el número de estudiantes que aprueban de 20, si la prob de aprobar es 0.7
+rbinom(n = 1, size = 20, prob = 0.7)
+
+# Visualizar la densidad de una muestra binomial
+sim_binomial &lt;- rbinom(n = 1000, size = 10, prob = 0.5)
+barplot(table(sim_binomial) / length(sim_binomial),
+        main = "Densidad de Muestra Binomial", xlab = "Número de Éxitos", ylab = "Probabilidad")
+points(x = 0:10, y = dbinom(0:10, size = 10, prob = 0.5), col = "red", pch = 16) # Puntos de densidad</code></pre>
+<hr>
+</section>
+<section id="generando-números-de-poisson-rpois" class="level4">
+<h4 class="anchored" data-anchor-id="generando-números-de-poisson-rpois"><strong>3. Generando números de Poisson</strong> (<code>rpois()</code>)</h4>
+<p>La función <code>rpois(n, lambda)</code> genera <code>n</code> números aleatorios de una distribución de Poisson, donde <code>lambda</code> es la tasa promedio de ocurrencias en un intervalo fijo de tiempo o espacio.</p>
+<p>Densidad (función de masa de probabilidad) asociada: dpois(x, lambda)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular el número de llamadas recibidas en una hora, si el promedio es 5 llamadas/hora</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular el número de defectos por metro de tela, si el promedio es 0.2 defectos/metro</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">lambda =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 0 0 1 1 0 0 0 1 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la densidad de una muestra de Poisson</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sim_poisson <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">lambda =</span> <span class="dv">3</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(sim_poisson) <span class="sc">/</span> <span class="fu">length</span>(sim_poisson),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Densidad de Muestra de Poisson"</span>, <span class="at">xlab =</span> <span class="st">"Número de Eventos"</span>, <span class="at">ylab =</span> <span class="st">"Probabilidad"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(sim_poisson), <span class="at">y =</span> <span class="fu">dpois</span>(<span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(sim_poisson), <span class="at">lambda =</span> <span class="dv">3</span>), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="generando-números-normales-rnorm" class="level4">
+<h4 class="anchored" data-anchor-id="generando-números-normales-rnorm"><strong>4. Generando números normales</strong> (<code>rnorm()</code>)</h4>
+<p>La función <code>rnorm(n, mean=0, sd=1)</code> genera <code>n</code> números aleatorios de una distribución normal (gaussiana) con una media (<code>mean</code>) y desviación estándar (<code>sd</code>) especificadas.</p>
+<p>Densidad asociada: dnorm(x, mean=0, sd=1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular la altura de 10 personas, con media 170 cm y desviación estándar 5 cm</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">170</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 174.5712 177.8213 176.8563 169.6985 165.9894 156.2568 167.7651 169.9752
+ [9] 175.8678 178.7809</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar 1000 valores de una distribución normal estándar y visualizar su densidad</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Densidad de Muestra Normal"</span>, <span class="at">xlab =</span> <span class="st">"Valor"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="generando-números-exponenciales-rexp" class="level4">
+<h4 class="anchored" data-anchor-id="generando-números-exponenciales-rexp"><strong>5. Generando números exponenciales</strong> (<code>rexp()</code>)</h4>
+<p>La función <code>rexp(n, rate=1)</code> genera <code>n</code> números aleatorios de una distribución exponencial, donde <code>rate</code> (tasa) es 1/media.</p>
+<p>Densidad asociada: dexp(x, rate=1)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular el tiempo de espera hasta la siguiente llegada de un cliente, si la tasa es 0.5 llegadas/minuto</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">rate =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1756393</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar 20 tiempos de falla de un componente con una tasa de 0.1 fallas/hora</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">rate =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 20.116407 11.998831  2.719707 13.749870  3.336115  7.096613 19.093176
+ [8] 16.073516  1.503681 10.004822  1.488084  2.031727  1.423998 38.972729
+[15]  1.554466  7.464147  9.905599 12.166572  0.972975  7.177107</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la densidad de una muestra exponencial</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rexp</span>(<span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span>), <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Densidad de Muestra Exponencial"</span>, <span class="at">xlab =</span> <span class="st">"Valor"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dexp</span>(x, <span class="at">rate =</span> <span class="dv">1</span>), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="asegurando-la-reproducibilidad-set.seed" class="level4">
+<h4 class="anchored" data-anchor-id="asegurando-la-reproducibilidad-set.seed"><strong>6. Asegurando la reproducibilidad</strong> (<code>set.seed()</code>)</h4>
+<p>Para que tus simulaciones generen los mismos resultados cada vez que se ejecutan (esencial para la verificación de hipótesis y compartir código reproducible), se usa <code>set.seed()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sin set.seed(), cada ejecución dará números diferentes</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.3811452  0.4138461  1.1602556</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.61519952 -0.07497133 -1.53629151</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con set.seed(), siempre obtendrás los mismos números</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">3</span>) <span class="co"># La primera ejecución con esta semilla</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1.3709584 -0.5646982  0.3631284</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">3</span>) <span class="co"># La segunda ejecución con la misma semilla da los mismos resultados</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1.3709584 -0.5646982  0.3631284</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="generador-de-realizaciones-de-variables-aleatorias-de-dos-dimensiones" class="level3">
+<h3 class="anchored" data-anchor-id="generador-de-realizaciones-de-variables-aleatorias-de-dos-dimensiones">Generador de realizaciones de variables aleatorias de dos dimensiones</h3>
+<p>Simular datos bidimensionales nos permite explorar cómo dos variables podrían estar relacionadas o no. Esto es clave para probar ideas sobre cómo funcionan los sistemas.</p>
+<section id="variables-normales-correlacionadas" class="level4">
+<h4 class="anchored" data-anchor-id="variables-normales-correlacionadas"><strong>1. Variables Normales Correlacionadas</strong></h4>
+<p>Generar dos variables normales con una relación específica.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>     <span class="co"># Cantidad de puntos</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>rho <span class="ot">&lt;-</span> <span class="fl">0.7</span>   <span class="co"># Correlación deseada</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar variables normales independientes</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>z1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>z2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformar para crear correlación (ej. altura y peso)</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>altura <span class="ot">&lt;-</span> <span class="dv">170</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">*</span> z1</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>peso <span class="ot">&lt;-</span> <span class="dv">70</span> <span class="sc">+</span> <span class="dv">10</span> <span class="sc">*</span> (rho <span class="sc">*</span> z1 <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> rho<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> z2)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver datos y correlación</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>datos_simulados <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Altura =</span> altura, <span class="at">Peso =</span> peso)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(datos_simulados))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Altura     Peso
+1 164.3952 61.00335
+2 167.6982 70.22327
+3 185.5871 79.14923
+4 170.7051 68.01161
+5 171.2929 64.10910
+6 187.1506 81.68389</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(datos_simulados<span class="sc">$</span>Altura, datos_simulados<span class="sc">$</span>Peso))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6592833</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la relación</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_simulados<span class="sc">$</span>Altura, datos_simulados<span class="sc">$</span>Peso,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Altura vs. Peso (Correlacionados)"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Altura (cm)"</span>, <span class="at">ylab =</span> <span class="st">"Peso (kg)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="relación-lineal-con-ruido-regresión-simple" class="level4">
+<h4 class="anchored" data-anchor-id="relación-lineal-con-ruido-regresión-simple"><strong>2. Relación Lineal con Ruido (Regresión Simple)</strong></h4>
+<p>Simular una variable que depende linealmente de otra, con algo de aleatoriedad.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span>      <span class="co"># Cantidad de puntos</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable independiente (ej. publicidad)</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>publicidad <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">100</span>)</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dependiente (ej. ventas = 200 + 3*publicidad + ruido)</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>ventas <span class="ot">&lt;-</span> <span class="dv">200</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> publicidad <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">50</span>)</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver datos</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>datos_simulados_reg <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Publicidad =</span> publicidad, <span class="at">Ventas =</span> ventas)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(datos_simulados_reg))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Publicidad   Ventas
+1   18.05964 310.8932
+2   28.94611 263.6956
+3   75.96597 411.4787
+4   86.69202 534.3030
+5   80.95581 388.3985
+6   39.87640 293.1895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la relación</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_simulados_reg<span class="sc">$</span>Publicidad, datos_simulados_reg<span class="sc">$</span>Ventas,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Ventas vs. Publicidad (Relación Lineal)"</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Inversión en Publicidad"</span>, <span class="at">ylab =</span> <span class="st">"Ventas"</span>)</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(Ventas <span class="sc">~</span> Publicidad, <span class="at">data =</span> datos_simulados_reg), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="variables-independientes-sin-relación" class="level4">
+<h4 class="anchored" data-anchor-id="variables-independientes-sin-relación"><strong>3. Variables Independientes (sin relación)</strong></h4>
+<p>Generar dos variables donde una no afecta a la otra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>     <span class="co"># Cantidad de puntos</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable 1 (ej. examen 1)</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>examen_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">70</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable 2 (ej. tiempo de traslado)</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>tiempo_traslado <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">5</span>, <span class="at">max =</span> <span class="dv">60</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver datos y correlación (cercana a cero)</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>datos_independientes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Examen1 =</span> examen_1, <span class="at">TiempoTraslado =</span> tiempo_traslado)</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(datos_independientes))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Examen1 TiempoTraslado
+1 75.24097       21.09588
+2 47.39232       10.14501
+3 69.80320       23.97269
+4 71.83140       16.84554
+5 66.38649       44.64698
+6 65.15516       55.98353</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">cor</span>(datos_independientes<span class="sc">$</span>Examen1, datos_independientes<span class="sc">$</span>TiempoTraslado))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.01696665</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la ausencia de relación</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_independientes<span class="sc">$</span>Examen1, datos_independientes<span class="sc">$</span>TiempoTraslado,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Calificación Examen vs. Tiempo Traslado (Independientes)"</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Calificación Examen 1"</span>, <span class="at">ylab =</span> <span class="st">"Tiempo de Traslado (min)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="relación-no-lineal-exponencial" class="level4">
+<h4 class="anchored" data-anchor-id="relación-no-lineal-exponencial"><strong>4. Relación No Lineal (Exponencial)</strong></h4>
+<p>Simular una variable que crece o decrece exponencialmente con respecto a otra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1011</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">70</span>      <span class="co"># Cantidad de puntos</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable independiente (ej. tiempo)</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>tiempo <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">length.out =</span> n)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Variable dependiente: crecimiento exponencial con ruido</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>poblacion <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="fl">0.5</span> <span class="sc">*</span> tiempo) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">400</span>)</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver datos</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>datos_exponenciales <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Tiempo =</span> tiempo, <span class="at">Poblacion =</span> poblacion)</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">head</span>(datos_exponenciales))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Tiempo Poblacion
+1 0.0000000  396.1956
+2 0.1449275 -186.4092
+3 0.2898551 -228.9739
+4 0.4347826  340.7638
+5 0.5797101  559.2761
+6 0.7246377  178.4095</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar la relación exponencial</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(datos_exponenciales<span class="sc">$</span>Tiempo, datos_exponenciales<span class="sc">$</span>Poblacion,</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Crecimiento Poblacional (Exponencial)"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Tiempo"</span>, <span class="at">ylab =</span> <span class="st">"Tamaño de Población"</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="dv">50</span> <span class="sc">*</span> <span class="fu">exp</span>(<span class="fl">0.5</span> <span class="sc">*</span> x), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># Curva teórica</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="simulación-de-cadenas-de-markov" class="level3">
+<h3 class="anchored" data-anchor-id="simulación-de-cadenas-de-markov">Simulación de cadenas de Markov</h3>
+<p>Una <strong>cadena de Markov</strong> es un proceso estocástico que describe una secuencia de eventos donde la probabilidad de cada evento futuro depende únicamente del estado actual, y no de la secuencia de eventos que lo precedieron. Matemáticamente, esto se conoce como la <strong>propiedad de Markov</strong>. Se define por un conjunto de estados y una <strong>matriz de probabilidades de transición</strong> P, donde Pij​ es la probabilidad de pasar del estado i al estado j. <span class="math display">\[
+\{X_1, X_{2}, X_{3}, \ldots, X_n\} = \{X_n\}
+\]</span> <span class="math display">\[
+P(X_{n+1}=j|X_{n}=i,  X_{n-1}=s, \ldots, X_{1}=f) = P(X_{n+1}=j|X_{n}=i)=P_{ij}
+\]</span></p>
+</section>
+<section id="simulación-de-cadenas-de-markov-ejemplos-con-r" class="level3">
+<h3 class="anchored" data-anchor-id="simulación-de-cadenas-de-markov-ejemplos-con-r"><strong>Simulación de Cadenas de Markov: Ejemplos con R</strong></h3>
+<p>Las cadenas de Markov modelan sistemas que cambian de estado discretamente a lo largo del tiempo, donde el próximo estado solo depende del estado actual. Esto es útil para explorar la dinámica de sistemas con transiciones probabilísticas.</p>
+<section id="clima-simple-soleado-o-lluvioso" class="level4">
+<h4 class="anchored" data-anchor-id="clima-simple-soleado-o-lluvioso"><strong>1. Clima Simple: Soleado o Lluvioso</strong></h4>
+<p>Simular la secuencia de estados del clima (soleado o lluvioso) día a día, basándose en la probabilidad de que cambie o permanezca igual.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Soleado</th>
+<th>Lluvioso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Soleado</strong></td>
+<td>0.8</td>
+<td>0.2</td>
+</tr>
+<tr class="even">
+<td><strong>Lluvioso</strong></td>
+<td>0.3</td>
+<td>0.7</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir los posibles estados del clima</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>estados <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Soleado"</span>, <span class="st">"Lluvioso"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de probabilidades de transición</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co"># P(Soleado -&gt; Soleado) = 0.8, P(Soleado -&gt; Lluvioso) = 0.2</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># P(Lluvioso -&gt; Soleado) = 0.3, P(Lluvioso -&gt; Lluvioso) = 0.7</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>matriz_transicion <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.2</span>,  <span class="co"># Desde "Soleado"</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>                              <span class="fl">0.3</span>, <span class="fl">0.7</span>), <span class="co"># Desde "Lluvioso"</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>                            <span class="at">dimnames =</span> <span class="fu">list</span>(estados, estados))</span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>n_dias <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Simular 30 días</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>estado_actual <span class="ot">&lt;-</span> <span class="st">"Soleado"</span> <span class="co"># Empezamos con un día soleado</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>secuencia_clima <span class="ot">&lt;-</span> <span class="fu">character</span>(n_dias)</span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>secuencia_clima[<span class="dv">1</span>] <span class="ot">&lt;-</span> estado_actual</span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular la cadena de Markov día a día</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_dias) {</span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Obtener las probabilidades de transición desde el estado actual</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>  prob_siguientes <span class="ot">&lt;-</span> matriz_transicion[estado_actual, ]</span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Muestrear el siguiente estado basado en esas probabilidades</span></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a>  estado_actual <span class="ot">&lt;-</span> <span class="fu">sample</span>(estados, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> prob_siguientes)</span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>  secuencia_clima[i] <span class="ot">&lt;-</span> estado_actual</span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Secuencia de Clima Simulada:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Secuencia de Clima Simulada:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(secuencia_clima)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Soleado" 
+ [7] "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Lluvioso"
+[13] "Soleado"  "Soleado"  "Lluvioso" "Lluvioso" "Lluvioso" "Soleado" 
+[19] "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Lluvioso" "Lluvioso"
+[25] "Lluvioso" "Soleado"  "Soleado"  "Soleado"  "Soleado"  "Soleado" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frecuencia de estados en la simulación</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Frecuencia de estados:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Frecuencia de estados:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">table</span>(secuencia_clima))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>secuencia_clima
+Lluvioso  Soleado 
+       7       23 </code></pre>
+</div>
+</div>
+</section>
+<section id="movimiento-de-un-cliente-entre-secciones-de-una-tienda" class="level4">
+<h4 class="anchored" data-anchor-id="movimiento-de-un-cliente-entre-secciones-de-una-tienda"><strong>2. Movimiento de un Cliente entre Secciones de una Tienda</strong></h4>
+<p>Simular el recorrido de un cliente por diferentes secciones de una tienda (e.g., Entrada, Ropa, Comida, Salida), con probabilidades de moverse de una a otra.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">202</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir las secciones de la tienda</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>secciones <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Entrada"</span>, <span class="st">"Ropa"</span>, <span class="st">"Comida"</span>, <span class="st">"Salida"</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Matriz de probabilidades de transición</span></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo:</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="co"># De Entrada: 50% Ropa, 30% Comida, 20% Salida</span></span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="co"># De Ropa: 10% Entrada, 40% Ropa, 30% Comida, 20% Salida</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># De Comida: 0% Entrada, 20% Ropa, 50% Comida, 30% Salida</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="co"># De Salida: 100% Salida (estado absorbente)</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>matriz_tienda <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="co"># Desde Entrada</span></span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">0.1</span>, <span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="co"># Desde Ropa</span></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">0.0</span>, <span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="co"># Desde Comida</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>                          <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">0.0</span>, <span class="fl">1.0</span>), <span class="co"># Desde Salida</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>                        <span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>                        <span class="at">dimnames =</span> <span class="fu">list</span>(secciones, secciones))</span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>n_pasos_max <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># Simular hasta 15 movimientos</span></span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>trayectoria_cliente <span class="ot">&lt;-</span> <span class="fu">character</span>(n_pasos_max)</span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>estado_actual <span class="ot">&lt;-</span> <span class="st">"Entrada"</span> <span class="co"># El cliente siempre empieza en la Entrada</span></span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>trayectoria_cliente[<span class="dv">1</span>] <span class="ot">&lt;-</span> estado_actual</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular la trayectoria</span></span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n_pasos_max) {</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (estado_actual <span class="sc">==</span> <span class="st">"Salida"</span>) { <span class="co"># Si ya salió, se queda en "Salida"</span></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>    trayectoria_cliente[i] <span class="ot">&lt;-</span> <span class="st">"Salida"</span></span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">next</span></span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>  prob_siguientes <span class="ot">&lt;-</span> matriz_tienda[estado_actual, ]</span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>  estado_actual <span class="ot">&lt;-</span> <span class="fu">sample</span>(secciones, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> prob_siguientes)</span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>  trayectoria_cliente[i] <span class="ot">&lt;-</span> estado_actual</span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Trayectoria del Cliente Simulada:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Trayectoria del Cliente Simulada:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(trayectoria_cliente)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Entrada" "Ropa"    "Comida"  "Comida"  "Comida"  "Comida"  "Salida" 
+ [8] "Salida"  "Salida"  "Salida"  "Salida"  "Salida"  "Salida"  "Salida" 
+[15] "Salida" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar cuántas veces estuvo en cada sección</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Visitas por sección:"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Visitas por sección:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">table</span>(trayectoria_cliente))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>trayectoria_cliente
+ Comida Entrada    Ropa  Salida 
+      4       1       1       9 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="métodos-de-aceptación-y-rechazo" class="level3">
+<h3 class="anchored" data-anchor-id="métodos-de-aceptación-y-rechazo">Métodos de aceptación y rechazo</h3>
+<p>Este método simula valores de distribuciones complejas (como las bimodales) usando una distribución más simple. Se generan propuestas de la simple y se aceptan o rechazan según una regla de probabilidad, permitiendo muestrear formas inusuales.</p>
+<p>Acepta una muestra propuesta x si:</p>
+<p><span class="math display">\[
+U&lt;M⋅g(x)f(x)​
+\]</span> Donde:</p>
+<ul>
+<li>U: Es un número aleatorio generado de una distribución uniforme entre 0 y 1 (<span class="math inline">\(U∼Unif(0,1)\)</span>).</li>
+<li>f(x): Es la función de densidad de probabilidad (FDP) de la <strong>distribución objetivo</strong> de la que quieres muestrear.</li>
+<li>g(x): Es la FDP de la <strong>distribución propuesta</strong> (o envolvente), de la cual es fácil generar muestras.</li>
+<li>M: Es una constante tal que M⋅g(x)≥f(x) para todo x. Es decir, M⋅g(x) debe ser una “envolvente” de f(x).</li>
+</ul>
+<p>El <strong>muestreo de aceptación/rechazo</strong> genera números aleatorios de una distribución objetivo f(x) (compleja) usando una distribución propuesta g(x) (fácil de muestrear) y una constante M tal que M⋅g(x)≥f(x). Se acepta una muestra propuesta x (generada de g(x)) si un número uniforme aleatorio U (entre 0 y 1) es menor que la razón f(x)/(M⋅g(x)), de lo contrario se rechaza, asegurando que los puntos aceptados provengan efectivamente de la distribución f(x).</p>
+<p>Hipótesis: Queremos muestrear una mezcla de dos distribuciones normales (una densidad bimodal), con la siguiente función de densidad:</p>
+<p><span class="math display">\[
+f(x)=w1​⋅N(x∣μ1​,σ1​)+w2​⋅N(x∣μ2​,σ2​) donde w1​+w2​=1.
+\]</span></p>
+<p>En nuestro ejemplo, <span class="math inline">\(f(x)=0.4⋅N(x∣μ1​=2,σ1​=0.5)+0.6⋅N(x∣μ2​=5,σ2​=1\)</span>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># función de densidad bimodal</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>f_x <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.4</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  la curva de densidad</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">f_x</span>(x), <span class="at">from =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">to =</span> <span class="dv">8</span>,</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">main =</span> <span class="st">"Densidad Bimodal"</span>,</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">"x"</span>, <span class="at">ylab =</span> <span class="st">"f(x)"</span>,</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1233</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Densidad objetivo (la que queremos muestrear: bimodal)</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>target_density <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.4</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="fl">0.5</span>) <span class="sc">+</span> <span class="fl">0.6</span> <span class="sc">*</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Densidad propuesta (una normal simple que la "envuelve")</span></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>proposal_density <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="fl">3.5</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb61-12"><a href="#cb61-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-13"><a href="#cb61-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Encontrar M (constante para escalar la propuesta)</span></span>
+<span id="cb61-14"><a href="#cb61-14" aria-hidden="true" tabindex="-1"></a>x_range <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">8</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb61-15"><a href="#cb61-15" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">target_density</span>(x_range) <span class="sc">/</span> <span class="fu">proposal_density</span>(x_range))</span>
+<span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Valor de M:"</span>, M, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># M debe ser &gt; 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Valor de M: 2.173388 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Generar muestras por Aceptación-Rechazo</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>n_muestras_deseadas <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>muestras_aceptadas <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_muestras_deseadas)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>conteo_aceptadas <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>conteo_propuestas <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (conteo_aceptadas <span class="sc">&lt;</span> n_muestras_deseadas) {</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>  propuesta_x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>, <span class="at">mean =</span> <span class="fl">3.5</span>, <span class="at">sd =</span> <span class="dv">2</span>) <span class="co"># Generar de la propuesta</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  u <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>) <span class="co"># Valor para decisión</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-11"><a href="#cb63-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aceptar si la propuesta está "debajo" de la densidad objetivo ajustada</span></span>
+<span id="cb63-12"><a href="#cb63-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">proposal_density</span>(propuesta_x) <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> u <span class="sc">&lt;</span> (<span class="fu">target_density</span>(propuesta_x) <span class="sc">/</span> (M <span class="sc">*</span> <span class="fu">proposal_density</span>(propuesta_x)))) {</span>
+<span id="cb63-13"><a href="#cb63-13" aria-hidden="true" tabindex="-1"></a>    conteo_aceptadas <span class="ot">&lt;-</span> conteo_aceptadas <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb63-14"><a href="#cb63-14" aria-hidden="true" tabindex="-1"></a>    muestras_aceptadas[conteo_aceptadas] <span class="ot">&lt;-</span> propuesta_x</span>
+<span id="cb63-15"><a href="#cb63-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb63-16"><a href="#cb63-16" aria-hidden="true" tabindex="-1"></a>  conteo_propuestas <span class="ot">&lt;-</span> conteo_propuestas <span class="sc">+</span> <span class="dv">1</span> <span class="co"># Contar todas las propuestas</span></span>
+<span id="cb63-17"><a href="#cb63-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb63-18"><a href="#cb63-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-19"><a href="#cb63-19" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Propuestas generadas:"</span>, conteo_propuestas, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Propuestas generadas: 10982 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Eficiencia:"</span>, n_muestras_deseadas <span class="sc">/</span> conteo_propuestas, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Eficiencia: 0.4552905 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Visualizar resultados</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(muestras_aceptadas, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Muestras Bimodales por Aceptación-Rechazo"</span>,</span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Valor de X"</span>, <span class="at">ylab =</span> <span class="st">"Densidad"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>,</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.43</span>))</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Añadir curvas para comparación</span></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">target_density</span>(x), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Objetivo</span></span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(M <span class="sc">*</span> <span class="fu">proposal_density</span>(x), <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Propuesta escalada</span></span>
+<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Densidad Objetivo"</span>, <span class="st">"Densidad Estimada"</span>),</span>
+<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"darkgreen"</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sesión-2-sabado-14-06-2026" class="level3">
+<h3 class="anchored" data-anchor-id="sesión-2-sabado-14-06-2026"><strong>Sesión 2: Sabado 14-06-2026</strong></h3>
+</section>
+</section>
+<section id="ejemplo-del-aumento-y-robustez-de-los-datos" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-del-aumento-y-robustez-de-los-datos"><strong>6. Ejemplo del aumento y robustez de los datos</strong></h2>
+<section id="estimación-de-la-varianza-y-construcción-de-intervalos-de-confianza-via-bootstrapping" class="level3">
+<h3 class="anchored" data-anchor-id="estimación-de-la-varianza-y-construcción-de-intervalos-de-confianza-via-bootstrapping">Estimación de la Varianza y Construcción de Intervalos de Confianza via Bootstrapping</h3>
+<p>El bootstrapping remuestra los datos originales para estimar la variabilidad de una estadística compleja, como el AUC, o para construir intervalos de confianza robustos cuando las fórmulas analíticas son difíciles de obtener o las suposiciones no se cumplen. Permite entender la fiabilidad de una métrica de rendimiento de un modelo sin depender de teorías distributivas restrictivas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.geeksforgeeks.org/wp-content/uploads/20240610153827/Bootstrap-Method.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption>5-folds</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar paquete</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Muestra original de ejemplo</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>original_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">30</span>, <span class="at">mean =</span> <span class="dv">50</span>, <span class="at">sd =</span> <span class="dv">10</span>) <span class="co"># 30 tiempos de respuesta</span></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Media de la muestra original</span></span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>observada_media <span class="ot">&lt;-</span> <span class="fu">mean</span>(original_sample)</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Función del estadístico (la media)</span></span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>calcular_media <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices) {</span>
+<span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">mean</span>(data[indices]))</span>
+<span id="cb68-15"><a href="#cb68-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb68-16"><a href="#cb68-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-17"><a href="#cb68-17" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Realizar Bootstrapping (10,000 réplicas)</span></span>
+<span id="cb68-18"><a href="#cb68-18" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb68-19"><a href="#cb68-19" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(<span class="at">data =</span> original_sample, <span class="at">statistic =</span> calcular_media, <span class="at">R =</span> <span class="dv">10000</span>)</span>
+<span id="cb68-20"><a href="#cb68-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-21"><a href="#cb68-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Estudiar la Distribución del Promedio e Inferencias</span></span>
+<span id="cb68-22"><a href="#cb68-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar distribución de medias bootstrap</span></span>
+<span id="cb68-23"><a href="#cb68-23" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(boot_results<span class="sc">$</span>t, <span class="at">breaks =</span> <span class="dv">50</span>, <span class="at">main =</span> <span class="st">"Distribución de Medias Bootstrap"</span>,</span>
+<span id="cb68-24"><a href="#cb68-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Medias Bootstrap"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>, <span class="at">border =</span> <span class="st">"white"</span>)</span>
+<span id="cb68-25"><a href="#cb68-25" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> observada_media, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Media original</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimar Error Estándar de la Media</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>estimated_se <span class="ot">&lt;-</span> <span class="fu">sd</span>(boot_results<span class="sc">$</span>t)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Error Estándar (Bootstrapping):"</span>, estimated_se, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Error Estándar (Bootstrapping): 1.758475 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular Intervalos de Confianza (percentil y BCa)</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>boot_ci_perc <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(boot_results, <span class="at">type =</span> <span class="st">"perc"</span>)</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>boot_ci_bca <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(boot_results, <span class="at">type =</span> <span class="st">"bca"</span>)</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">IC 95% (Percentil):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+IC 95% (Percentil):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_ci_perc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 10000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_results, type = "perc")
+
+Intervals : 
+Level     Percentile     
+95%   (46.13, 52.97 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">IC 95% (BCa):</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+IC 95% (BCa):</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_ci_bca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 10000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_results, type = "bca")
+
+Intervals : 
+Level       BCa          
+95%   (46.16, 53.00 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+<p><strong>Ejemplo:</strong> <strong>Intervalo de Confianza para el Área Bajo la Curva ROC (AUC) de un Modelo Predictivo de Enfermedad.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar paquetes</span></span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({<span class="fu">library</span>(pROC) ; <span class="fu">library</span>(boot)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'pROC' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos de ejemplo 'aSAH' (predicción de enfermedad)</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(aSAH)</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar modelo logístico simple</span></span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>modelo_logistico <span class="ot">&lt;-</span> <span class="fu">glm</span>(outcome <span class="sc">~</span> s100b, <span class="at">data =</span> aSAH, <span class="at">family =</span> binomial)</span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>aSAH<span class="sc">$</span>prob_predicha <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_logistico, <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Función para calcular AUC (para bootstrapping)</span></span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a>calcular_auc <span class="ot">&lt;-</span> <span class="cf">function</span>(data, indices) {</span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>  d <span class="ot">&lt;-</span> data[indices, ]</span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(<span class="fu">unique</span>(d<span class="sc">$</span>outcome)) <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="fu">return</span>(<span class="cn">NA</span>) <span class="co"># Evitar errores si falta una clase</span></span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a>  roc_obj <span class="ot">&lt;-</span> <span class="fu">roc</span>(<span class="at">response =</span> d<span class="sc">$</span>outcome, <span class="at">predictor =</span> d<span class="sc">$</span>prob_predicha, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">auc</span>(roc_obj))</span>
+<span id="cb81-14"><a href="#cb81-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb81-15"><a href="#cb81-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-16"><a href="#cb81-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar bootstrapping (2000 remuestreos)</span></span>
+<span id="cb81-17"><a href="#cb81-17" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) </span>
+<span id="cb81-18"><a href="#cb81-18" aria-hidden="true" tabindex="-1"></a>boot_results <span class="ot">&lt;-</span> <span class="fu">boot</span>(<span class="at">data =</span> aSAH, <span class="at">statistic =</span> calcular_auc, <span class="at">R =</span> <span class="dv">2000</span>)</span>
+<span id="cb81-19"><a href="#cb81-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Considerando lamisma predicción</span></span>
+<span id="cb81-20"><a href="#cb81-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar resultados e intervalo de confianza BCa</span></span>
+<span id="cb81-21"><a href="#cb81-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ORDINARY NONPARAMETRIC BOOTSTRAP
+
+
+Call:
+boot(data = aSAH, statistic = calcular_auc, R = 2000)
+
+
+Bootstrap Statistics :
+     original        bias    std. error
+t1* 0.7313686 -0.0005761782  0.05208095</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>boot_ci <span class="ot">&lt;-</span> <span class="fu">boot.ci</span>(boot_results, <span class="at">type =</span> <span class="st">"bca"</span>)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(boot_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+Based on 2000 bootstrap replicates
+
+CALL : 
+boot.ci(boot.out = boot_results, type = "bca")
+
+Intervals : 
+Level       BCa          
+95%   ( 0.6205,  0.8198 )  
+Calculations and Intervals on Original Scale</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluación-robusta-del-rendimiento-de-modelos-via-cross-validation" class="level3">
+<h3 class="anchored" data-anchor-id="evaluación-robusta-del-rendimiento-de-modelos-via-cross-validation">Evaluación Robusta del Rendimiento de Modelos via Cross-Validation</h3>
+<p>La validación cruzada divide los datos en múltiples subconjuntos para entrenar y probar un modelo repetidamente, ofreciendo una estimación más confiable de su rendimiento en datos nuevos y ayudando a seleccionar los mejores hiperparámetros. Es esencial para evitar el sobreajuste y obtener una medida realista de la capacidad de generalización del modelo, especialmente con datasets limitados o con muchas variables.</p>
+<p><strong>Ejemplo:</strong> <strong>Estimación del Error de Predicción de un Modelo de Regresión Penalizada (Lasso/Ridge) en Genómica.</strong></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://miro.medium.com/v2/resize:fit:520/1*z3OmZ2Vp3uskfgLIZVIeTQ.jpeg" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption>5-folds</figcaption>
+</figure>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar paquetes</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressPackageStartupMessages</span>({<span class="fu">library</span>(glmnet) ; <span class="fu">library</span>(caret) })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'glmnet' was built under R version 4.4.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'caret' was built under R version 4.4.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.4.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datos de ejemplo 'diabetes' (predicción de enfermedad)</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(diabetes, <span class="at">package =</span> <span class="st">"lars"</span>)</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(diabetes<span class="sc">$</span>x)</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> diabetes<span class="sc">$</span>y</span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuración para validación cruzada (10-fold CV)</span></span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>ctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">"cv"</span>, <span class="at">number =</span> <span class="dv">10</span>)</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrenar modelo Lasso con CV para encontrar el mejor lambda</span></span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a>lasso_model_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="at">x =</span> X, <span class="at">y =</span> Y,</span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">method =</span> <span class="st">"glmnet"</span>,</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">trControl =</span> ctrl,</span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a>                        <span class="at">tuneGrid =</span> <span class="fu">expand.grid</span>(<span class="at">alpha =</span> <span class="dv">1</span>, <span class="co"># Lasso</span></span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a>                                               <span class="at">lambda =</span> <span class="fu">seq</span>(<span class="fl">0.01</span>, <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">100</span>)))</span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar resultados y mejor lambda/RMSE</span></span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(lasso_model_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>glmnet 
+
+442 samples
+  1 predictor
+
+No pre-processing
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 398, 397, 398, 398, 397, 398, ... 
+Resampling results across tuning parameters:
+
+  lambda  RMSE      Rsquared   MAE     
+  0.01    54.28518  0.5074562  44.25058
+  0.02    54.27817  0.5075839  44.24399
+  0.03    54.26812  0.5077692  44.23326
+  0.04    54.25921  0.5079371  44.22512
+  0.05    54.25109  0.5080936  44.21860
+  0.06    54.24457  0.5082234  44.21261
+  0.07    54.23982  0.5083235  44.20682
+  0.08    54.23706  0.5083794  44.20225
+  0.09    54.23456  0.5084247  44.19939
+  0.10    54.23608  0.5083977  44.20010
+  0.11    54.23945  0.5083482  44.20349
+  0.12    54.24268  0.5082990  44.20833
+  0.13    54.24676  0.5082449  44.21319
+  0.14    54.25351  0.5081396  44.22040
+  0.15    54.26071  0.5080262  44.22602
+  0.16    54.26486  0.5079654  44.22809
+  0.17    54.26804  0.5079147  44.22873
+  0.18    54.27076  0.5078736  44.22874
+  0.19    54.27326  0.5078370  44.22815
+  0.20    54.27503  0.5078181  44.22676
+  0.21    54.27631  0.5078086  44.22663
+  0.22    54.27754  0.5078007  44.22857
+  0.23    54.27390  0.5078764  44.22721
+  0.24    54.26772  0.5079984  44.22362
+  0.25    54.26168  0.5081180  44.22009
+  0.26    54.25535  0.5082447  44.21614
+  0.27    54.24925  0.5083680  44.21232
+  0.28    54.24322  0.5084887  44.20771
+  0.29    54.23736  0.5086067  44.20311
+  0.30    54.23172  0.5087210  44.19867
+  0.31    54.22665  0.5088191  44.19476
+  0.32    54.22271  0.5088942  44.19174
+  0.33    54.21931  0.5089582  44.18915
+  0.34    54.21666  0.5090061  44.18731
+  0.35    54.21472  0.5090470  44.18652
+  0.36    54.21299  0.5090837  44.18588
+  0.37    54.21186  0.5091082  44.18568
+  0.38    54.21076  0.5091324  44.18549
+  0.39    54.20967  0.5091566  44.18528
+  0.40    54.20857  0.5091808  44.18504
+  0.41    54.20747  0.5092049  44.18479
+  0.42    54.20641  0.5092285  44.18454
+  0.43    54.20541  0.5092513  44.18437
+  0.44    54.20445  0.5092740  44.18451
+  0.45    54.20351  0.5092965  44.18477
+  0.46    54.20259  0.5093186  44.18503
+  0.47    54.20169  0.5093406  44.18525
+  0.48    54.20088  0.5093612  44.18549
+  0.49    54.20021  0.5093795  44.18601
+  0.50    54.19955  0.5093975  44.18670
+  0.51    54.19893  0.5094149  44.18739
+  0.52    54.19838  0.5094314  44.18828
+  0.53    54.19790  0.5094465  44.18938
+  0.54    54.19746  0.5094611  44.19049
+  0.55    54.19705  0.5094754  44.19160
+  0.56    54.19667  0.5094892  44.19273
+  0.57    54.19630  0.5095031  44.19383
+  0.58    54.19599  0.5095162  44.19488
+  0.59    54.19570  0.5095289  44.19594
+  0.60    54.19544  0.5095411  44.19698
+  0.61    54.19518  0.5095532  44.19799
+  0.62    54.19490  0.5095651  44.19890
+  0.63    54.19467  0.5095760  44.19986
+  0.64    54.19446  0.5095869  44.20079
+  0.65    54.19428  0.5095974  44.20190
+  0.66    54.19412  0.5096076  44.20303
+  0.67    54.19387  0.5096190  44.20405
+  0.68    54.19343  0.5096332  44.20484
+  0.69    54.19301  0.5096470  44.20560
+  0.70    54.19270  0.5096583  44.20656
+  0.71    54.19244  0.5096686  44.20757
+  0.72    54.19221  0.5096785  44.20859
+  0.73    54.19201  0.5096880  44.20961
+  0.74    54.19179  0.5096977  44.21063
+  0.75    54.19159  0.5097074  44.21163
+  0.76    54.19142  0.5097164  44.21265
+  0.77    54.19130  0.5097244  44.21370
+  0.78    54.19121  0.5097321  44.21476
+  0.79    54.19096  0.5097422  44.21579
+  0.80    54.19067  0.5097530  44.21681
+  0.81    54.19041  0.5097633  44.21783
+  0.82    54.19017  0.5097733  44.21886
+  0.83    54.18998  0.5097828  44.21994
+  0.84    54.18983  0.5097920  44.22109
+  0.85    54.18970  0.5098008  44.22224
+  0.86    54.18960  0.5098093  44.22338
+  0.87    54.18951  0.5098176  44.22452
+  0.88    54.18946  0.5098255  44.22566
+  0.89    54.18939  0.5098339  44.22679
+  0.90    54.18932  0.5098432  44.22789
+  0.91    54.18931  0.5098516  44.22907
+  0.92    54.18940  0.5098585  44.23041
+  0.93    54.18952  0.5098651  44.23174
+  0.94    54.18974  0.5098694  44.23322
+  0.95    54.19002  0.5098720  44.23479
+  0.96    54.19033  0.5098743  44.23637
+  0.97    54.19067  0.5098761  44.23795
+  0.98    54.19119  0.5098754  44.23969
+  0.99    54.19184  0.5098727  44.24157
+  1.00    54.19251  0.5098702  44.24325
+
+Tuning parameter 'alpha' was held constant at a value of 1
+RMSE was used to select the optimal model using the smallest value.
+The final values used for the model were alpha = 1 and lambda = 0.91.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Mejor lambda por CV:"</span>, lasso_model_cv<span class="sc">$</span>bestTune<span class="sc">$</span>lambda, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Mejor lambda por CV: 0.91 </code></pre>
+</div>
+</div>
+</section>
+<section id="estudio-de-las-propiedades-de-estimadores-en-muestras-pequeñas-via-simulación-monte-carlo" class="level3">
+<h3 class="anchored" data-anchor-id="estudio-de-las-propiedades-de-estimadores-en-muestras-pequeñas-via-simulación-monte-carlo">Estudio de las Propiedades de Estimadores en Muestras Pequeñas via Simulación Monte Carlo</h3>
+<p>La simulación Monte Carlo permite evaluar el comportamiento de los estimadores (como su sesgo o tasa de error Tipo I) en escenarios específicos donde no hay soluciones analíticas simples, como con distribuciones de datos no estándar o tamaños de muestra pequeños. Consiste en repetir el proceso de muestreo y estimación miles de veces para observar las propiedades empíricas del estimador.</p>
+<p><strong>Ejemplo:</strong> <strong>Tasa de Error Tipo I de una Prueba de Hipótesis para la Media de una Distribución Altamente Asimétrica (e.g., Datos de Costos Sanitarios).</strong></p>
+<p><span class="math display">\[
+H_0: \mu = 100 \quad \mbox{versus} \quad \mu \neq 100.
+\]</span> Fórmula LaTeX para calcular la Tasa de Error Tipo I empírica:</p>
+<p><span class="math display">\[
+P("\mbox{Rechazar $H_0$ cuando es verdadera"})
+\]</span></p>
+<p><span class="math display">\[
+\text{Tasa de Error Tipo I Empírica} = \frac{\text{Número de } p\text{-valores} &lt; \alpha}{\text{Número Total de Simulaciones}}
+\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros de simulación</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>n_sims <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>tamano_muestra <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>alfa <span class="ot">&lt;-</span> <span class="fl">0.05</span>         </span>
+<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros de la distribución log-normal (H0: media = 100)</span></span>
+<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>sdlog_val <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb93-8"><a href="#cb93-8" aria-hidden="true" tabindex="-1"></a>meanlog_val <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="dv">100</span>) <span class="sc">-</span> (sdlog_val<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb93-9"><a href="#cb93-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-10"><a href="#cb93-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulación Monte Carlo</span></span>
+<span id="cb93-11"><a href="#cb93-11" aria-hidden="true" tabindex="-1"></a>p_valores <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sims)</span>
+<span id="cb93-12"><a href="#cb93-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>) </span>
+<span id="cb93-13"><a href="#cb93-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-14"><a href="#cb93-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sims) {</span>
+<span id="cb93-15"><a href="#cb93-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Generar datos log-normales bajo H0</span></span>
+<span id="cb93-16"><a href="#cb93-16" aria-hidden="true" tabindex="-1"></a>  datos_simulados <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n =</span> tamano_muestra, <span class="at">meanlog =</span> meanlog_val, <span class="at">sdlog =</span> sdlog_val)</span>
+<span id="cb93-17"><a href="#cb93-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb93-18"><a href="#cb93-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Realizar prueba t y guardar p-valor</span></span>
+<span id="cb93-19"><a href="#cb93-19" aria-hidden="true" tabindex="-1"></a>  t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(datos_simulados, <span class="at">mu =</span> <span class="dv">100</span>)</span>
+<span id="cb93-20"><a href="#cb93-20" aria-hidden="true" tabindex="-1"></a>  p_valores[i] <span class="ot">&lt;-</span> t_test_result<span class="sc">$</span>p.value</span>
+<span id="cb93-21"><a href="#cb93-21" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb93-22"><a href="#cb93-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-23"><a href="#cb93-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular Tasa de Error Tipo I empírica</span></span>
+<span id="cb93-24"><a href="#cb93-24" aria-hidden="true" tabindex="-1"></a>tasa_error_tipo_I <span class="ot">&lt;-</span> <span class="fu">sum</span>(p_valores <span class="sc">&lt;</span> alfa) <span class="sc">/</span> n_sims</span>
+<span id="cb93-25"><a href="#cb93-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb93-26"><a href="#cb93-26" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Alfa nominal:"</span>, alfa, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Alfa nominal: 0.05 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tasa de Error Tipo I empírica:"</span>, tasa_error_tipo_I, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="st">"Tamaño muestra,"</span>, tamano_muestra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tasa de Error Tipo I empírica: 0.0656 
+ Tamaño muestra, 100</code></pre>
+</div>
+</div>
+<ul>
+<li>Taza: , n=</li>
+<li>Taza: , n=</li>
+<li>Taza: , n =</li>
+</ul>
+</section>
+<section id="manejo-de-datos-faltantes-imputation-multiple" class="level3">
+<h3 class="anchored" data-anchor-id="manejo-de-datos-faltantes-imputation-multiple">Manejo de Datos Faltantes Imputation Multiple:</h3>
+<p>Cuando un dataset es limitado y presenta valores perdidos, se puede utilizar la <strong>imputación múltiple</strong>. Esta técnica implica ajustar un modelo estadístico (basado en los datos observados) para predecir y generar múltiples conjuntos de valores plausibles para los datos faltantes.</p>
+<p>La imputación múltiple rellena los datos faltantes generando varias versiones completas del conjunto de datos, rellenando los valores perdidos de forma probabilística. Esto permite analizar los datos sin sesgos significativos por la pérdida de información y combinar los resultados para una inferencia más robusta, incorporando la incertidumbre de la imputación. Es crucial para estudios con patrones de datos faltantes complejos o no aleatorios.</p>
+<p><strong>Ejemplo:</strong> <strong>Análisis de Impacto de Factores de Salud en la Presión Sanguínea en un Estudio con Datos Faltantes.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cargar paquete</span></span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mice)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'mice' was built under R version 4.4.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'mice'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    cbind, rbind</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usar datos de ejemplo 'nhanes' con NA</span></span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(nhanes)</span>
+<span id="cb102-3"><a href="#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(nhanes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md.pattern</span>(nhanes) <span class="co"># Patrón de faltantes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   age hyp bmi chl   
+13   1   1   1   1  0
+3    1   1   1   0  1
+1    1   1   0   1  1
+1    1   0   0   1  2
+7    1   0   0   0  3
+     0   8   9  10 27</code></pre>
+</div>
+</div>
+<hr>
+<section id="rellenar-los-datos-faltantes-múltiples-veces" class="level4">
+<h4 class="anchored" data-anchor-id="rellenar-los-datos-faltantes-múltiples-veces">Rellenar los Datos Faltantes (Múltiples Veces)</h4>
+<ul>
+<li><code>set.seed(42)</code>: Esto asegura que si ejecutas el código varias veces, el proceso de imputación sea el mismo y los resultados sean <strong>reproducibles</strong>.</li>
+<li><code>imputed_data &lt;- mice(nhanes, m = 5, method = "pmm", printFlag = FALSE)</code>: Aquí actua la <strong>imputación múltiple</strong>:
+<ul>
+<li><code>mice(nhanes, ...)</code>: Le dice a la función <code>mice</code> que trabaje con tu dataset <code>nhanes</code>.</li>
+<li><code>m = 5</code>: Le indica que cree <strong>5 conjuntos de datos completos diferentes</strong>. Cada uno de estos 5 conjuntos tendrá los valores <code>NA</code> rellenos con estimaciones plausibles, pero ligeramente distintas. Esto refleja la incertidumbre de no conocer el valor real.</li>
+<li><code>method = "pmm"</code>: Este es el método que <code>mice</code> usa para rellenar los datos. “Predictive Mean Matching” (PMM) es popular y funciona bien para varios tipos de datos, buscando observaciones “similares” para copiar sus valores.</li>
+<li><code>printFlag = FALSE</code>: Solo evita que la función imprima demasiada información detallada mientras trabaja.</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar imputación múltiple (5 datasets)</span></span>
+<span id="cb105-2"><a href="#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) </span>
+<span id="cb105-3"><a href="#cb105-3" aria-hidden="true" tabindex="-1"></a>imputed_data <span class="ot">&lt;-</span> <span class="fu">mice</span>(nhanes, <span class="at">m =</span> <span class="dv">5</span>, <span class="at">method =</span> <span class="st">"pmm"</span>, <span class="at">printFlag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb105-4"><a href="#cb105-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-5"><a href="#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustar modelo lineal en cada dataset imputado</span></span>
+<span id="cb105-6"><a href="#cb105-6" aria-hidden="true" tabindex="-1"></a>model_fits <span class="ot">&lt;-</span> <span class="fu">with</span>(imputed_data, <span class="fu">lm</span>(chl <span class="sc">~</span> bmi <span class="sc">+</span> hyp))</span>
+<span id="cb105-7"><a href="#cb105-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-8"><a href="#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinar los resultados de los modelos</span></span>
+<span id="cb105-9"><a href="#cb105-9" aria-hidden="true" tabindex="-1"></a>pooled_results <span class="ot">&lt;-</span> <span class="fu">pool</span>(model_fits)</span>
+<span id="cb105-10"><a href="#cb105-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb105-11"><a href="#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Mostrar resumen combinado</span></span>
+<span id="cb105-12"><a href="#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(pooled_results))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         term  estimate std.error statistic       df   p.value
+1 (Intercept) 78.905502 63.678726  1.239119 17.01323 0.2321244
+2         bmi  2.771842  2.199206  1.260383 16.43887 0.2251289
+3         hyp 33.118378 21.408734  1.546956 12.50266 0.1468033</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="ejemplo-de-estudio-de-propiedades-estadísticas" class="level2">
+<h2 class="anchored" data-anchor-id="ejemplo-de-estudio-de-propiedades-estadísticas"><strong>7. Ejemplo de Estudio de Propiedades Estadísticas</strong></h2>
+<p>Este principio utiliza la simulación para <strong>resolver el problema</strong> de comprender y verificar el comportamiento asintótico de los estimadores y métodos inferenciales. La simulación nos da una visión empírica vital de su fiabilidad en escenarios prácticos.</p>
+<section id="convergencia-de-un-estimador-consistencia-evaluar-la-fiabilidad-del-estimador-de-tasa-de-fallas-de-componentes" class="level4">
+<h4 class="anchored" data-anchor-id="convergencia-de-un-estimador-consistencia-evaluar-la-fiabilidad-del-estimador-de-tasa-de-fallas-de-componentes"><strong>Convergencia de un Estimador (Consistencia): Evaluar la Fiabilidad del Estimador de Tasa de Fallas de Componentes</strong></h4>
+<p>En ingeniería, estimar la tasa de fallas (<span class="math inline">\(\lambda\)</span>) de componentes es crucial para la planificación del mantenimiento. El Estimador de Máxima Verosimilitud (MLE), <span class="math inline">\(1/\bar{x}\)</span>, es comúnmente usado para datos de tiempo hasta la falla (distribución exponencial). La siguiente simulación verificar empíricamente si este estimador es consistente, es decir, si sus estimaciones se acercan al valor real de la tasa de fallas a medida que se recolectan más datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>true_lambda <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Tasa real</span></span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">5000</span>) <span class="co"># Tamaños de muestra</span></span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>n_runs_per_size <span class="ot">&lt;-</span> <span class="dv">500</span> <span class="co"># Repeticiones</span></span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>estimates_list <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(sample_sizes))</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular y estimar</span></span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s_idx <span class="cf">in</span> <span class="fu">seq_along</span>(sample_sizes)) {</span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> sample_sizes[s_idx]</span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>  current_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_runs_per_size)</span>
+<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_runs_per_size) {</span>
+<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>    data_exp <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> true_lambda)</span>
+<span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>    current_estimates[i] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">mean</span>(data_exp) <span class="co"># MLE lambda</span></span>
+<span id="cb107-16"><a href="#cb107-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb107-17"><a href="#cb107-17" aria-hidden="true" tabindex="-1"></a>  estimates_list[[s_idx]] <span class="ot">&lt;-</span> current_estimates</span>
+<span id="cb107-18"><a href="#cb107-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb107-19"><a href="#cb107-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-20"><a href="#cb107-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar convergencia</span></span>
+<span id="cb107-21"><a href="#cb107-21" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb107-22"><a href="#cb107-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (s_idx <span class="cf">in</span> <span class="fu">seq_along</span>(sample_sizes)) {</span>
+<span id="cb107-23"><a href="#cb107-23" aria-hidden="true" tabindex="-1"></a>  n <span class="ot">&lt;-</span> sample_sizes[s_idx]</span>
+<span id="cb107-24"><a href="#cb107-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hist</span>(estimates_list[[s_idx]], <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb107-25"><a href="#cb107-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"n ="</span>, n), <span class="at">xlab =</span> <span class="st">"Estimación de Tasa"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> true_lambda))</span>
+<span id="cb107-26"><a href="#cb107-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> true_lambda, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Tasa verdadera</span></span>
+<span id="cb107-27"><a href="#cb107-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Medias de las estimaciones</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Medias de estimaciones por tamaño de muestra:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Medias de estimaciones por tamaño de muestra:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sapply</span>(estimates_list, mean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5470512 0.5090266 0.5066188 0.5019865 0.4999208 0.5002957</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tasa verdadera:"</span>, true_lambda, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tasa verdadera: 0.5 </code></pre>
+</div>
+</div>
+</section>
+<section id="propiedades-de-un-intervalo-de-confianza-verificar-la-fiabilidad-de-un-ic-para-el-consumo-promedio-en-marketing" class="level4">
+<h4 class="anchored" data-anchor-id="propiedades-de-un-intervalo-de-confianza-verificar-la-fiabilidad-de-un-ic-para-el-consumo-promedio-en-marketing"><strong>Propiedades de un Intervalo de Confianza: Verificar la Fiabilidad de un IC para el Consumo Promedio en Marketing</strong></h4>
+<p>Una empresa de marketing quiere estimar el consumo promedio de un producto en un nuevo segmento de clientes y desea saber si sus intervalos de confianza del 95% realmente capturan la media poblacional el 95% de las veces. La simulación puede verificar empíricamente la tasa de cobertura de su intervalo de confianza (usando la prueba t, con varianza desconocida), asegurando que sus afirmaciones sobre la precisión de la estimación del consumo promedio son válidas y fiables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>true_mu <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># Media verdadera</span></span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>true_sigma <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Desviación estándar verdadera</span></span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Tamaño de muestra</span></span>
+<span id="cb114-5"><a href="#cb114-5" aria-hidden="true" tabindex="-1"></a>confidence_level <span class="ot">&lt;-</span> <span class="fl">0.95</span> <span class="co"># Nivel de confianza</span></span>
+<span id="cb114-6"><a href="#cb114-6" aria-hidden="true" tabindex="-1"></a>n_sims <span class="ot">&lt;-</span> <span class="dv">10000</span> <span class="co"># Simulaciones</span></span>
+<span id="cb114-7"><a href="#cb114-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-8"><a href="#cb114-8" aria-hidden="true" tabindex="-1"></a>contains_true_mu <span class="ot">&lt;-</span> <span class="fu">logical</span>(n_sims)</span>
+<span id="cb114-9"><a href="#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb114-10"><a href="#cb114-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-11"><a href="#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular y calcular ICs</span></span>
+<span id="cb114-12"><a href="#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sims) {</span>
+<span id="cb114-13"><a href="#cb114-13" aria-hidden="true" tabindex="-1"></a>  sample_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> sample_size, <span class="at">mean =</span> true_mu, <span class="at">sd =</span> true_sigma)</span>
+<span id="cb114-14"><a href="#cb114-14" aria-hidden="true" tabindex="-1"></a>  t_test_result <span class="ot">&lt;-</span> <span class="fu">t.test</span>(sample_data, <span class="at">conf.level =</span> confidence_level)</span>
+<span id="cb114-15"><a href="#cb114-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb114-16"><a href="#cb114-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Verificar si IC contiene la media verdadera</span></span>
+<span id="cb114-17"><a href="#cb114-17" aria-hidden="true" tabindex="-1"></a>  contains_true_mu[i] <span class="ot">&lt;-</span> (true_mu <span class="sc">&gt;=</span> t_test_result<span class="sc">$</span>conf.int[<span class="dv">1</span>] <span class="sc">&amp;&amp;</span> true_mu <span class="sc">&lt;=</span> t_test_result<span class="sc">$</span>conf.int[<span class="dv">2</span>])</span>
+<span id="cb114-18"><a href="#cb114-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb114-19"><a href="#cb114-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-20"><a href="#cb114-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Tasa de cobertura empírica</span></span>
+<span id="cb114-21"><a href="#cb114-21" aria-hidden="true" tabindex="-1"></a>coverage_rate <span class="ot">&lt;-</span> <span class="fu">sum</span>(contains_true_mu) <span class="sc">/</span> n_sims</span>
+<span id="cb114-22"><a href="#cb114-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb114-23"><a href="#cb114-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nivel de confianza nominal:"</span>, confidence_level, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nivel de confianza nominal: 0.95 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tasa de cobertura empírica:"</span>, coverage_rate, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tasa de cobertura empírica: 0.9515 </code></pre>
+</div>
+</div>
+</section>
+<section id="ejemplo-de-verificación-y-validación-de-métodos" class="level3">
+<h3 class="anchored" data-anchor-id="ejemplo-de-verificación-y-validación-de-métodos"><strong>8. Ejemplo de Verificación y Validación de Métodos</strong></h3>
+<section id="estudio-de-sensibilidad-de-un-modelo-lineal-evaluar-la-robustez-de-predicciones-de-precios-inmobiliarios-bajo-colinealidad" class="level4">
+<h4 class="anchored" data-anchor-id="estudio-de-sensibilidad-de-un-modelo-lineal-evaluar-la-robustez-de-predicciones-de-precios-inmobiliarios-bajo-colinealidad"><strong>Estudio de Sensibilidad de un Modelo Lineal: Evaluar la Robustez de Predicciones de Precios Inmobiliarios bajo Colinealidad</strong></h4>
+<p>Al predecir precios de casas, variables como tamaño de la casa y número de habitaciones pueden estar altamente correlacionadas (colinealidad). La simulación nos ayuda a entender y cuantificar cómo esta colinealidad puede hacer que las contribuciones individuales de estas variables al precio estimado sean inestables o contradictorias en diferentes muestras, incluso si el modelo general predice bien. Esto ayuda a los analistas inmobiliarios a comprender las limitaciones y la sensibilidad de sus modelos estándar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>n_obs <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="co"># Casas</span></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>n_sims <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># Simulaciones</span></span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>beta0_true <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Intercepto real</span></span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>beta1_true <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Coef. real X1</span></span>
+<span id="cb118-6"><a href="#cb118-6" aria-hidden="true" tabindex="-1"></a>beta2_true <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span> <span class="co"># Coef. real X2</span></span>
+<span id="cb118-7"><a href="#cb118-7" aria-hidden="true" tabindex="-1"></a>sigma_error <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Ruido</span></span>
+<span id="cb118-8"><a href="#cb118-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-9"><a href="#cb118-9" aria-hidden="true" tabindex="-1"></a>correlation_x1_x2 <span class="ot">&lt;-</span> <span class="fl">0.9</span> <span class="co"># Colinealidad</span></span>
+<span id="cb118-10"><a href="#cb118-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-11"><a href="#cb118-11" aria-hidden="true" tabindex="-1"></a>beta1_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sims)</span>
+<span id="cb118-12"><a href="#cb118-12" aria-hidden="true" tabindex="-1"></a>beta2_estimates <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_sims)</span>
+<span id="cb118-13"><a href="#cb118-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>) <span class="co"># Para reproducibilidad</span></span>
+<span id="cb118-14"><a href="#cb118-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-15"><a href="#cb118-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Simular y ajustar modelos</span></span>
+<span id="cb118-16"><a href="#cb118-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_sims) {</span>
+<span id="cb118-17"><a href="#cb118-17" aria-hidden="true" tabindex="-1"></a>  X1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_obs)</span>
+<span id="cb118-18"><a href="#cb118-18" aria-hidden="true" tabindex="-1"></a>  Z <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_obs)</span>
+<span id="cb118-19"><a href="#cb118-19" aria-hidden="true" tabindex="-1"></a>  X2 <span class="ot">&lt;-</span> correlation_x1_x2 <span class="sc">*</span> X1 <span class="sc">+</span> <span class="fu">sqrt</span>(<span class="dv">1</span> <span class="sc">-</span> correlation_x1_x2<span class="sc">^</span><span class="dv">2</span>) <span class="sc">*</span> Z <span class="co"># X2 correlacionado</span></span>
+<span id="cb118-20"><a href="#cb118-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb118-21"><a href="#cb118-21" aria-hidden="true" tabindex="-1"></a>  Y <span class="ot">&lt;-</span> beta0_true <span class="sc">+</span> beta1_true <span class="sc">*</span> X1 <span class="sc">+</span> beta2_true <span class="sc">*</span> X2 <span class="sc">+</span> <span class="fu">rnorm</span>(n_obs, <span class="at">sd =</span> sigma_error) <span class="co"># Precio</span></span>
+<span id="cb118-22"><a href="#cb118-22" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X1 <span class="sc">+</span> X2)</span>
+<span id="cb118-23"><a href="#cb118-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb118-24"><a href="#cb118-24" aria-hidden="true" tabindex="-1"></a>  beta1_estimates[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="st">"X1"</span>]</span>
+<span id="cb118-25"><a href="#cb118-25" aria-hidden="true" tabindex="-1"></a>  beta2_estimates[i] <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)[<span class="st">"X2"</span>]</span>
+<span id="cb118-26"><a href="#cb118-26" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb118-27"><a href="#cb118-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-28"><a href="#cb118-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar variabilidad</span></span>
+<span id="cb118-29"><a href="#cb118-29" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb118-30"><a href="#cb118-30" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta1_estimates, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Estimaciones Beta1"</span>, <span class="at">xlab =</span> <span class="st">"Coef. Tamaño"</span>, <span class="at">col =</span> <span class="st">"lightblue"</span>)</span>
+<span id="cb118-31"><a href="#cb118-31" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> beta1_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb118-32"><a href="#cb118-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-33"><a href="#cb118-33" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(beta2_estimates, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">main =</span> <span class="st">"Estimaciones Beta2"</span>, <span class="at">xlab =</span> <span class="st">"Coef. Habitaciones"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span>
+<span id="cb118-34"><a href="#cb118-34" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> beta2_true, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SD Beta1:"</span>, <span class="fu">sd</span>(beta1_estimates), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SD Beta1: 0.3332102 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"SD Beta2:"</span>, <span class="fu">sd</span>(beta2_estimates), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>SD Beta2: 0.3396312 </code></pre>
+</div>
+</div>
+</section>
+<section id="estudio-de-puntos-influyentes-validar-la-fiabilidad-de-un-modelo-de-rendimiento-agrícola-ante-errores-de-medición" class="level4">
+<h4 class="anchored" data-anchor-id="estudio-de-puntos-influyentes-validar-la-fiabilidad-de-un-modelo-de-rendimiento-agrícola-ante-errores-de-medición"><strong>Estudio de Puntos Influyentes: Validar la Fiabilidad de un Modelo de Rendimiento Agrícola ante Errores de Medición</strong></h4>
+<p>En agricultura, se usa regresión para predecir el rendimiento de cultivos (Y) basado en fertilizantes (X). Un error de medición accidental al registrar el fertilizante o el rendimiento de una parcela (un outlier) puede distorsionar el modelo. La simulación demuestra cuán vulnerable es la regresión estándar a estos errores. Al introducir un punto anómalo, se valida la necesidad de métodos robustos o de detección de outliers para asegurar que las recomendaciones agrícolas no se basen en estimaciones sesgadas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Parámetros base</span></span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>n_points <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># Parcelas</span></span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>true_beta0 <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a>true_beta1 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a>error_sd <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb123-6"><a href="#cb123-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-7"><a href="#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar datos "limpios"</span></span>
+<span id="cb123-8"><a href="#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">987</span>) <span class="co"># Reproducibilidad</span></span>
+<span id="cb123-9"><a href="#cb123-9" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">runif</span>(n_points, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>) <span class="co"># Fertilizante</span></span>
+<span id="cb123-10"><a href="#cb123-10" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> true_beta0 <span class="sc">+</span> true_beta1 <span class="sc">*</span> X <span class="sc">+</span> <span class="fu">rnorm</span>(n_points, <span class="at">sd =</span> error_sd) <span class="co"># Rendimiento</span></span>
+<span id="cb123-11"><a href="#cb123-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-12"><a href="#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear outlier influyente (error de medición)</span></span>
+<span id="cb123-13"><a href="#cb123-13" aria-hidden="true" tabindex="-1"></a>outlier_X <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb123-14"><a href="#cb123-14" aria-hidden="true" tabindex="-1"></a>outlier_Y <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb123-15"><a href="#cb123-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-16"><a href="#cb123-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Ajustar modelo sin outlier</span></span>
+<span id="cb123-17"><a href="#cb123-17" aria-hidden="true" tabindex="-1"></a>data_clean <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X, Y)</span>
+<span id="cb123-18"><a href="#cb123-18" aria-hidden="true" tabindex="-1"></a>model_clean <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X, <span class="at">data =</span> data_clean)</span>
+<span id="cb123-19"><a href="#cb123-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-20"><a href="#cb123-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Ajustar modelo con outlier</span></span>
+<span id="cb123-21"><a href="#cb123-21" aria-hidden="true" tabindex="-1"></a>X_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(X, outlier_X)</span>
+<span id="cb123-22"><a href="#cb123-22" aria-hidden="true" tabindex="-1"></a>Y_outlier <span class="ot">&lt;-</span> <span class="fu">c</span>(Y, outlier_Y)</span>
+<span id="cb123-23"><a href="#cb123-23" aria-hidden="true" tabindex="-1"></a>data_with_outlier <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X =</span> X_outlier, <span class="at">Y =</span> Y_outlier)</span>
+<span id="cb123-24"><a href="#cb123-24" aria-hidden="true" tabindex="-1"></a>model_with_outlier <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X, <span class="at">data =</span> data_with_outlier)</span>
+<span id="cb123-25"><a href="#cb123-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-26"><a href="#cb123-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Visualizar impacto</span></span>
+<span id="cb123-27"><a href="#cb123-27" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X, Y, <span class="at">main =</span> <span class="st">"Impacto de Outlier en Modelo Agrícola"</span>,</span>
+<span id="cb123-28"><a href="#cb123-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Fertilizante"</span>, <span class="at">ylab =</span> <span class="st">"Rendimiento"</span>,</span>
+<span id="cb123-29"><a href="#cb123-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">16</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">40</span>))</span>
+<span id="cb123-30"><a href="#cb123-30" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(outlier_X, outlier_Y, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pch =</span> <span class="dv">17</span>, <span class="at">cex =</span> <span class="dv">2</span>) <span class="co"># Outlier</span></span>
+<span id="cb123-31"><a href="#cb123-31" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(outlier_X, outlier_Y <span class="sc">+</span> <span class="dv">2</span>, <span class="st">"Outlier"</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">pos =</span> <span class="dv">3</span>)</span>
+<span id="cb123-32"><a href="#cb123-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-33"><a href="#cb123-33" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_clean, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Línea sin outlier</span></span>
+<span id="cb123-34"><a href="#cb123-34" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(model_with_outlier, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># Línea con outlier</span></span>
+<span id="cb123-35"><a href="#cb123-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-36"><a href="#cb123-36" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Datos originales"</span>, <span class="st">"Outlier"</span>, <span class="st">"Modelo sin Outlier"</span>, <span class="st">"Modelo con Outlier"</span>),</span>
+<span id="cb123-37"><a href="#cb123-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>),</span>
+<span id="cb123-38"><a href="#cb123-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">17</span>, <span class="cn">NA</span>, <span class="cn">NA</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Unidad_V_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Coeficientes SIN outlier:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Coeficientes SIN outlier:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">coef</span>(model_clean))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           X 
+   4.926217    1.986220 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Coeficientes CON outlier:</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Coeficientes CON outlier:</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">coef</span>(model_with_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)           X 
+ 10.3993867   0.6654753 </code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
