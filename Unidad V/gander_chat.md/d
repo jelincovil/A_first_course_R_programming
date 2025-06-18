@@ -1,0 +1,19 @@
+# Librerias y códigos
+
+library(gander)
+library(ellmer)
+library(ggplot2)
+
+# ejemplo para el chat de gemini
+
+options(.gander_chat = ellmer::chat_google_gemini(
+  system_prompt = NULL,
+  base_url = "",
+  api_key = "",
+  model = NULL,
+  params = NULL,
+  api_args = list(),
+  echo = NULL
+) )
+
+Para buscar otros chats revisar la documentación de (ellmer)[https://ellmer.tidyverse.org/]
