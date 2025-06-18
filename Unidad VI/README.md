@@ -1,3 +1,8 @@
+
+ 
+ ### Link sesión Sabado 21-06-2025 [Link]()
+
+ 
  # Álgebra Matricial
 Podemos resumir en 5 puntos claves la aplicación del Algebra Matricial a Data Science:
 
