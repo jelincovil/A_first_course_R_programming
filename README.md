@@ -12,7 +12,7 @@
 
 
 
-# Programación Estadística con R
+# Objetivos: Programación Estadística con R
 
 Curso de programación con R para análisis de datos. Curso para el Magíster en Data Science de la UDLA, Chile.
 
@@ -21,6 +21,8 @@ Foco del curso:
 - Usar plataformas de complemento: Posit Cloud, Rstudio, Anaconda, GitHub, LinkedIn.
 - Lenguajes Complementarios: markdown y SQL.
 - Producto Final: proyecto aplicado de Data Science.
+
+# Undades
 
 ## Unidad I:  Introducción al Lenguaje R
 
@@ -36,7 +38,11 @@ Foco del curso:
 
 ## Unidad VII: Optimización númerica 
 
-## Unidad VII: Complementos: rmarkdown, Shiny apps and rbookdown
+## Unidad VII: Complementos
+
+1. rmarkdown, Shiny apps and rbookdown.
+2. Test de funciones.
+3. Uso de plataforma replit.
 
 ### Herramientas Anexas
 - Consola de R en linea.
