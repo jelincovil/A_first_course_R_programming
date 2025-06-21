@@ -22,7 +22,7 @@ Foco del curso:
 - Lenguajes Complementarios: markdown y SQL.
 - Producto Final: proyecto aplicado de Data Science.
 
-# Undades
+# Unidades
 
 ## Unidad I:  Introducción al Lenguaje R
 
