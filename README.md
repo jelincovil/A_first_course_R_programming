@@ -23,18 +23,6 @@ Foco del curso:
 - Producto Final: proyecto aplicado de Data Science.
 
 ## Unidad I:  Introducción al Lenguaje R
-- Introducción al Lengueje R.
-- Plataformas donde corre R.
-- Rstudio.
-- Instalacion de paquetes y documentación.
-- Libros.
-- Intro a objetos en R:
-                - Funciones.
-                - Datos y DataFrames.
-                - Algoritmos de simulación.
-                - Modelo y algoritmo de clasificación.
-                - Gráficos.
-  
 
 ## Unidad II: Programando gráficos estadísticos en R
 
