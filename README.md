@@ -49,5 +49,4 @@ Foco del curso:
 - Jones, O., Maillardet, R., & Robinson, A. (2009). Introduction to scientific programming and simulation using R. Chapman and Hall/CRC. [Link](https://nyu-cdsc.github.io/learningr/assets/simulation.pdf)
 - Advanced R [Link](https://adv-r.hadley.nz/)
   
-## Datos utilizados
-(Datos de alumnos)[https://github.com/jelincovil/A_course_R_programming/tree/main/Datos]
+## Datos utilizados [Datos de alumnos](https://github.com/jelincovil/A_course_R_programming/tree/main/Datos)
