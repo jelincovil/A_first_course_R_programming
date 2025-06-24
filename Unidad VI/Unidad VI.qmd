@@ -1,0 +1,1080 @@
+---
+title: "Unidad VI: Álgebra matricial con R"
+subtitle: "Aplicaciones de la transformación y reducción de matrices"
+format: html
+editor: visual
+html-math-method: mathjax 
+---
+
+# Introducción: ¿Qué es una matriz?
+
+Las matrices son estructuras de datos esenciales en análisis y modelado. Aunque Markdown no es un entorno de dibujo, ofrece métodos efectivos para visualizar y describir matrices, facilitando la explicación de conceptos. Principalmente, las matrices pueden representarse mediante tablas o bloques de código.
+
+### 1. Representación de una Matriz
+
+Una forma de presentar la estructura de filas y columnas de una matriz es mediante **tablas**.
+
+Considérese una **matriz de 2x3**, lo que implica que posee dos filas y tres columnas:
+
+| ----------- | Columna 1 | Columna 2 | Columna 3 |
+|-------------|-----------|-----------|-----------|
+| **Fila 1**  | 1         | 2         | 3         |
+| **Fila 2**  | 4         | 5         | 6         |
+
+En esta representación, las **filas** corresponden a las secuencias horizontales de números (por ejemplo, la primera fila contiene los elementos \[1, 2, 3\]). Las **columnas** son las secuencias verticales de números (por ejemplo, la primera columna está compuesta por \[1, 4\]).
+
+El concepto de **diagonal principal** es intrínseco a las matrices **cuadradas**, es decir, aquellas que poseen un número idéntico de filas y columnas. Se refiere a los elementos donde el índice de la fila coincide con el índice de la columna. Para ilustrar esto, se puede utilizar una tabla y resaltar los elementos pertinentes con negritas.
+
+A continuación, se presenta una **matriz de 3x3** con su diagonal principal claramente identificada:
+
+| ----------- | Columna 1 | Columna 2 | Columna 3 |
+|-------------|-----------|-----------|-----------|
+| Fila 1      | **1**     | 2         | 3         |
+| Fila 2      | 4         | **5**     | 6         |
+| Fila 3      | 7         | 8         | **9**     |
+
+En esta matriz, los elementos **1**, **5**, y **9** constituyen la **diagonal principal**.
+
+------------------------------------------------------------------------
+
+### 2. Tipos de Matrices Comunes e Indexación
+
+Para un entendimiento completo de las matrices en el análisis de datos, es crucial conocer sus tipos comunes y cómo acceder a sus elementos.
+
+#### Tipos de Matrices
+
+Se presentan los tipos de matrices más frecuentes:
+
+-   **Vectores:** Son matrices con una sola fila o una sola columna. Por ejemplo, una lista de edades o una serie de coeficientes de un modelo pueden representarse como vectores.
+
+    ```         
+    Vector Fila: [18  25  34  42]
+
+    Vector Columna:
+    [18]
+    [25]
+    [34]
+    [42]
+    ```
+
+-   **Matrices Cuadradas:** Aquellas que poseen el mismo número de filas que de columnas. Su importancia radica en que solo ellas permiten operaciones como el cálculo de la inversa o el determinante, elementos cruciales en muchos algoritmos.
+
+    | 1   | 2   | 3   |
+    |-----|-----|-----|
+    | 4   | 5   | 6   |
+    | 7   | 8   | 9   |
+
+-   **Matrices Identidad:** Son un tipo especial de matriz cuadrada que tiene unos en su diagonal principal y ceros en el resto de sus posiciones. Actúan de manera similar al número uno en la multiplicación aritmética, manteniendo la matriz original sin cambios cuando se multiplican por ella.
+
+    | 1   | 0   | 0   |
+    |-----|-----|-----|
+    | 0   | 1   | 0   |
+    | 0   | 0   | 1   |
+
+-   **Matrices Simétricas:** Son matrices cuadradas que permanecen inalteradas al ser transpuestas (sus filas se convierten en columnas y viceversa). Estas son frecuentes en estadística, apareciendo en matrices de covarianza o correlación, las cuales describen las interrelaciones entre diferentes variables.
+
+    | 1.0 | 0.8 | 0.2 |
+    |-----|-----|-----|
+    | 0.8 | 1.0 | 0.5 |
+    | 0.2 | 0.5 | 1.0 |
+
+#### Indexación de Matrices
+
+La **indexación** es el mecanismo para acceder a elementos específicos o subconjuntos de datos dentro de una matriz. Permite seleccionar valores individuales, filas completas o columnas enteras.
+
+-   Para acceder a un **elemento individual**, se especifica su posición de fila y columna. Por ejemplo, en una matriz `M`, `M[2,3]` obtendría el elemento en la segunda fila y tercera columna.
+
+-   Para extraer una **fila completa**, se indica solo el número de fila, dejando la posición de la columna vacía. Por ejemplo, `M[1, ]` seleccionaría todos los elementos de la primera fila.
+
+-   Para obtener una **columna completa**, se especifica solo el número de columna, dejando la posición de la fila vacía. Por ejemplo, `M[, 3]` seleccionaría todos los elementos de la tercera columna.
+
+------------------------------------------------------------------------
+
+# Parte I: Matrices y álgebra matricial con R
+
+Las matrices pueden ser construidas usando las funciones `matrix()`, `cbind()` o `rbind()`.
+
+*Syntax*
+
+``` r
+matrix(data, nrow, ncol) # donde data es un vector con nrow*ncol obs.
+cbind(d1, d2, ..., dm)   # donde (d1, ..., dm) es un vector columns
+rbind(d1, d2, ..., dn)   # donde (d1, ..., dn) es un vector filas
+```
+
+Primero, podemos construir la matriz uniendo columnas de esta manera.
+
+```{r}
+
+#c(seq(1, 3), seq(2, 4), seq(3, 5))
+#------------
+cbind(seq(1, 3), seq(2, 4), seq(3, 5)) # Organizar por columnas
+
+```
+
+En este ejemplo, `rbind()` podria dar el mismo resultado, debido a la simetria.
+
+```{r}
+
+rbind(seq(1, 3), seq(2, 4), seq(3, 5)) # Organizar por columnas
+
+```
+
+Por otra parte, las matrices no necesariamente deben ser cuadradas como por ejemplo:
+
+```{r}
+
+matrix( c(seq(1, 3), seq(2, 4), seq(3, 5)), nrow = 3)
+```
+
+Una matriz también puede ser construida por medio de un vector. En este caso agrupando por número columnas:
+
+```{r}
+X <- matrix(c(1, 2, 3, 1, 4, 9), ncol = 2)
+X
+```
+
+En este caso agrupando por número filas:
+
+```{r}
+Y <- matrix(c(1, 2, 3, 1, 4, 9), nrow = 2)
+#Y
+class(Y)
+```
+
+En otro ejemplo, construimos una matriz H3 de Hilbert de 3 × 3, donde la entrada (i,j) es
+
+$$ 
+x_{ij} = 1/(i + j − 1).
+$$
+
+Notemos que ncol no es requerido en el comando que lo creó, ya que los datos al argumento se le ha asignado un vector que consta de nueve elementos; está claro que si hay tres filas también debe haber tres columnas.
+
+```{r}
+
+H3 <- matrix(c(1, 1/2, 1/3, 1/2, 1/3, 1/4, 1/3, 1/4, 1/5), nrow = 3)
+cat("Cada elemento de H3 es un numero racional redondeado a dos decimales \n")
+H3 <- round(H3, 1) # round() es una funcion vetorizada.
+H3
+
+```
+
+Agregamos los nombres de las columnas y filas de la matriz H3
+
+```{r}
+# Agregamos los nombres de las filas a H3
+rownames(H3) <- c("f1", "f2", "f3")
+H3
+
+```
+
+```{r}
+# Agregamos los nombres de las filas a H3
+colnames(H3) <- c("c1", "c2", "c3")
+H3
+
+```
+
+### Acceder a elementos de la matriz; nombres de filas y columnas
+
+Accedemos al elemento (i,j):
+
+```{r}
+H3[3, 2]
+
+```
+
+Accedemos a la tercera linea:
+
+```{r}
+H3[3,]
+
+```
+
+Accedemos a la segunda columna:
+
+```{r}
+
+H3[, 2]
+
+```
+
+Extraer una fila con el nombre de fila y columna:
+
+```{r}
+
+H3[3, , drop = FALSE]
+
+```
+
+Extraer una columna con el nombre de fila y columna:
+
+```{r}
+
+H3[, 2, drop = FALSE]
+
+```
+
+Podemos acceder a los nombres de columnas y lineas de la matriz X
+
+```{r}
+
+colnames(H3)
+
+
+```
+
+```{r}
+
+rownames(H3)
+
+```
+
+Errores al llamar las columnas
+
+```{r}
+
+# H3$c2
+
+# H[, "c2"]
+
+```
+
+### Propiedades matriciales
+
+Dimensión de la matriz
+
+```{r}
+
+dim(H3)
+
+```
+
+Determinante de una matriz
+
+```{r}
+
+det(H3)
+
+```
+
+La diagonal de una matriz
+
+```{r}
+
+diag(H3)
+
+```
+
+El trazo (o traza) de una matriz
+
+```{r}
+trace <- function(data) sum(diag(data))
+
+
+trace(H3)
+
+```
+
+Diagonal y transpuesta de una matriz
+
+```{r}
+
+diag(diag(H3))
+
+
+```
+
+```{r}
+
+t(H3)
+
+```
+
+### Matrices triangulares
+
+Las matrices triangulares son tipos especiales de matrices cuadradas donde todos los elementos por encima o por debajo de la diagonal principal son cero. Se distinguen en matrices triangulares superiores e inferiores.
+
+### Matriz Triangular Superior
+
+Una **matriz triangular superior** es una matriz cuadrada donde todos los elementos *debajo* de la diagonal principal son cero.
+
+**Ejemplo:**
+
+```         
+[ 1  2  3 ]
+[ 0  4  5 ]
+[ 0  0  6 ]
+```
+
+En este ejemplo, los elementos en las posiciones (fila 2, columna 1), (fila 3, columna 1) y (fila 3, columna 2) están por debajo de la diagonal principal y son todos cero.
+
+### Matriz Triangular Inferior
+
+Una **matriz triangular inferior** es una matriz cuadrada donde todos los elementos *por encima* de la diagonal principal son cero.
+
+**Ejemplo:**
+
+```         
+[ 1  0  0 ]
+[ 7  8  0 ]
+[ 9 10 11 ]
+```
+
+Aquí, los elementos en las posiciones (fila 1, columna 2), (fila 1, columna 3) y (fila 2, columna 3) están por encima de la diagonal principal y son todos cero.
+
+```{r}
+lower.tri(H3)
+
+Hnew <- H3
+
+Hnew[upper.tri(H3, diag = TRUE)] <- 0
+
+```
+
+### Aritmética de matrices
+
+Definamos una matriz H2
+
+```{r}
+
+H2 <- matrix(seq(2,10), nrow=3)
+H2
+
+```
+
+Multiplicación de matrices por un escalar y suma de matrices
+
+```{r}
+cat("2*H3 \n")
+Y <- 2 * H3
+Y
+
+```
+
+```{r}
+cat("Suma Y + H2 \n")
+Y + H2
+```
+
+Suma de una transpueta con una matriz de dimensiones diferentes
+
+```{r}
+
+t(H3) + H2
+
+
+```
+
+En este ejemplo, t(Y) es un 2 × 3 matriz en cuanto X es 3 × 2
+
+```{r}
+cat("Dimensiones de H2 y H3 \n")
+dim(H2) ; dim(H3)
+cat("---------------------------\n")
+cat("Producto de H2 * H3 \n")
+H2 * H3
+
+```
+
+### Multiplicación e inversión de matricial
+
+La **inversa de una matriz** ($A^{-1}$) es fundamental en álgebra lineal. Para una **matriz cuadrada** $A$, su inversa es otra matriz que, al multiplicarse por $A$ (en cualquier orden), produce la **matriz identidad** ($I$). Solo las matrices **no singulares** (cuyo determinante no es cero) tienen inversa.
+
+$$ 
+ A \times A^{-1} = A^{-1} \times A = I 
+$$
+
+### Propiedades Clave
+
+La inversa posee propiedades importantes:
+
+-   **Unicidad:** Cada matriz invertible tiene una única inversa.
+-   **Inversa de la Inversa:** $(A^{-1})^{-1} = A$.
+-   **Inversa de un Producto:** $(AB)^{-1} = B^{-1} A^{-1}$.
+-   **Inversa de la Transpuesta:** $(A^T)^{-1} = (A^{-1})^T$.
+-   **Determinante:** $det(A^{-1}) = 1 / det(A)$.
+
+### Ejemplo
+
+Consideremos la matriz $A$:
+
+```         
+[2 1]
+[1 1]
+```
+
+Su determinante es $(2 \times 1) - (1 \times 1) = 2 - 1 = 1$, por lo tanto, es invertible.
+
+La inversa de $A$, denotada como $A^{-1}$, es:
+
+```         
+[ 1 -1]
+[-1  2]
+```
+
+Para verificar, multiplicamos $A$ por $A^{-1}$:
+
+```         
+[2 1]   [ 1 -1]   [(2*1 + 1*-1) (2*-1 + 1*2)]   [1 0]
+[1 1] x [-1  2] = [(1*1 + 1*-1) (1*-1 + 1*2)] = [0 1]
+```
+
+El resultado es la **matriz identidad** 2x2, confirmando que $A^{-1}$ es la inversa de $A$.
+
+En R, esta formada multiplicación de matriz puede ser desarrollado mediante el operador %\*% por ejemplo
+
+```{r}
+
+t(Y) %*% X
+
+```
+
+```{r}
+
+Y %*% X
+
+```
+
+### La función `crossprod()`
+
+La función `crossprod()` nos puede ayudar a forma eficiente a calcular el producto $Y^T * X$.
+
+$$
+Y^T * X
+$$
+
+```{r}
+
+cat("Producto Y^T * X \n")
+crossprod(Y, X)
+
+```
+
+### Inversión matricial
+
+Inversión de la matriz H3
+
+```{r}
+
+H3
+H3inv <- solve(H3)
+H3inv
+
+```
+
+```{r}
+
+# Comprobamos que H3inv es la inversa de H3
+H3inv %*% H3
+
+```
+
+### Aplicación: Analisis de Componentes Principales
+
+El Análisis de Componentes Principales (PCA) es una técnica de reducción de dimensionalidad que transforma variables originales, posiblemente correlacionadas, en un nuevo conjunto de variables no correlacionadas llamadas Componentes Principales (PCs).
+
+**1. Perspectiva Algebraica (Combinación Lineal):**
+
+Cada Componente Principal ($PC_j$) se calcula como una combinación lineal de las variables originales ($X_1, X_2, \dots, X_p$):
+
+$$PC_j = w_{1j}X_1 + w_{2j}X_2 + \dots + w_{pj}X_p$$
+
+Donde $X_i$ son las variables originales (usualmente estandarizadas) y $w_{ij}$ son los **pesos** o **cargas (loadings)**. Estos pesos provienen de la matriz de rotación y determinan la contribución de cada variable a la PC. Por ejemplo, tu PC1 se forma combinando `Wr.Hnd`, `NW.Hnd`, `Pulse`, `Height` y `Age` con sus respectivos pesos de la primera columna de la matriz de rotación. Los pesos se eligen para que la primera PC capture la máxima varianza, y las siguientes maximicen la varianza restante siendo no correlacionadas con las anteriores.
+
+**2. Perspectiva Aplicada:**
+
+Aplicar PCA tiene beneficios clave:
+
+-   **Identificación de Patrones y Reducción de Ruido:** PCA consolida la información de variables correlacionadas en menos PCs, revelando patrones subyacentes. Las PCs con baja varianza explicada (como PC5 en tu caso) suelen representar ruido, permitiendo su eliminación.
+-   **Simplificación y Optimización:** Reduce el número de variables de un dataset (ej., de 5 a 3 PCs que capturan el 90.1% de la varianza), simplificando el análisis y la visualización de datos complejos. Al generar variables no correlacionadas, mejora el rendimiento de los algoritmos de Machine Learning y reduce la complejidad computacional.
+
+```{r}
+library(MASS)
+library(corrplot)
+library(factoextra)
+
+# --- 1. Preparación de Datos ---
+data(survey)
+
+# Seleccionar solo columnas numéricas del dataset 'survey'
+numeric_cols <- sapply(survey, is.numeric)
+data_for_pca <- survey[, numeric_cols]
+
+# Eliminar filas con valores faltantes (NA)
+data_for_pca <- na.omit(data_for_pca)
+
+```
+
+Escalar los datos datos significa estandarizar los datos expresado en la formula:
+
+$$
+\text{Valor escalado} = \frac{\text{Valor original} - \text{Promedio de la columna}}{\text{Desviación estándar de la columna}}
+$$
+
+### En términos simples:
+
+1.  **Restamos el promedio** de todos los valores de la columna → esto centra los datos alrededor de cero.
+2.  **Dividimos por la desviación estándar** → esto ajusta la escala para que los datos tengan una dispersión estándar (una especie de "unidad común").
+
+```{r}
+# Escalar los datos (centrar y reducir a varianza unitaria), esencial para PCA
+# Operaciones matriciales aplicadas por scale():
+# 1. Centrado: Se resta la media de cada columna a cada uno de sus elementos.
+# 2. Escalamiento: Cada elemento centrado se divide por la desviación estándar de su columna.
+scaled_data <- scale(data_for_pca)
+
+# --- 2. Gráfico de Calor de Correlaciones ---
+
+correlation_matrix <- cor(data_for_pca)
+
+corrplot(correlation_matrix, method = "circle", 
+         type = "upper",
+         order = "hclust", tl.col = "black", tl.srt = 45,
+         title = "Gráfico de Calor de Correlaciones de Variables Numéricas")
+```
+
+```{r}
+# --- 3. Realizar Análisis de Componentes Principales (PCA) ---
+# Operaciones matriciales aplicadas por prcomp():
+# 1. Cálculo de la matriz de covarianza (o correlación) de los datos escalados.
+# 2. Descomposición de valores singulares (SVD) de la matriz de datos,
+#    o descomposición de valores propios (eigen-descomposición) de la matriz de covarianza.
+# 3. Obtención de vectores singulares (que son las cargas/rotaciones) y valores singulares (relacionados con la varianza).
+# 4. Proyección de los datos originales (escalados) en los nuevos ejes (las componentes principales).
+pca_result <- prcomp(scaled_data)
+print(pca_result$rotation)
+```
+
+```{r}
+# --- 4. Resumen y Visualización de Componentes y Pesos ---
+# Resumen de la varianza explicada por cada componente principal
+explained_variance_ratio <- pca_result$sdev^2 / sum(pca_result$sdev^2)
+cumulative_variance_ratio <- cumsum(explained_variance_ratio)
+
+pca_resumen_df <- data.frame(
+  Componente = paste0("PC", 1:length(explained_variance_ratio)),
+  Varianza_Explicada = round(explained_variance_ratio, 3),
+  Varianza_Acumulada = round(cumulative_variance_ratio, 3)
+)
+# Mostrar una tabla concisa de la varianza explicada
+print(pca_resumen_df)
+
+
+```
+
+```{r}
+nuevo_dataset <- as.data.frame(pca_result$x)
+nuevo_dataset <- nuevo_dataset[,1:3]
+round(cor(nuevo_dataset),3)
+#View(nuevo_dataset)
+```
+
+# Parte II. Descomposiciones de matrices
+
+### Tipo de descomposiciones matriciales
+
+-   Descomposición espectral (o diagonalización)
+-   Descomposición por valores singulares.
+-   Descomposición de Choleski.
+-   Descomposición del tipo QR.
+
+| Descomposición Matricial | Método Estadístico Asociado |
+|----------------------------------|--------------------------------------|
+| Espectral | Análisis de Componentes Principales |
+| Valores Singulares | Sistemas de Recomendación, Procesamiento de Lenguaje Natural |
+| Cholesky | Generación de datos sintéticos |
+| QR | Sistemas de ecuaciones, Regresión Lineal |
+
+## Descomposición de Matrices: Simplificando la Complejidad
+
+La **descomposición de matrices** es una técnica fundamental en álgebra lineal que consiste en reescribir una matriz compleja como el producto de dos o más matrices más simples y con propiedades específicas. Imagina que tienes una máquina complicada y la desmontas en sus piezas clave para entender cómo funciona o para reemplazar una parte. Eso es, conceptualmente, la descomposición de matrices.
+
+El objetivo principal es:
+
+-   **Simplificar cálculos:** Operar con matrices más simples es computacionalmente más eficiente.
+-   **Revelar propiedades:** Cada tipo de descomposición expone características inherentes de la matriz original que no son obvias a primera vista. Esto es crucial para entender la estructura de los datos, la estabilidad de un sistema o las relaciones entre variables.
+-   **Resolver problemas:** Muchas soluciones a problemas en estadística, optimización, gráficos por computadora y machine learning se derivan de algún tipo de descomposición matricial.
+
+------------------------------------------------------------------------
+
+### Métodos de Descomposición
+
+#### 1. Descomposición Espectral (o Diagonalización)
+
+La descomposición espectral se aplica a **matrices cuadradas y simétricas**. Revela los "modos" o "direcciones" principales de variación de la matriz. Es la base del **Análisis de Componentes Principales (PCA)**.
+
+**Representación Algebraica:** $$A = Q \Lambda Q^T$$
+
+Donde:
+
+-   $A$: Es la matriz original (cuadrada y simétrica).
+-   $Q$: Es una matriz de **vectores propios** (eigenvectors) como columnas. Estos vectores son ortogonales entre sí y representan las direcciones de mayor variabilidad o importancia en la matriz.
+-   $\Lambda$ (Lambda): Es una matriz **diagonal** que contiene los **valores propios** (eigenvalues) correspondientes a los vectores propios. Estos valores propios indican la "cantidad de varianza" o "importancia" asociada a cada dirección (vector propio).
+
+Considera una matriz de covarianza (Contine varianzas y covarianzas) `A`:
+
+```         
+Matriz A (simétrica):
+[4 2]
+[2 3]
+```
+
+Su descomposición espectral resultaría en:
+
+```         
+Matriz de Vectores Propios Q:
+[ 0.89  -0.45 ]
+[ 0.45   0.89 ]
+
+Matriz de Valores Propios Λ (diagonal):
+[ 5.      0   ]
+[ 0       2   ]
+```
+
+La primera columna de Q (0.89, 0.45) es el vector propio asociado al valor propio 5.0, indicando la dirección de mayor varianza.
+
+------------------------------------------------------------------------
+
+#### 2. Descomposición por Valores Singulares (SVD)
+
+La **Descomposición por Valores Singulares (SVD)** es una de las descomposiciones más potentes y versátiles, aplicable a **cualquier tipo de matriz** (no tiene que ser cuadrada ni simétrica). Es el corazón de algoritmos en sistemas de recomendación, procesamiento de lenguaje natural y reducción de dimensionalidad avanzada.
+
+**Representación Algebraica:** $$A = U \Sigma V^T$$
+
+Donde:
+
+-   $A$: Es la matriz original (de cualquier dimensión $m \times n$).
+-   $U$: Es una matriz **ortogonal** de $m \times m$ cuyos vectores columna son los **vectores singulares izquierdos**.
+-   $\Sigma$ (Sigma): Es una matriz **diagonal** (del mismo tamaño que $A$) que contiene los **valores singulares** no negativos en orden decreciente. Estos valores son similares a los valores propios y cuantifican la "fuerza" de cada dimensión en la matriz.
+-   $V^T$: Es la transpuesta de una matriz **ortogonal** de $n \times n$ cuyos vectores columna son los **vectores singulares derechos**.
+
+Considera una matriz `A` (2x3):
+
+```         
+Matriz A:
+[1 1 0]
+[0 1 1]
+```
+
+Su SVD resultaría en:
+
+```         
+Matriz U:
+[-0.707 -0.707]
+[-0.707  0.707]
+
+Matriz Σ (valores singulares en diagonal):
+[ 1.732   0     0   ]
+[ 0       1.0   0   ]
+
+Matriz V^T:
+[-0.577 -0.577 -0.577]
+[-0.816  0.408  0.408]
+[ 0      0.707 -0.707]
+```
+
+Aquí, 1.732 y 1.0 son los valores singulares, indicando la importancia relativa de las dos dimensiones principales capturadas.
+
+------------------------------------------------------------------------
+
+#### 3. Descomposición de Cholesky
+
+La **Descomposición de Cholesky** es un método muy eficiente y numéricamente estable que se aplica exclusivamente a **matrices simétricas y definidas positivas**. Una matriz definida positiva puede verse intuitivamente como una matriz que "mantiene la positividad" en ciertas operaciones; esto es común en matrices de covarianza válidas.
+
+**Representación Algebraica:** $$A = L L^T$$
+
+Donde:
+
+-   $A$: Es la matriz original (cuadrada, simétrica y definida positiva).
+-   $L$: Es una matriz **triangular inferior** con elementos positivos en la diagonal.
+-   $L^T$: Es la transpuesta de $L$, que será una matriz triangular superior.
+
+Considera una matriz de covarianza `A` (simétrica y definida positiva):
+
+```         
+Matriz A:
+[25  15 ]
+[15  18 ]
+```
+
+Su descomposición de Cholesky resultaría en la matriz `L`:
+
+```         
+Matriz L (triangular inferior):
+[ 5   0 ]
+[ 3   3 ]
+```
+
+Puedes verificar que $L \times L^T$ te devuelve la matriz $A$:
+
+```         
+[ 5   0 ]   [ 5   3 ]   [ (5*5 + 0*3)  (5*3 + 0*3) ]   [ 25  15 ]
+[ 3   3 ] x [ 0   3 ] = [ (3*5 + 3*0)  (3*3 + 3*3) ] = [ 15  18 ]
+```
+
+------------------------------------------------------------------------
+
+#### 4. Descomposición QR
+
+La **Descomposición QR** es aplicable a **cualquier matriz real** (no tiene que ser cuadrada). Es una herramienta robusta para resolver sistemas de ecuaciones lineales y es la base de algoritmos para encontrar valores propios.
+
+**Representación Algebraica:** $$A = QR$$
+
+Donde:
+
+-   $A$: Es la matriz original ($m \times n$).
+-   $Q$: Es una matriz **ortogonal** ($m \times m$) cuyas columnas forman una base ortonormal para el espacio columna de $A$.
+-   $R$: Es una matriz **triangular superior** ($m \times n$) que contiene ceros por debajo de la diagonal principal.
+
+**Aplicación Práctica:**
+
+-   **Regresión Lineal por Mínimos Cuadrados:** Una forma numéricamente más estable de resolver los coeficientes de regresión que la inversa directa de $X^T X$, especialmente para datasets con multicolinealidad.
+-   **Cálculo de Valores Propios:** Es la base de algoritmos iterativos para calcular valores propios y vectores propios de matrices.
+
+Considera una matriz `A` (3x2):
+
+```         
+Matriz A:
+[1 2]
+[3 4]
+[5 6]
+```
+
+Su descomposición QR resultaría en:
+
+```         
+Matriz Q:
+[-0.18 -0.89 ]
+[-0.55  0.30 ]
+[-0.82  0.32 ]
+
+Matriz R (triangular superior):
+[-5.47 -7.68 ]
+[ 0     0.79 ]
+```
+
+Aquí, al multiplicar $Q$ por $R$, se recuperaría la matriz $A$ original.
+
+------------------------------------------------------------------------
+
+## Valores propios y vectores propios
+
+```{r}
+eigen(H3)
+
+v1 <- sprintf("%.3f", eigen(H3)$vectors[,1])
+
+
+```
+
+```{r}
+
+evalues <- sprintf("%.3f", eigen(H3)$values)
+evalues[3] <- sprintf("%.5f", eigen(H3)$values[3])
+print(evalues)
+
+```
+
+### La descomposición en valores singulares de una matriz
+
+```{r}
+
+help(svd)
+H3.svd <- svd(H3)
+H3.svd
+
+```
+
+```{r}
+
+H3.svd$d
+H3.svd$u
+H3.svd$v
+
+```
+
+```{r}
+
+# Podemos verificar que los componentes al multiplicarse 
+# apropiadamente reconstruyen la matriz H3
+
+H3.svd$u %*% diag(H3.svd$d) %*% t(H3.svd$v)
+
+HH3 = H3.svd$u %*% diag(H3.svd$d) %*% t(H3.svd$v)
+
+# Verificacion elemento por elemento
+
+round( H3 -  HH3, 2)
+
+```
+
+```{r}
+# Usando esta descomposición, podemos obtener la matriz inversa
+# de H3
+
+H3.svd$v %*% diag(1/H3.svd$d) %*% t(H3.svd$u)
+solve(H3)
+
+Inverse.H3 = H3.svd$v %*% diag(1/H3.svd$d) %*% t(H3.svd$u) 
+
+round(solve(H3) - Inverse.H3, 2)
+
+```
+
+### La descomposición de Choleski de una matriz positiva definida
+
+```{r}
+
+# Descomposición de Choleski
+
+H3.chol <- chol(H3)
+H3.chol   # Esta es la matriz triangular superior U
+
+crossprod(H3.chol, H3.chol)  
+# Multiplicamos  t(U) %*% U para recuperar  H3
+
+```
+
+```{r}
+# Calculo de la inversa de H3 por medio de la descomposición de
+# Choleski
+
+chol2inv(H3.chol)
+
+```
+
+### La descomposición QR
+
+```{r}
+
+# Descomposicion QR
+H3.qr <- qr(H3)
+H3.qr
+
+```
+
+```{r}
+
+# La matriz Q
+Q <- qr.Q(H3.qr)
+Q
+
+# La matriz P
+R <- qr.R(H3.qr)
+R
+
+```
+
+```{r}
+
+# Recuperar la matriz H3
+Q %*% R
+round(H3 - Q %*% R, 3)
+
+```
+
+### Función `outer( )`
+
+```{r}
+
+help(outer)
+
+x1 <- seq(1, 5)
+x1
+outer(x1, x1, "/")
+
+```
+
+```{r}
+
+round(outer(x1, x1, "/"), 2)
+
+outer(x1, x1, function(x, y) {x / y})
+
+```
+
+```{r}
+
+outer(x1, x1, "-")
+
+```
+
+```{r}
+
+y <- seq(5, 10)
+outer(x1, y, "+")
+
+```
+
+## Aplicación de la descomposición de matrices
+
+### 1. Carga de Librerías y Dataset Real
+
+Cargamos `recommenderlab` y `MovieLense`, un dataset real de calificaciones. `MovieLense` se carga como una `realRatingMatrix`, optimizada para datos dispersos.
+
+```{r}
+# Asegúrate de tener el paquete 'recommenderlab' instalado:
+#install.packages("recommenderlab",
+#    repos = c("https://mhahsler.r-universe.dev",
+#              "https://cloud.r-project.org/"))
+
+suppressPackageStartupMessages({library(recommenderlab)})
+
+# Cargar el dataset MovieLense (ratings reales de películas)
+data(MovieLense)
+
+# Mostrar las dimensiones de la matriz (usuarios x películas)
+print("Dimensiones de la matriz de calificaciones (Usuarios x Películas):")
+print(dim(MovieLense))
+
+# Mostrar una pequeña porción de la matriz (formato disperso).
+# Los puntos '.' indican que el usuario no ha calificado esa película.
+print("Vista de una porción de la matriz de calificaciones (dispersa):")
+print(MovieLense[1:5, 1:10])
+```
+
+```{r}
+class(MovieLense)
+# View(as(MovieLense, "data.frame"))
+```
+
+### 2. Entrenamiento del Modelo de Factorización de Matrices (ALS)
+
+La **descomposición matricial** similar a la SVD adaptada a matrices "esparzas" ocurre aquí con **ALS (Alternating Least Squares)**. Este algoritmo factoriza la matriz de calificaciones dispersa $R\_{M \times N}$ (usuarios $\times$ ítems) en dos matrices de menor dimensión: una **matriz de factores latentes de usuarios** ($P\_{M \times K}$) y una **matriz de factores latentes de ítems** ($Q\_{N \times K}$).
+
+Matemáticamente, buscamos una aproximación de la matriz de calificaciones $R$ mediante el producto de estas dos matrices factorizadas:
+
+$$R = P \Sigma Q^T$$
+
+$$R \approx P Q^T$$
+
+Donde:
+
+-   $P$ es la matriz ($M \times K$) con los factores latentes del usuario $u$ en cada fila $\vec{p}\_u$.
+-   $Q$ es la matriz ($N \times K$) con los factores latentes del ítem $i$ en cada fila $\vec{q}\_i$. ($Q^T$ es $K \times N$).
+-   $K$ es el número de factores latentes (parámetro `rank`).
+
+ALS minimiza el error entre calificaciones reales y predichas. Este proceso de hallar las matrices $P$ y $Q$ es la descomposición matricial, encontrando representaciones de menor rango que explican la matriz de calificaciones observada.
+
+```{r}
+# Paso de preparación: Definir un esquema de evaluación.
+# Dividimos el dataset para entrenar (90%) y probar (10%) el modelo.
+esquema <- evaluationScheme(MovieLense, method = "split", train = 0.9, k = 1, given = 10)
+
+# Entrenar el modelo de recomendación usando el método "ALS".
+# 'rank = 10': aprender 10 factores latentes. 'lambda': regularización.
+modelo_recomendador <- Recommender(getData(esquema, "train"), method = "ALS", parameter = list(rank = 10, lambda = 0.1))
+
+print(paste0("\nModelo ALS entrenado con ", modelo_recomendador@model$rank, " factores latentes."))
+```
+
+### 3. Predicción de Calificaciones y Generación de Recomendaciones
+
+El modelo descompuesto usa los factores latentes para estimar calificaciones de ítems no vistos. Estas estimaciones son las predicciones clave para generar recomendaciones personalizadas.
+
+```{r}
+# Seleccionar un usuario de prueba para generar sus recomendaciones.
+usuario_a_recomendar <- getData(esquema, "unknown")[2]
+
+# Predecir calificaciones para los ítems no calificados por este usuario.
+calificaciones_predichas <- predict(modelo_recomendador, usuario_a_recomendar, type = "ratings")
+
+print(paste0("\nPredicciones de calificaciones para el usuario '", rownames(as(usuario_a_recomendar, "matrix"))[1], "' (primeras 10 estimaciones):"))
+print(as(calificaciones_predichas, "matrix")[1, 1:10])
+
+# Generar el Top-N de recomendaciones (ej. las 5 películas con las calificaciones predichas más altas).
+top_n_recomendaciones <- predict(modelo_recomendador, usuario_a_recomendar, n = 5)
+
+print(paste0("\nTop 5 recomendaciones para el usuario '", rownames(as(usuario_a_recomendar, "matrix"))[1], "':"))
+print(as(top_n_recomendaciones, "list"))
+```
+
+# Parte III: uso de la familia de funciones `apply( )`
+
+La familia de funciones **apply** en R es ampliamente utilizada para aplicar una función a cada elemento de una estructura de datos. Estas funciones son especialmente útiles para operar en matrices, data frames, arrays y listas. A continuación, se presentan las principales funciones de la familia **apply**:
+
+1.  **`apply()`**: Aplica una función a filas o columnas de una matriz, data frame o array. Puedes especificar el argumento `MARGIN` para indicar si deseas aplicar la función a filas (con `MARGIN = 1`), columnas (con `MARGIN = 2`), o ambos (con `MARGIN = c(1, 2)`). Además, puedes proporcionar argumentos adicionales para la función que se aplicará¹.
+
+2.  **`tapply()`**: Aplica una función a grupos de datos. Es útil para operaciones agregadas en función de factores o variables categóricas⁴.
+
+3.  **`sapply()`** y **`lapply()`**: Ambas aplican una función a elementos de una lista. La diferencia radica en que `sapply()` intenta simplificar el resultado a un vector o matriz, mientras que `lapply()` siempre devuelve una lista⁴.
+
+La familia **apply** permite realizar operaciones de manera eficiente sin necesidad de bucles explícitos. ¡Es una herramienta poderosa para el análisis de datos en R!
+
+### 1. `apply()`: Operaciones sobre Filas o Columnas
+
+`apply()` es ideal para calcular estadísticas o transformar datos directamente sobre las filas o columnas de una **matriz** o **data frame**.
+
+**Ejemplo:** Calcular la media de las ventas por producto y el total de ventas por región.
+
+```{r}
+
+# Crear una matriz de datos de ejemplo
+datos_ventas <- matrix(c(100, 150, 120,
+                         80, 130, 110,
+                         200, 180, 220,
+                         90, 110, 95), ncol = 3, byrow = TRUE)
+colnames(datos_ventas) <- c("Prod_A", "Prod_B", "Prod_C")
+rownames(datos_ventas) <- paste0("Region_", 1:4)
+
+print("Datos de Ventas por Región:")
+print(datos_ventas)
+
+# Calcular la venta promedio por producto (aplicar a columnas: MARGIN = 2)
+media_por_producto <- apply(datos_ventas, 2, mean)
+print("\nVenta Promedio por Producto:")
+print(media_por_producto)
+
+# Calcular el total de ventas por región (aplicar a filas: MARGIN = 1)
+total_por_region <- apply(datos_ventas, 1, sum)
+print("\nTotal de Ventas por Región:")
+print(total_por_region)
+```
+
+`apply()` agiliza estas operaciones directas sobre los márgenes, eliminando la necesidad de bucles explícitos.
+
+------------------------------------------------------------------------
+
+### 2. `sapply()`: Aplicar una Función a Columnas de un DataFrame
+
+`sapply()` es una variante concisa para aplicar una función a cada elemento de una **lista** o, comúnmente, a múltiples **columnas de un data frame**, simplificando el resultado a un vector o matriz.
+
+**Ejemplo:** Convertir columnas a tipo numérico o imputar valores faltantes en un data frame.
+
+```{r}
+
+# Crear un data frame de ejemplo con datos mixtos y NAs
+datos_clientes_raw <- data.frame(
+  ID = 1:5,
+  Edad = c(25, 30, NA, 40, 28),
+  Ingresos = c("50000", "75000", "45000", "90000", "60000"),
+  Experiencia_Anios = c(3, 8, 2, NA, 5),
+  Region = c("Norte", "Sur", "Centro", "Norte", "Sur")
+)
+
+print("Datos Originales:")
+print(datos_clientes_raw)
+
+# Convertir la columna 'Ingresos' a numérica
+datos_procesados <- datos_clientes_raw
+datos_procesados$Ingresos <- sapply(datos_procesados$Ingresos, as.numeric)
+
+# Imputar NA en 'Edad' y 'Experiencia_Anios' con la media de cada columna
+datos_procesados[, c("Edad", "Experiencia_Anios")] <- sapply(
+  datos_procesados[, c("Edad", "Experiencia_Anios")],
+  function(x) {
+    x[is.na(x)] <- mean(x, na.rm = TRUE)
+    return(x)
+  }
+)
+
+print("\nDatos Procesados (Ingresos numéricos, NAs imputados):")
+print(datos_procesados)
+```
+
+`sapply()` simplifica la aplicación de la misma transformación a varias columnas, mejorando la eficiencia en la preparación de datos.
+
+# Referencias
+
+-   Linear Models with R by Julian Faraway [Link](https://julianfaraway.github.io/faraway/LMR/)
