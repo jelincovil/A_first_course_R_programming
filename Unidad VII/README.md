@@ -1,407 +1,423 @@
-# Optimización numérica
+---
+title: "Optimización Numérica y sistemas lineales en R"
+subtitle: "Aplicaciones con paralelización"
+format: 
+  html:
+    toc: true
+    code-fold: false
+    self-contained: true
+editor: visual
+---
 
+# ¿Qué es un optimo y un algoritmo de optimización?
 
-## Optimizando funciones objetivos
+-   El óptimo global es la mejor solución posible entre todas las opciones existentes, sin excepción. Y un algoritmo para encontrar un óptimo es, simplemente, una **receta** o una serie de **pasos metódicos** que sigue un ordenador para buscar y comparar sistemáticamente esas opciones hasta encontrar esa solución ganadora.
 
-Cuando tenemos una función analitica que necesita ser minimizada o maximizada local o globalmente,
-estamos frente al caso de un caso de optimización de una función objetivo.
+Veamos un ejemplo didactico:https://clementmihailescu.github.io/Pathfinding-Visualizer/#
 
-Esto ocurre en al caso de querer encontrar un estimador de maxima verosimilitud o los estimadores de minimos cuadrados.
+La **Optimización Numérica**, abordada en el Capítulo 8 de "A First Course in Statistical Programming with R", es una de las áreas más importantes y aplicadas en Data Science. Este documento sirve como una guía práctica que explora dos de sus aplicaciones fundamentales. Partiremos de los conceptos teóricos del libro para construir soluciones ejecutables en R, y finalizaremos demostrando cómo acelerar estas tareas mediante computación en paralelo.
 
-### Máximos y minimos globales
+## a) Optimización de Funciones Continuas: Entrenamiento de Redes Neuronales
 
-### Max/min de una función continua univariada
+Comenzaremos por el problema general de optimización sobre funciones continuas, que es el núcleo del machine learning moderno.
 
-```r
-# Syntax
-# optim(par, fn, ...)
+#### Conceptos del Capítulo 8: Optimización General
+
+> **Ejemplo:** En el modelado estadístico, a menudo queremos encontrar un conjunto de parámetros para un modelo que minimice los errores de predicción. Aquí, los parámetros del modelo son las variables `x` y la medida del error de predicción es la función `f(x)` que queremos minimizar.
+
+> **Definición:** La optimización numérica es el área de la computación que se enfoca en resolver el siguiente problema: dada una función `f(·)`, ¿qué valor de `x` hace que `f(x)` sea lo más grande o lo más pequeño posible? El entrenamiento de redes neuronales es un problema de minimización a gran escala sobre una función continua.
+
+El proceso que seguiremos para entrenar nuestra red neuronal se ilustra en el siguiente esquema:
+
+```{mermaid}
+
+%%| label: fig-nn-methodology
+%%| fig-cap: "Esquema metodológico para el entrenamiento de una red neuronal."
+
+graph TD
+    A[1. Modelo y clasificación] --> B[2. Definir Problema de Optimización<br><i>Función de Pérdida + Optimizador</i>];
+    B --> C{3. Iniciar Entrenamiento (fit)};
+    C --> D[Cálculo Iterativo];
+    subgraph "Ciclo de Convergencia"
+        D -- En cada paso --> E[a. Calcular Gradiente];
+        E --> F[b. Ajustar Parámetros];
+    end
+    F --> C;
+    C -- Convergencia Alcanzada --> G[4. Modelo Óptimo (Mínimo Local)];
 ```
 
-Consideremos la función
+### 1. Clasificación de Dígitos MNIST con un Modelo Random Forest
 
-$$
-g(x) =|x-3.5| + |x-2| + |x-1|
-$$
+El Random Forest no se optimiza minimizando una función de pérdida continua, a diferencia de otros modelos. Su entrenamiento es una partición recursiva de nodos, donde la "optimización" es avara y local. El criterio clave para cada división es la **reducción de impureza**, medida por funciones como la **Impureza de Gini**, buscando en cada paso la característica y el valor que maximizan dicha reducción.
 
-la cual tiene un minimo global.
+Este proceso se aplica a cada árbol individual, que se entrena con una muestra aleatoria de datos y un subconjunto de características. El modelo final combina las predicciones de todos los árboles por votación, lo que lo hace robusto y menos propenso al sobreajuste.
 
-```r
-# Syntax
-# optim(par, fn, ...)
+![ ](https://tse3.mm.bing.net/th/id/OIP.Nw5J_nPFlzprOLsJpLHQ8AHaDt?rs=1&pid=ImgDetMain&o=7&rm=3)
 
-g <- function(x) abs(x-3.5) + abs(x-2) + abs(x-1)
+### Fórmula para la Impureza de Gini
 
-# Graficamos g
-curve(g(x), from=-2, to=6,
-      main="Función |x-3.5| + |x-2| + |x-1|")
+La medida de impureza de Gini para un nodo con $K$ clases es:
 
-# Como punto inicial x=0, comienza la busqueda
-# del minimo
-optim(0, g)
+$$G(p) = 1 - \sum_{k=1}^{K} p_k^2$$
 
+Donde $p_k$ es la proporción de instancias de la clase $k$ en ese nodo. El objetivo del algoritmo es encontrar la división que maximiza la reducción de esta impureza.
+
+### Pseudo-fórmula para la Optimización de un Nodo
+
+**`Para cada nodo en un árbol:`**
+
+1.  **`Iterar a través de cada característica y umbral de división.`**
+2.  **`Calcular la impureza de Gini del nodo padre: G_padre.`**
+3.  **`Calcular la ganancia de la división: Ganancia = G_padre - G_hijos_ponderada.`**
+4.  **`Seleccionar la división (característica + umbral) con la Ganancia más alta.`**
+5.  **`Dividir el nodo y repetir recursivamente hasta que el árbol esté completo.`**
+
+A seguir detallamos el procedimiento para entrenar y evaluar un modelo de Machine Learning con el objetivo de clasificar dígitos manuscritos del conjunto de datos MNIST. Se emplea un modelo Random Forest, una técnica robusta implementada íntegramente en el entorno de R.
+
+------------------------------------------------------------------------
+
+### Paso 1: Carga de Librerías
+
+Se inicia el proceso cargando las librerías de R necesarias para el análisis. Cada una cumple una función específica:
+
+-   **randomForest**: Provee el algoritmo para la construcción del modelo.
+-   **dslabs**: Facilita el acceso y la carga del dataset MNIST.
+-   **caret**: Ofrece herramientas para una evaluación detallada del rendimiento del modelo.
+
+```{r}
+#| label: cargar-librerias
+#| message: false
+#| warning: false
+
+# Es necesario tener estos paquetes instalados previamente (ej: install.packages("randomForest")).
+library(randomForest)
+library(dslabs)
+library(caret)
 ```
 
-### Estimación de minimos cuadrado de una regresión
-Veremos el caso de los estimadores de minimos cuadrados para un modelos de regresión lineal simple
+------------------------------------------------------------------------
 
-$$
-Y_i= \alpha + \beta X_i.
-$$
+### Paso 2: Carga y Segmentación de los Datos
 
-para $i=1,2,...,n$.
+El dataset MNIST se carga utilizando la función `read_mnist` del paquete `dslabs`. Inmediatamente, los datos son segmentados en dos conjuntos independientes:
 
+1.  **Conjunto de Entrenamiento**: Datos utilizados para que el modelo aprenda los patrones.
+2.  **Conjunto de Prueba**: Datos reservados para evaluar el modelo sobre información nueva.
 
-```r
-# Introduzimos el set de datos de X e Y
-x = c(1, 3, 2, 3, 4)
-y = c(10, 14, 12, 15, 20)
-plot(x,y)
+```{r}
+#| label: cargar-datos
+
+# Se carga el dataset completo
+mnist <- read_mnist()
+
+# Se asignan los datos de entrenamiento
+x_train <- mnist$train$images
+y_train <- mnist$train$labels
+
+# Se asignan los datos de prueba
+x_test <- mnist$test$images
+y_test <- mnist$test$labels
+
+# Se muestra un resumen de las dimensiones de los conjuntos de datos
+cat("Dimensiones del conjunto de entrenamiento:", dim(x_train)[1], "muestras\n")
+cat("Dimensiones del conjunto de prueba:", dim(x_test)[1], "muestras\n")
 ```
 
-```r
-# Rengo de los parametros y función a minimizar
-alpha <- seq(-15, 15, by = 1)
-beta <- seq(-15, 15, by = 1)
+------------------------------------------------------------------------
 
-z = function(alpha, beta){
-  out <- sum(y^2) - 2*alpha*sum(y)  - 2*beta*sum(y*x) + length(x)*alpha^2 +
-    (beta^2)*sum(x^2) + 2*alpha*beta*sum(x)
-  return(out)
-}
+### Paso 3: Preparación de los Datos
 
-```
-La funcion de la suma de las diferencias al cuadrado entre el valor predicto y los reales como
-función de alpha y beta es dado por
+Los modelos basados en árboles, como Random Forest, requieren una preparación mínima. El único paso esencial es la conversión de la variable objetivo a un tipo `factor`. Esto asegura que el algoritmo trate el problema como uno de clasificación categórica en lugar de regresión numérica.
 
-$$
-  z(\alpha, \beta) = \sum_{i=1}^n (y_i - \alpha - \beta x_i)^2 = \sum_{i=1}^{n} y_i^2 - 2\alpha\sum_{i=1}^{n} y_i - 2\beta\sum_{i=1}^{n} x_iy_i + n\alpha^2 + \beta^2\sum_{i=1}^{n} x_i^2 + 2\alpha\beta\sum_{i=1}^{n} x_i
-$$
+```{r}
+#| label: preparar-datos
 
-
-```r
-# Visualizamos la función a optimizar
-SRC <- outer(alpha, beta, z)
-persp(alpha, beta, SRC, theta=70)
+# Se convierte la variable respuesta del conjunto de entrenamiento a factor
+y_train <- as.factor(y_train)
 ```
 
-Una persepectiva en otro angulo
+------------------------------------------------------------------------
 
-```r
-persp(alpha, beta, SRC, theta=120)
+### Paso 4: Entrenamiento del Modelo
 
-```
+En esta fase, se construye el modelo Random Forest. El algoritmo es alimentado con las imágenes de entrenamiento (`x_train`) y sus correspondientes etiquetas (`y_train`). Se establece una semilla de aleatoriedad (`set.seed`) para garantizar que los resultados del entrenamiento sean reproducibles.
 
-Usamos la función *optim()* de las funciones bases de R
+```{r}
+#| eval: false
+#| include: false
 
-```r
-help(optim)
-```
+#| label: entrenar-modelo
+#| cache: true
 
-La apliacamos sobre la función z
-
-```r
-f <- function(par) z(par[1], par[2])
-f(c(0,0))
+tiempo_entrenamiento <- system.time({
+  
+# Se fija la semilla para la reproducibilidad
 set.seed(123)
-optim(c(0,0), fn = f)
-```
-Los parametros alfa y betas que minimizan la función Z estan en
+cat("Iniciando el proceso de entrenamiento del modelo...\n")
+# Se entrena el modelo Random Forest.
+modelo_rf <- randomForest(x = x_train, y = y_train, ntree = 100) 
 
-```r
-optim(c(0,0), fn = f)$par
-```
+}) 
 
-Finalmente, el modelo es para 6.001591 3.153134, es decir
-
-$$
-Y_i= 6 +  3.15X_i.
-$$
-
-para $i=1,2,...,n$.
-
-Finalmente, podemos ver los datos junto con la linea media esperada
-```r
-# Grafica de los valores estimados y el puntos
-plot(x,y)
-curve(6 + 3.15*x, 
-      from=0, to=5, 
-      col="blue", 
-      add= TRUE,
-      lwd=3)
+cat("\n--- Tiempo de ejecución del entrenamiento ---\n")
+print(tiempo_entrenamiento)
 ```
 
-## Programación lineal
+Para 100 arboles entrenados
 
+-   El tiempo elapsed fue de **861.23** segundos.
 
+### Paso 5: Evaluación del Rendimiento
 
+Una vez entrenado, el rendimiento del modelo es puesto a prueba. Se utilizan las imágenes del conjunto de prueba (`x_test`) para generar predicciones. Estas predicciones son luego comparadas con las etiquetas reales (`y_test`) para cuantificar la precisión del modelo.
 
-### Resolver problemas de programación lineal en R
+```{r}
+#| label: evaluar-modelo
 
-Emplearemos una función de programación lineal disponible en R: la función lp() en el paquete *lpSolve* 
-puede ser la más via disponible más estable. Se basa en el método símplex revisado.
+# Se generan predicciones sobre el conjunto de prueba
+predicciones <- predict(modelo_rf, newdata = x_test)
 
-```r
+# Se crea la matriz de confusión para comparar predicciones con valores reales
+# La variable y_test también se convierte a factor para una comparación consistente
+matriz_confusion <- confusionMatrix(data = predicciones, reference = as.factor(y_test))
+```
 
+------------------------------------------------------------------------
+
+### Paso 6: Resultados Finales
+
+Los resultados se presentan a través de la matriz de confusión. La métrica clave es la **Precisión (Accuracy)**, que representa el porcentaje total de clasificaciones correctas realizadas por el modelo sobre el conjunto de prueba.
+
+```{r}
+#| label: resultados
+
+# Se imprime el informe completo de la matriz de confusión
+print(matriz_confusion)
+
+# Se extrae y muestra la precisión general de manera destacada
+precision <- matriz_confusion$overall['Accuracy'] * 100
+cat(paste("\nPrecisión General del Modelo:", round(precision, 2), "%\n"))
+```
+
+La alta precisión obtenida confirma la efectividad del modelo Random Forest para esta tarea de clasificación de imágenes, constituyendo una alternativa robusta y nativa en el ecosistema R.
+
+## Paso 7: Aceleración con Entrenamiento Paralelo
+
+![](https://revolution-computing.typepad.com/.a/6a010534b1db25970b01b8d28ac4a6970c-pi)
+
+Para reducir el tiempo de cómputo, se implementa el entrenamiento en paralelo. El trabajo de construir los árboles se distribuye entre los núcleos disponibles de la CPU. El código detecta el sistema operativo para aplicar el método de paralelización más adecuado.
+
+```{r}
+#| label: cargar-librerias
+#| message: false
+#| warning: false
+
+#library(randomForest)
+#library(dslabs)
+#library(caret)
+library(parallel)
+```
+
+```{r}
+#| label: entrenar-paralelo
+#| cache: true
+
+# 1. Definir parámetros
+total_arboles <- 100  # Se usa un número mayor para que la paralelización sea más evidente
+num_nucleos <- detectCores() - 1  # Dejar un núcleo libre para el sistema
+arboles_por_nucleo <- ceiling(total_arboles / num_nucleos)
+
+cat(paste("Iniciando entrenamiento en paralelo sobre", num_nucleos, "núcleos.\n"))
+cat(paste("Cada núcleo construirá aproximadamente", arboles_por_nucleo, "árboles.\n"))
+```
+
+```{r}
+# 2. Medir el tiempo de ejecución del entrenamiento en paralelo
+  
+# Crear un clúster de procesos trabajadores (workers)
+# num_nucleos debe estar definido previamente, ej: num_nucleos <- detectCores() - 1
+cl <- makeCluster(num_nucleos)
+  
+# Exportar las variables necesarias del entorno principal a cada worker del clúster
+# Las variables x_train, y_train y arboles_por_nucleo deben existir en tu entorno
+clusterExport(cl, varlist = c("x_train", "y_train", "arboles_por_nucleo"), envir = environment())
+  
+# Cargar la librería 'randomForest' en cada worker del clúster
+clusterEvalQ(cl, library(randomForest))
+
+```
+
+```{r}
+tiempo_paralelo <- system.time({
+
+# Ejecutar el entrenamiento en paralelo. parLapply distribuye la tarea entre los workers
+lista_de_bosques <- parLapply(cl, 1:num_nucleos, function(i) {
+    randomForest(x = x_train, y = y_train, ntree = arboles_por_nucleo)
+  })
+  
+# Detener el clúster para liberar los recursos. ¡Paso muy importante!
+stopCluster(cl)
+
+# 3. Combinar los resultados en un único modelo
+modelo_rf_paralelo <- do.call(combine, lista_de_bosques)
+
+})
+
+cat("\n¡Entrenamiento en paralelo finalizado!\n")
+cat("Tiempo total de ejecución:\n")
+print(tiempo_paralelo)
+```
+
+Para 100 arboles entrenados
+
+-   Tiempo Real (elapsed): La tarea completa tardó **520.39** segundos en finalizar desde el inicio hasta el fin.
+-   Trabajo del Proceso Principal (user): El proceso principal de R solo trabajó activamente segundos.
+
+## Paso 7: Evaluación del Modelo Paralelo
+
+Finalmente, se evalúa el modelo resultante del entrenamiento en paralelo. Se espera que la precisión sea muy similar a la del modelo secuencial, pero con un tiempo de entrenamiento significativamente menor.
+
+```{r}
+#| label: evaluar-paralelo
+
+# Se evalúa el nuevo modelo con los datos de prueba
+predicciones_paralelo <- predict(modelo_rf_paralelo, newdata = x_test)
+matriz_confusion_paralelo <- confusionMatrix(data = predicciones_paralelo, reference = as.factor(y_test))
+precision_paralelo <- matriz_confusion_paralelo$overall['Accuracy'] * 100
+
+cat(paste("\nPrecisión del Modelo entrenado en Paralelo:", round(precision_paralelo, 2), "%\n"))
+```
+
+------------------------------------------------------------------------
+
+## b) Resolución de Sistemas Lineales: Programación Lineal
+
+Ahora nos enfocamos en un tipo específico de optimización donde tanto el objetivo como las restricciones son lineales.
+
+#### Conceptos del Capítulo 8: Programación Lineal (Sección 8.5)
+
+> **Ejemplo Motivador (del libro):** Una compañía tiene dos procedimientos para reducir la contaminación. Cada uno tiene un costo y una efectividad diferente para reducir dos tipos de gases. El objetivo es cumplir con las regulaciones de reducción de ambos gases al **mínimo costo** posible.
+
+> **Definición Simple (del libro):** Cuando la función objetivo (ej. el costo) y las restricciones (ej. los límites de reducción) pueden expresarse como ecuaciones o desigualdades **lineales**, el problema se denomina **Programación Lineal**.
+
+El método para resolver este tipo de sistemas se basa en las propiedades geométricas del problema, como se ilustra a continuación:
+
+```{mermaid}
+%%| label: fig-lp-methodology
+%%| fig-cap: "Esquema metodológico para la resolución de un problema de Programación Lineal."
+graph TD
+    A[1. Definir Problema de Negocio<br><i>Objetivo y Restricciones</i>] --> B[2. Formular Sistema Lineal<br><i>Se crea una Región Factible Convexa</i>];
+    B --> C{3. Aplicar Algoritmo Simplex};
+    subgraph "Búsqueda Eficiente"
+      C --> D[a. Iniciar en un vértice];
+      D --> E{b. ¿Hay un vértice vecino mejor?};
+      E -- Sí --> F[c. Moverse al mejor vértice];
+      F --> E;
+    end
+    E -- No --> G[4. Solución Óptima Encontrada<br><i>(El mejor vértice)</i>];
+```
+
+### 1. Definición del Problema y Solución
+
+Vamos a resolver un problema clásico de mezcla de productos para maximizar el beneficio.
+
+-   **Objetivo:** Maximizar el beneficio total.
+    -   Beneficio por unidad de A: \$40
+    -   Beneficio por unidad de B: \$30
+    -   Función objetivo: C(A,B)=40\*A + 30B
+-   **Restricciones (Sistema Lineal):**
+    1.  **Mano de Obra:** `1*A + 2*B <= 240`
+    2.  **Materia Prima:** `3*A + 1*B <= 300`
+
+```{r}
+#| label: setup-lp
 library(lpSolve)
 
+# Definir los componentes del problema
+objective.in <- c(40, 30)
+const.mat <- matrix(c(1, 2, 3, 1), nrow = 2)
+const.dir <- c("<=", "<=")
+const.rhs <- c(240, 300)
+
+# Resolver el sistema
+solucion_optima <- lp("max", objective.in, const.mat, const.dir, const.rhs)
+
+# Interpretar la solución
+cat("Beneficio máximo: $", solucion_optima$objval, "\n")
+cat("Unidades de A:", solucion_optima$solution[1], "\n")
+cat("Unidades de B:", solucion_optima$solution[2], "\n")
 ```
 
-La función lp() tiene una serie de parámetros; 
+### 2. Implementación en Paralelo: Simulación de Escenarios
 
-- objective.in: el vector de coeficientes de la función objetivo.
-- const.mat: una matriz que contiene los coeficientes de las variables
-  de decisión en el lado izquierdo de las restricciones; cada fila corresponde a un restricción.
-- const.rhs: un vector que contiene las constantes dadas en el lado derecho de las restricciones.
-- const.dir: un vector de caracteres que indica la dirección de la restricción
-  para las desigualdades; Algunas de las entradas posibles son >=, == y <=.
+Un solo problema de programación lineal se resuelve muy rápido. La paralelización se vuelve indispensable cuando necesitamos resolver **miles de problemas similares**, por ejemplo, al simular el efecto de la variabilidad en los recursos disponibles.
 
-### Ejemplo de las cantidade de sulfuro y carbono emitidos
+**Tarea:** Resolveremos el problema 5,000 veces, pero cada vez con una ligera variación aleatoria en los recursos de mano de obra y materia prima.
+
+```{r}
+#| label: paralelo-pl-espanol
+# Cargar las librerías necesarias en la sesión principal
+library(lpSolve)
+library(parallel)
+
+# Función que resuelve un escenario de Programación Lineal (PL)
+resolver_escenario_pl <- function(vector_rhs) {
+  objetivo <- c(40, 30)
+  matriz_restr <- matrix(c(1, 3, 2, 1), nrow = 2)
+  dir_restr <- c("<=", "<=")
   
-```r
-eg.lp <- lp(objective.in = c(5, 8), 
-            const.mat = matrix(c(1, 1, 1, 2), nrow = 2), 
-            const.rhs = c(2, 3), 
-            const.dir = c(">=", ">="))
-eg.lp
-## El valor minimo de C= 13
+  solucion_lp <- lp("max", objetivo, matriz_restr, dir_restr, vector_rhs)
+  
+  if (solucion_lp$status == 0) return(solucion_lp$solution) else return(c(NA, NA))
+}
 
-eg.lp$solution
+# Generar 5000 escenarios de restricciones aleatorias
+num_simulaciones <- 5000
+set.seed(42)
+lista_escenarios <- lapply(1:num_simulaciones, function(i) {
+  c(240 + rnorm(1, 0, 10), 300 + rnorm(1, 0, 15))
+})
+
+# --- Ejecución Secuencial ---
+cat("Iniciando ejecución secuencial para", num_simulaciones, "escenarios...\n")
+tiempo_secuencial <- system.time({
+  resultados_secuencial <- lapply(lista_escenarios, resolver_escenario_pl)
+})
+cat("Tiempo secuencial:\n")
+print(tiempo_secuencial)
+
+
+# --- Ejecución en Paralelo ---
+num_nucleos <- detectCores() - 1
+
+# Medir el tiempo de toda la operación en paralelo
+tiempo_paralelo <- system.time({
+  
+  # 1. Crear el clúster de procesos trabajadores
+  clúster <- makeCluster(num_nucleos) 
+  
+  # 2. Exportar los objetos necesarios (la función y los datos)
+  clusterExport(clúster, varlist = c("resolver_escenario_pl", "lista_escenarios"))
+  
+  # 3. Cargar la librería 'lpSolve' en cada núcleo del clúster
+  clusterEvalQ(clúster, library(lpSolve))
+  
+  # 4. Ejecutar la tarea en paralelo
+  resultados_paralelo <- parLapply(clúster, lista_escenarios, resolver_escenario_pl)
+  
+  # 5. Detener el clúster (paso fundamental)
+  stopCluster(clúster)
+
+}) # Fin del bloque medido por system.time
+
+cat("\nTiempo paralelo:\n")
+print(tiempo_paralelo)
+
+# Calcular y mostrar la mejora de velocidad
+ganancia_velocidad <- round(tiempo_secuencial['elapsed'] / tiempo_paralelo['elapsed'], 2)
+cat("\nGanancia de velocidad (Tiempo Secuencial / Tiempo Paralelo):", ganancia_velocidad, "X\n")
 
 ```
 
-### Maximización y otros tipos de restricciones.
-
-```r
-eg.lp <- lp(objective.in = c(5, 8),
-            const.mat = matrix(c(1, 1, 1, 2), nrow = 2),
-            const.rhs = c(2, 3),
-            const.dir = c("<=", "="), direction = "max")
-
-eg.lp
-
-#
-
-eg.lp$solution
-
-```
-
-### Situaciones especiales
-
-**Degeneración**
-
-Para un problema con m variables de decisión, la degeneración surge cuando más de m límites de restricción se cruzan en un solo punto. Esta situación es bastante rara, pero tiene el potencial de causar dificultades para el símplex
-método, por lo que es importante ser consciente de esta condición. En circunstancias muy raras, la degeneración puede impedir que el método converja a la solución óptima; La mayoría de las veces, sin embargo, hay poco de qué preocuparse
-acerca de.
-
-$$
-x_1 + x_2 \leq 2; \quad x_1 + 4x_2 \leq 5.
-$$
-
-
-```r
-degen.lp <- lp(objective.in = c(3, 1),
-               const.mat = matrix(c(1, 1, 1, 4, 1, 2, 3, 1), nrow = 4),
-               const.rhs = c(2, 3, 4, 4), const.dir = rep(">=", 4))
-degen.lp
-## El optimo de C es 3.333333
-degen.lp$solution
-## [1] 0.6666667 1.3333333
-
-```
-
-
-### Ejemplo aplicado al transporte
-
-Vamos a revisar una aplicación que emplee la función `lpSolve` para resolver un sistema lineal a un problema de optimización de en el contexto de la producción.
-
-### Situación a Resolver
-
-**Problema:** Una fábrica produce dos productos, A y B. Cada producto requiere un tiempo específico en dos máquinas, Máquina 1 y Máquina 2. La fábrica quiere maximizar las ganancias produciendo estos productos, pero está limitada por la capacidad de tiempo disponible en cada máquina.
-
-### Datos del Problema
-
-1. **Tiempo requerido por producto (en horas):**
-   - Producto A:
-     - Máquina 1: 2 horas
-     - Máquina 2: 1 hora
-   - Producto B:
-     - Máquina 1: 1 hora
-     - Máquina 2: 3 horas
-
-2. **Capacidad de tiempo disponible (en horas):**
-   - Máquina 1: 100 horas
-   - Máquina 2: 120 horas
-
-3. **Ganancia por unidad producida:**
-   - Producto A: $40
-   - Producto B: $50
-
-### Formulación del Sistema Lineal
-
-**Función objetivo:** Maximizar las ganancias:
-
-$$ 
-\text{Maximizar } Z = 40A + 50B 
-$$
-
-**Restricciones:**
-1. Capacidad de la Máquina 1:
-
-$$
-2A + 1B \leq 100
-$$
-
-3. Capacidad de la Máquina 2:
-
-$$
-1A + 3B \leq 120
-$$
-
-5. No negatividad:
-
-$$
-A \geq 0 
-$$
-
-$$ 
-B \geq 0 
-$$
-
-### Código R para Resolver el Problema
-
-A seguir presentamos el código en R para definir y resolver este problema utilizando `lpSolve`:
-
-```r
-# Instalar y cargar el paquete lpSolve
-# Definir la función objetivo
-f.obj <- c(40, 50)
-
-# Definir las restricciones
-f.con <- matrix(c(2, 1,  # Coeficientes de A y B en la restricción de la Máquina 1
-                  1, 3), # Coeficientes de A y B en la restricción de la Máquina 2
-                nrow = 2, byrow = TRUE)
-
-# Definir la dirección de las restricciones
-f.dir <- c("<=", "<=")
-
-# Definir los lados derechos de las restricciones
-f.rhs <- c(100, 120)
-
-# Resolver el problema de programación lineal
-resultado <- lp("max", f.obj, f.con, f.dir, f.rhs)
-
-# Obtener y mostrar los resultados
-valor_optimo <- resultado$objval
-valores_variables <- resultado$solution
-
-cat("Ganancia máxima:", valor_optimo, "\n")
-cat("Unidades de A a producir:", valores_variables[1], "\n")
-cat("Unidades de B a producir:", valores_variables[2], "\n")
-```
-
-### Explicación del Código
-
-1. **Definir la función objetivo:** 
-   ```r
-   f.obj <- c(40, 50)
-   ```
-   Esto representa las ganancias por cada unidad de los productos A y B.
-
-2. **Definir las restricciones:**
-   ```r
-   f.con <- matrix(c(2, 1,
-                     1, 3), 
-                   nrow = 2, byrow = TRUE)
-   ```
-   La matriz `f.con` contiene los coeficientes de las restricciones.
-
-3. **Definir la dirección de las restricciones:**
-   ```r
-   f.dir <- c("<=", "<=")
-   ```
-   Esto indica que ambas restricciones son de tipo "menor o igual que".
-
-4. **Definir los lados derechos de las restricciones:**
-   ```r
-   f.rhs <- c(100, 120)
-   ```
-   Estos son los valores máximos de horas disponibles para las máquinas 1 y 2.
-
-5. **Resolver el problema:**
-   ```r
-   resultado <- lp("max", f.obj, f.con, f.dir, f.rhs)
-   ```
-
-6. **Obtener y mostrar los resultados:**
-   ```r
-   valor_optimo <- resultado$objval
-   valores_variables <- resultado$solution
-
-   cat("Ganancia máxima:", valor_optimo, "\n")
-   cat("Unidades de A a producir:", valores_variables[1], "\n")
-   cat("Unidades de B a producir:", valores_variables[2], "\n")
-   ```
-
-### Resultados Esperados
-
-El resultado del código proporcionará la cantidad óptima de productos A y B que deben producirse para maximizar las ganancias, dado el tiempo disponible en las máquinas. También mostrará la ganancia máxima que se puede obtener bajo estas condiciones.
-
-
-### Programación cuadrática
-
-### Explicación Completa de la Programación Cuadrática
-
-**Programación Cuadrática (QP)** es una extensión de la programación lineal, donde la función objetivo es cuadrática y las restricciones son lineales. Matemáticamente, un problema de programación cuadrática se puede expresar como:
-
-$$ 
-\text{Minimizar} \quad \frac{1}{2} x^T Q x + c^T x 
-$$
-
-$$ 
-\text{Sujeto a} \quad Ax \leq b 
-$$
-
-Donde:
-- \( Q \) es una matriz simétrica definida positiva.
-- \( c \) es un vector de coeficientes lineales.
-- \( x \) es el vector de variables de decisión.
-- \( A \) y \( b \) definen las restricciones lineales.
-
-### Ejemplo Aplicado a Data Science en R
-
-Supongamos que queremos minimizar una función cuadrática sujeta a restricciones lineales. Esto podría ser útil, por ejemplo, en la optimización de portafolios en finanzas.
-
-**Ejemplo: Optimización de Portafolio**
-
-```r
-# Instalar y cargar el paquete quadprog
-install.packages("quadprog")
-library(quadprog)
-
-# Definir los parámetros del problema
-Dmat <- matrix(c(2, 0.5, 0.5, 1), nrow = 2)
-dvec <- c(-8, -6)
-Amat <- matrix(c(1, 2, 1, -1, 0, 1), nrow = 3, byrow = TRUE)
-bvec <- c(2, 2, 0)
-meq <- 1
-
-# Resolver el problema de programación cuadrática
-sol <- solve.QP(Dmat, dvec, t(Amat), bvec, meq)
-sol$solution
-
-# Imprimir la solución
-print(sol$solution)
-```
-
-### Explicación del Código
-
-1. **Paquete `quadprog`:** Utilizamos el paquete `quadprog` para resolver problemas de programación cuadrática.
-2. **Definición de Matrices y Vectores:**
-   - `Dmat`: Matriz \( Q \) de la función cuadrática.
-   - `dvec`: Vector \( c \) de coeficientes lineales.
-   - `Amat` y `bvec`: Matrices de restricciones.
-   - `meq`: Número de restricciones de igualdad.
-3. **Resolución del Problema:**
-   - `solve.QP` encuentra la solución óptima al problema definido.
-   - `sol$solution` proporciona los valores óptimos de las variables.
+**Observación:** Cuando una tarea consiste en muchas operaciones pequeñas e independientes, `mclapply` puede distribuirlas eficientemente entre los núcleos del procesador. Esto permite un rendimiento muy superior al de un bucle secuencial, siendo una técnica clave para análisis y simulaciones a gran escala.
 
