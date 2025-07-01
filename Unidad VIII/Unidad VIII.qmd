@@ -1,0 +1,58 @@
+---
+title: "**Unidad VIII: Clase, documentación y testeo de funciones**"
+format: html
+editor: visual
+---
+
+# Parte I: documentación de objetos en el proyecto
+
+## Documentación del dataset
+
+| Variable | Descripción                                    |
+| :------- | :--------------------------------------------- |
+| Hora     | Secuencia temporal.                            |
+| SMP      | Valores numéricos variables.                   |
+| SJL      | Valores numéricos con tendencia ascendente.    |
+| VMT      | Valores numéricos fluctuantes.                 |
+| STA      | Valores numéricos diversos.                    |
+| SBJ      | Valores numéricos constantes en inicio.        |
+
+## Documentación de funciones
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+## Documentación de Clases S3
+
+
+```{r}
+
+```
+
+
+# Demostración de funcionamiento
+
+---
+
+# Parte II: Testeo de funciones
+
+## El flujo de tranbajo de el testeo
+
+## Estructura del test
+
+## Escribiendo un test
+
+## Usando una aplicación para realizar los tests
+
+### **Referencias**
+
+-   R Packages by Hadley Wickham. Páginas 82-110 y 130-142.
