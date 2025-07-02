@@ -1,0 +1,303 @@
+---
+title: "**Unidad VIII: Clase, documentación y testeo de funciones**"
+format: html
+editor: visual
+---
+
+# Parte I: documentación de objetos en el proyecto
+
+Librerias necesarias
+
+```{r}
+library(wavethresh)
+```
+
+## Documentación del dataset
+
+El data set contiene las emosiones de mp2.5 de 5 estaciones de medición de la ciudad de Lima.
+
+Los datos se consideran como funciones con ruido y la función lo que hace es obtener de regreso la función que genero los datos sin el ruido:
+
+$$
+Y(t) = f(t)+ \epsilon(t),
+$$
+
+Mi función lo que busca es ser un estimador de $f(t)$ quitando el ruido añadido por $\epsilon(t)$. El metodo de estimación esta representada en la siguiente formula:
+
+$$
+\widehat{f}(t)= \sum_{k} c_{kj_0} \phi_{j_0}(t) + \sum_{j=j_0}^{J} \sum_{k} d_{jk}\psi_{jk}(t).
+$$
+
+En donde $\{c_{kj_0}, d_{jk}\}$ son coeficientes obtenidos mediante el algoritmo de transformada de Ondaletas.
+
+La descripción de los datos sigue a continuación:
+
+| Variable | Descripción                                 |
+|:---------|:--------------------------------------------|
+| Hora     | Secuencia temporal.                         |
+| SMP      | Valores numéricos variables.                |
+| SJL      | Valores numéricos con tendencia ascendente. |
+| VMT      | Valores numéricos fluctuantes.              |
+| STA      | Valores numéricos diversos.                 |
+| SBJ      | Valores numéricos constantes en inicio.     |
+
+La dimensión de los datos es de 16384x5 de los cuales verificamos que la extensión es una potencia de 2.
+
+## Documentación de funciones
+
+La siguiente función llamada \`resolucion_norm_j\` encuentra el nivel de resolución $j$ que normaliza el 95\\% de la energia de los datos
+
+```{r}
+resolucion_norm_j <- function(objeto_ondaletas, 
+                              limite_de_energia = 0.95) {
+
+# Paso 1: obtengo los niveles del objeto de ondaletas
+nlevels <- nlevelsWT(objeto_ondaletas)
+
+# Paso 2: extraigo toda la energia 
+total_energy <- sum(sapply(0:(nlevels-1), function(j) sum(accessD(objeto_ondaletas, j)^2)))
+
+# Paso 3: genero un objeto para guardar la energia
+cumulative_energy <- 0
+
+# Paso 4: Obtengo el j que conserva por a lo máximo el 95% de la energia
+for (j in 0:(nlevels-1)) {
+    level_energy <- sum(accessD(objeto_ondaletas, j)^2) / total_energy
+    cumulative_energy <- cumulative_energy + level_energy
+    
+    if (cumulative_energy >= energy_threshold) {
+      return(j)
+    }
+  }
+  # Paso 5: salida de el objeto j
+  
+return(nlevels - 1)  
+}
+
+
+```
+
+La siguiente función encuentra los coeficientes $\{c_{kj_0}, d_{jk} \}$ .
+
+```{r}
+coef_onda <- function(senal=NULL, 
+                      filtro= NULL, 
+                      tipo_ondaletas= NULL, 
+                      j1= NULL){
+  
+# Parte A: dejo la señal en formato numerico  
+signal <- as.numeric( unlist(senal) ) # the signal enter as a list
+
+# Parte B: aplico el algortimo de transformada de Ondaletas
+# La funcion `wd` pertenece a la libreria `wavethresh`
+decom <- wd(senal, filter.number= filtro, family= tipo_ondaletas )
+
+# Parte C: obtengo los coeficientes
+dj <- vector("list", j1 ) 
+for ( j in  0:(j1-1) ) { dj[[j+1]] <-  accessD(decom, level=j) }
+
+# Parte D: los caso de la lista y los devuelvo en formato numerico
+vec <- unlist(dj)
+return(vec)
+
+}
+```
+
+La siguiente función encuentra el estimador $\widehat{f}(t)$ :
+
+```{r}
+
+f_gorro <- function( senal = NULL, 
+                     filtro = NULL, 
+                     tipo_ondaletas = NULL,
+                     j0=NULL,
+                     j1= NULL){
+  # Paso
+  senal <- as.numeric( unlist(senal) ) # the signal enter as a list
+  decom <- wd(senal, 
+              filter.number = filtro, 
+              family= tipo_ondaletas)
+  # j=1, ..., J
+  decom <- nullevels(decom, (j1-1):(nlevelsWT(decom)-1) ) 
+  
+# La funcion `threshold` pertenece a la libreria `wavethresh`
+  decom.th <- threshold(decom, levels = (j0-1):(j1-2), 
+                        type = "soft", 
+                        policy = "sure", 
+                        by.level= TRUE) # thresholding
+  
+  # la función `wr` reconstruye la señal sin ruidi
+  hatf <- wr(decom.th, 
+             start.level = j1-1 ) # start.level com ruido
+  
+  return(hatf)
+}
+
+```
+
+## Documentación de Clases S3
+
+En mi propuesta, extiendo la funcion original `f_gorro`\` a una clase S3 generando un output en formato de lista con el atributo de ser imprimible.
+
+```{r}
+# Es la función ahora con clase S3
+F_gorro <- function( signal = NULL, 
+                    filtro = NULL, 
+                    waveletn = NULL,
+                    j0=NULL,
+                    j1= NULL){
+  
+  # Parte 0: Preparación de la señal y verificación (opcional, buena práctica)
+  n <- length(signal)
+  if (!log2(n) %% 1 == 0) {
+    warning("La longitud de la señal no es una potencia de 2,
+              la función puede no funcionar correctamente.")
+  }
+  
+  signal_numeric <- as.numeric( unlist(signal) ) # la señal entra como una lista
+  
+  # Parte I: descomposicicón de la curva con ruido
+  decom <- wd(signal_numeric, filter.number= filtro, family= waveletn )
+  
+  # Parte 2: "denoising" o "alisamiento de la curva" 
+  decom_nulled <- nullevels(decom, (j1-1):(nlevelsWT(decom)-1) ) # Shrinkage
+  decom_thresholded <- threshold(decom_nulled, levels = (j0-1):(j1-2), 
+                                 type = "soft", 
+                                 policy = "sure", 
+                                 by.level= TRUE) # thresholding
+  
+  # Parte 3: reconstrucción de la curva \hat{f}(t)
+  hatf <- wr(decom_thresholded, start.level = j1-1 ) # start.level com ruido
+  
+  # Parte 4: Obtener características del procesamiento
+  procesamiento_caracteristicas <- list(
+    filtro_usado = filtro,
+    wavelet_usada = waveletn,
+    nivel_j0 = j0,
+    nivel_j1 = j1
+  )
+  
+  # Parte 5: Crear la lista de resultados
+  result <- list(
+    curva_estimada = hatf,
+    resumen_curva = summary(hatf), # Resumen de la curva estimada
+    caracteristicas_procesamiento = procesamiento_caracteristicas # Características del procesamiento
+  )
+  
+  class(result) <- "mweth_output" 
+  
+  return(result)
+}
+
+```
+
+Agregamos el atributo de impresión de `F_gorro`
+
+```{r}
+### Método de Impresión para la Clase S3 "mweth_output"
+print.F_gorro <- function(x, ...) {
+cat("Estimación de Curva Basada en Ondeletas (mweth) - Resumen de Resultados\n")
+cat("========================================================================\n\n")
+  
+  cat("1. Curva Estimada (hatf):\n")
+  print(summary(x$curva_estimada))
+  cat("\n")
+  
+  cat("2. Características del Procesamiento Wavelets y Filtro:\n")
+  cat("   - Filtro usado: ", x$caracteristicas_procesamiento$filtro_usado, "\n")
+  cat("   - Wavelet usada: ", x$caracteristicas_procesamiento$wavelet_usada, "\n")
+  cat("   - Nivel de inicio (j0): ", x$caracteristicas_procesamiento$nivel_j0, "\n")
+  cat("   - Nivel de fin (j1): ", x$caracteristicas_procesamiento$nivel_j1, "\n\n")
+  
+  cat("3. Resumen Completo de la Curva Estimada:\n")
+  print(x$resumen_curva)
+  cat("\n")
+}
+
+```
+
+# Demostración de funcionamiento
+
+Aplicaremos las funciones `coef_onda` y `f_gorro` al dataset de una de las estaciones de medición del `dataset.csv` encontrando los coeficientes, un grafico para ellos, la serie temporal de mp2.5 y la respectiva curva media estimada.
+
+```{r}
+
+df = read.csv("dataset.csv")
+head(df)
+
+```
+
+Presento un histograma de los niveles de mp2.5 para la estación SMP.
+
+```{r}
+
+hist(df$SMP, probability = TRUE)
+lines(density(df$SMP), col="blue", lwd=2)
+
+```
+
+A continuación una pequeña demostración de la función `coef_onda`\`
+
+```{r}
+
+coeficientes = coef_onda(senal= df$SMP,
+               filtro = 4,
+               tipo_ondaletas = "DaubLeAsymm",
+               j1=5)
+
+boxplot(coeficientes, horizontal= TRUE)
+```
+
+Ahora una demostración de la función `f_gorro`
+
+```{r}
+
+f <- f_gorro(senal=df$SMP,
+             filtro=5,
+             tipo_ondaletas = "DaubLeAsymm",
+             j0=2,
+             j1=5)
+summary(f)
+```
+
+Ahora presentamos la los niveles de SMP y la estimación de la curva media
+
+```{r}
+plot(df$SMP, main = "Niveles de mp2.5 con ruido y curva estimada", ylab="mp2.5", xlab = "Tiempo en horas", type="l")
+lines(f, col="blue", lwd=2)
+```
+
+Acontinuación, demostramos el uso de la función de estimación de clase S3
+
+```{r}
+
+F <- F_gorro(df$SMP,
+             5,
+             "DaubLeAsymm",
+             j0=2,
+             j1=5)
+F
+```
+
+Ahora solo la curva estimada
+
+```{r}
+F$caracteristicas_procesamiento
+
+```
+
+------------------------------------------------------------------------
+
+# Parte II: Testeo de funciones
+
+## El flujo de tranbajo de el testeo
+
+## Estructura del test
+
+## Escribiendo un test
+
+## Usando una aplicación para realizar los tests
+
+### **Referencias**
+
+-   R Packages by Hadley Wickham. Páginas 82-110 y 130-142.
