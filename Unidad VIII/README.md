@@ -1,6 +1,13 @@
+# Documentación de funciones con R.
+
+Link de la clase del martes 01-07-2025 [Link](https://udla.zoom.us/rec/share/987My8MJsnM72ng4UwEZ9m6FPf2avlu0v7uTU3_kYNPwfcXbgqf3sOc4VjmWjVu4.WMr6x3qTfj-5NB8Q?startTime=1751410963000&pwd=DH6kYClryWzffhjo_QAAIAAAAFFf41qq0V0WP6HXqabGCOG27cg9a_K5GfpSY89I4khmRv9ZJI5Hcg59JMCosnrQ-DAwMDAwMQ)
+
+Link de la clase del sábado 05-07-2025 [Link]()
+
+
 # Tópicos de rmarkdown, bookdown, shinyapps y dashboards
 
-# Parte 0: Sintaxis en R Markdown
+## Parte 0: Sintaxis en R Markdown
 
 **Markdown** es un lenguaje de marcado ligero que puedes usar para añadir formato a texto en la web. Aquí te presento una lista de las sintaxis más comunes en Markdown:
 
