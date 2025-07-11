@@ -1,0 +1,279 @@
+---
+title: "**Unidad VIII Parte II: Testeo de funciones**"
+format: html
+editor: visual
+---
+
+
+
+# Parte II: Testeo de funciones
+
+## El flujo de trabajo del testeo
+
+
+* **Testeo con `testthat()`:** Verifica la **corrección funcional** del código. Se crean tests unitarios con `test_that()` para asegurar que la función se comporta como se espera, usando `expect_...()` para comprobar salidas, tipos, errores o advertencias. Es crucial para la fiabilidad del código.
+
+* **Evaluación de Cobertura de Código (con `covr`):** Mide la **cantidad de código ejecutado** por los tests. Indica qué porcentaje de la función fue "tocado" por las pruebas. Ayuda a identificar áreas no testeadas, guiando la adición de nuevas pruebas.
+
+* **Pruebas de Rendimiento (Benchmarking con `microbenchmark` o `bench`):** Se enfoca en la **velocidad y eficiencia** de la función. Mide con precisión el tiempo de ejecución del código. Útil para identificar cuellos de botella o comparar implementaciones.
+
+
+```{r}
+# 1. Cargar paquetes necesarios
+suppressPackageStartupMessages({library(testthat); library(wavethresh)})
+
+# 2. Definición de la función a testear
+# Pega aqui el codigo completo de tu funcion F_gorro
+F_gorro <- function( signal = NULL, 
+                     filtro = NULL, 
+                     waveletn = NULL,
+                     j0=NULL,
+                     j1= NULL){
+  # ... codigo de F_gorro ...
+  n <- length(signal)
+  if (!log2(n) %% 1 == 0) {
+    warning("La longitud de la señal no es una potencia de 2,
+              la función puede no funcionar correctamente.")
+  }
+  signal_numeric <- as.numeric( unlist(signal) ) 
+  decom <- wd(signal_numeric, filter.number= filtro, family= waveletn )
+  decom_nulled <- nullevels(decom, (j1-1):(nlevelsWT(decom)-1) ) 
+  decom_thresholded <- threshold(decom_nulled, levels = (j0-1):(j1-2), 
+                               type = "soft", 
+                               policy = "sure", 
+                               by.level= TRUE) 
+  hatf <- wr(decom_thresholded, start.level = j1-1 ) 
+  procesamiento_caracteristicas <- list(
+    filtro_usado = filtro,
+    wavelet_usada = waveletn,
+    nivel_j0 = j0,
+    nivel_j1 = j1
+  )
+  result <- list(
+    curva_estimada = hatf,
+    resumen_curva = summary(hatf), 
+    caracteristicas_procesamiento = procesamiento_caracteristicas 
+  )
+  class(result) <- "mweth_output" 
+  return(result)
+}
+
+# Definición del metodo de impresion S3
+print.mweth_output <- function(x, ...) { 
+  cat("Estimación de Curva Basada en Ondeletas (mweth) - Resumen de Resultados\n")
+  cat("========================================================================\n\n")
+  cat("1. Curva Estimada (hatf):\n")
+  print(summary(x$curva_estimada))
+  cat("\n")
+  cat("2. Características del Procesamiento Wavelets y Filtro:\n")
+  cat("   - Filtro usado: ", x$caracteristicas_procesamiento$filtro_usado, "\n")
+  cat("   - Wavelet usada: ", x$caracteristicas_procesamiento$wavelet_usada, "\n")
+  cat("   - Nivel de inicio (j0): ", x$caracteristicas_procesamiento$nivel_j0, "\n")
+  cat("   - Nivel de fin (j1): ", x$caracteristicas_procesamiento$nivel_j1, "\n\n")
+  cat("3. Resumen Completo de la Curva Estimada:\n")
+  print(x$resumen_curva)
+  cat("\n")
+}
+
+```
+
+```{r}
+# --- Datos de Prueba para los Tests ---
+set.seed(123) 
+inicio <- -10
+fin <- 10
+longitud_aproximada <- (fin - inicio) / 0.01 + 1
+next_power_of_2 <- function(x) {
+  if (x == 0) return(1)
+  2^ceiling(log2(x))
+}
+longitud_final <- next_power_of_2(longitud_aproximada)
+t <- seq(from = inicio, to = fin, length.out = longitud_final)
+
+signal_prueba_valida <- sin(t)+ rnorm(length(t)) # Señal de 128 puntos
+filtro_ejemplo <- 1 
+wavelet_ejemplo <- "DaubExPhase" 
+plot(t,signal_prueba_valida,type="l")
+lines(t, sin(t), col="blue", lwd =2)
+```
+
+Probamos si las salidas son lo que espera:
+
+
+```{mermaid}
+graph TD
+    A(Inicio Test) --> B(Prepara Datos y Llama Función)
+    B --> C(Define Expectativas)
+    C --> D(Evalúa Resultados)
+    D --> E(Fin Test)
+```
+
+```{r}
+#------- EVALUACIÓN 1: pruebas usando la función `test_that()`
+test_that("La salida es una lista de clase 'mweth_output' con 3 componentes", {
+  resultado <- F_gorro(signal = signal_prueba_valida, 
+                       filtro = filtro_ejemplo, 
+                       waveletn = wavelet_ejemplo, 
+                       j0 = 3, j1 = 5)
+  
+  expect_s3_class(resultado, "mweth_output")
+  expect_type(resultado, "list")
+  expect_length(resultado, 3) 
+  expect_named(resultado, c("curva_estimada", "resumen_curva", "caracteristicas_procesamiento"))
+})
+```
+
+```{r}
+test_that("La 'curva_estimada' es numerica y de longitud correcta", {
+  resultado <- F_gorro(signal = signal_prueba_valida, 
+                       filtro = filtro_ejemplo, 
+                       waveletn = wavelet_ejemplo, 
+                       j0 = 3, j1 = 5)
+  
+  expect_type(resultado$curva_estimada, "double")
+  expect_length(resultado$curva_estimada, length(signal_prueba_valida))
+  expect_false(anyNA(resultado$curva_estimada)) 
+})
+```
+
+El siguiente analisis evalua el porcentaje real de códigos utilizados en la función
+
+```{mermaid}
+graph TD
+    A(Iniciar Cobertura) --> B(Escribir Tests)
+    B --> C(Ejecutar covr)
+    C --> D(Analizar Reporte)
+    D --> E(Finalizar)
+```
+
+
+```{r}
+# Cargar librerias necesarias para este bloque
+library(testthat)
+library(covr)
+
+
+# --- EVALUACIÓN 2: Cobertura de Código ---
+cat("\n--- Evaluacion de Cobertura de Codigo (Ejemplo Simplificado) ---\n")
+cat("Mide qué partes de F_gorro son ejecutadas por un solo test.\n")
+
+# Realiza la cobertura de F_gorro usando un unico test_that
+cobertura <- function_coverage(
+  fun = F_gorro, # La función a medir la cobertura
+  { # El test que covr usará para evaluar la cobertura
+
+    test_that('F_gorro funciona basic_test (para cobertura)', {
+      s_test <- rnorm(2^6) # Señal de 64 puntos
+      expect_no_error(F_gorro(signal = s_test, filtro = 3, 
+                              waveletn = 'DaubExPhase', 
+                              j0 = 2, 
+                              j1 = 4))
+    })
+  }
+)
+print(cobertura)
+
+
+```
+
+La cobertura de código para tu función F_gorro es del 92.00%. Esto significa que el 92% de las líneas de código de F_gorro fueron ejecutadas durante la prueba. E
+
+
+```{mermaid}
+graph TD
+    A(Inicio) --> B(Datos)
+    B --> C(Ejecutar)
+    C --> D(Medir tiempo)
+    D --> E(Reportar)
+```
+
+```{r}
+# --- EVALUACIÓN 3: Pruebas de Rendimiento (Benchmarking) ---
+library(microbenchmark)
+library(wavethresh)
+
+# --- Datos de Prueba para Benchmarking (Ejemplo Simple) ---
+set.seed(123) 
+
+# Definimos un unico escenario de prueba
+signal_ejemplo_bench <- rnorm(2^15, sd = 2) # Señal de 1024 puntos con ruido
+filtro_ejemplo_bench <- 2
+waveletn_ejemplo_bench <- "DaubExPhase"
+j0_ejemplo_bench <- 5
+j1_ejemplo_bench <- 8
+veces_a_ejecutar <- 50 # Número de repeticiones para la medición
+
+cat("\n--- Evaluacion de Rendimiento (Benchmarking) ---\n")
+cat("Mide el tiempo de ejecucion de F_gorro para un escenario simple.\n")
+
+# Ejecutamos la prueba de rendimiento para el escenario definido
+tryCatch({
+  performance_test <- microbenchmark(
+    F_gorro_ejecucion = F_gorro(signal = signal_ejemplo_bench,
+                                filtro = filtro_ejemplo_bench,
+                                waveletn = waveletn_ejemplo_bench,
+                                j0 = j0_ejemplo_bench, j1 = j1_ejemplo_bench),
+    times = veces_a_ejecutar, # Número de veces que se ejecuta la función
+    unit = "ms" # Unidades para el tiempo: milisegundos
+  )
+  print(performance_test)
+}, error = function(e) {
+  message(sprintf("Error al realizar benchmark: %s", e$message))
+})
+
+print(performance_test)
+
+```
+
+```{r}
+# --- EVALUACIÓN 3: Fuzz Testing Simple (Fuerza Bruta) ---
+cat("\n--- Fuzz Testing Simple ---\n")
+cat("Intenta encontrar fallos en la funcion con entradas inesperadas.\n")
+
+# Numero de veces que se ejecutara la prueba de fuzzing.
+# Un valor pequeno es suficiente para un ejemplo.
+num_fuzz_tests <- 5 
+
+for (i in 1:num_fuzz_tests) {
+  # Genera una señal aleatoria con longitud variable (entre 1 y 100)
+  # y con posible presencia de NA.
+  signal_fuzz <- sample(c(rnorm(sample(1:100, 1)), NA), sample(1:100, 1), replace = TRUE)
+  
+  # Selecciona un filtro y una familia de wavelet al azar entre opciones válidas.
+  filtro_fuzz <- sample(c(1, 2), 1) 
+  waveletn_fuzz <- sample(c("haar", "DaubExPhase"), 1) 
+  
+  # Genera niveles j0 y j1 de forma simple, asegurando que j0 <= j1 y sean positivos.
+  # Simplificamos asumiendo que los niveles no excederán un maximo bajo (ej. 5)
+  j0_fuzz <- sample(1:3, 1) 
+  j1_fuzz <- sample(j0_fuzz:5, 1)
+  
+  # Intenta ejecutar F_gorro y captura cualquier error.
+  resultado_fuzz <- tryCatch({
+    # Suprime advertencias internas para enfocarse solo en errores fatales.
+    suppressWarnings(F_gorro(signal = signal_fuzz, filtro = filtro_fuzz, 
+                             waveletn = waveletn_fuzz, j0 = j0_fuzz, j1 = j1_fuzz))
+  }, error = function(e) {
+    # Si hay un error, lo imprime.
+    message(sprintf("Fuzz Test %d FALLO con error: %s", i, e$message))
+    return(NULL) # Devuelve NULL si hubo un error para indicar fallo.
+  })
+  
+  # Verifica si el resultado es nulo (indicando un error fatal) o si la clase no es la esperada.
+  if (is.null(resultado_fuzz)) {
+    # Ya se imprimio un mensaje de fallo en tryCatch
+  } else if (!inherits(resultado_fuzz, "mweth_output")) {
+    message(sprintf("Fuzz Test %d FALLO: Retorno un tipo de objeto inesperado", i))
+  } else {
+    message(sprintf("Fuzz Test %d PASO (resultado valido)", i))
+  }
+}
+cat("Fuzz Testing Simple Completado. Revisar mensajes de 'FALLO' para problemas.\n")
+```
+
+
+
+
+### **Referencias**
+
+-   R Packages by Hadley Wickham. Páginas 82-110 y 130-142.
